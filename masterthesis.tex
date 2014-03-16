@@ -1,4 +1,4 @@
-\documentclass[oneside,brudnopis]{xelatex-mgr/xmgr}
+\documentclass[11pt,oneside,brudnopis]{xelatex-mgr/xmgr}
 
 \usepackage{amsmath}
 \usepackage{blindtext}
@@ -7,10 +7,9 @@
 %\setmainfont[Numbers=OldStyle,Ligatures=TeX]{Minion Pro}
 %\setsansfont[Numbers=OldStyle,Ligatures=TeX]{Myriad Pro}
 % for fontspec version < 2.0
-\setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
-\setsansfont[Numbers=OldStyle,Mapping=tex-text]{Myriad Pro}
+% \setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
+% \setsansfont[Numbers=OldStyle,Mapping=tex-text]{Myriad Pro}
 \setmonofont[Scale=0.75]{Monaco}
-
 
 \wersja   {wersja wstępna [\ymdtoday]}
 
@@ -57,7 +56,7 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
   zbioru
 
 \item{\emph{lewoskrętność, prawoskrętność}} --- o kącie mówimy, że
-  jest lewoskrętny jeżeli wyznacznik 3 x 3 współrzędnych punktów
+  jest lewoskrętny jeżeli wyznacznik $3 \times 3$ współrzędnych punktów
   $p_1$, $p_2$, $p_3$ kąta jest dodatni, w przeciwnym przypadku
   mówimy, że kąt jest prawoskrętny. Jeżeli $p_i = (x_i, y_i)$ to
   wyznacznik:
@@ -91,19 +90,28 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
     $\forall n \geq n_0 : f(n) \leq c \cdot g(n)$
   \end{center}
 
-  Najczęściej wyróżniamy następujące rzędy żłożoności obliczeniowej
-  (podane według rosnącej złożoności):
-
-  \begin{itemize}
-    \item{$O(1)$} stała
-    \item{$O(\log n)$} logarytmiczna
-    \item{$O(n)$} liniowa
-    \item{$O(n \log n)$} liniowo-logarytmiczna
-    \item{$O(n^2)$} kwadratowa
-    \item{$O(n^c)$} wielomianowa
-    \item{$O(c^n)$} wykładnicza
-    \item{$O(n!)$} ograniczona przez silnię
-  \end{itemize}
+  \begin{table}[htp]
+    \centering
+    \caption{Najczęściej wyróżniane rzędy żłożoności obliczeniowej,
+      podane według rosnącej złożoności.}
+    \begin{tabular}{c c}
+      $O(1)$ & stała \\
+      \hline
+      $O(\log n)$ & logarytmiczna \\
+      \hline
+      $O(n)$ & liniowa \\
+      \hline
+      $O(n \log n)$ & liniowo-logarytmiczna \\
+      \hline
+      $O(n^2)$ & kwadratowa \\
+      \hline
+      $O(n^c)$ & wielomianowa \\
+      \hline
+      $O(c^n)$ & wykładnicza \\
+      \hline
+      $O(n!)$ & ograniczona przez silnię \\
+    \end{tabular}
+  \end{table}
 
   W tej pracy efektywnym algorytmem będziemy nazywać algorytm o
   złożoności nie większej niż liniowo-logartymiczna.
@@ -148,6 +156,8 @@ w miare możliwości dowodem poprawności algorytmu.
 \end{document}
 
 %%% Local Variables:
+%%% coding: utf-8
 %%% mode: latex
 %%% TeX-master: t
+%%% TeX-engine: xetex
 %%% End:
