@@ -1,0 +1,9 @@
+#+TITLE: masterthesis
+#+AUTHOR: Bartłomiej Kruczyk
+#+DATE: <2014-03-16 nie>
+
+Moja praca magisterska pod tytułem "Efektywne algorytmy dla wielokątów
+wypukłych".
+
+* TODO uzupełnić sekcję "Lokalizacja punktu" w rodziale "Przegląd problemów"
+* TODO dodać opis wielokąta prostego do rozdziału podstawowe pojęcia
