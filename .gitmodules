@@ -1,0 +1,4 @@
+[submodule "xelatex-mgr"]
+	path = xelatex-mgr
+	url = https://github.com/bkruczyk/xelatex-mgr.git
+	ignore = dirty

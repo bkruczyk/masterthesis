@@ -1,23 +1,50 @@
-\documentclass{article}
+\documentclass[oneside,brudnopis]{xelatex-mgr/xmgr}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[polish]{babel}
-\usepackage{polski}
-
-\usepackage{lmodern}
 \usepackage{amsmath}
-\usepackage{graphicx}
+\usepackage{blindtext}
+
+%\defaultfontfeatures{Scale=MatchLowercase}
+%\setmainfont[Numbers=OldStyle,Ligatures=TeX]{Minion Pro}
+%\setsansfont[Numbers=OldStyle,Ligatures=TeX]{Myriad Pro}
+% for fontspec version < 2.0
+\setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
+\setsansfont[Numbers=OldStyle,Mapping=tex-text]{Myriad Pro}
+\setmonofont[Scale=0.75]{Monaco}
+
+
+\wersja   {wersja wstępna [\ymdtoday]}
+
+\author   {Bartłomiej Kruczyk}
+\nralbumu {213603}
+\email    {bartlomiej.kruczyk@gmail.com}
+
+\title    {Efektywne algorytmy dla wielokątów wypukłych}
+\date     {2014}
+\miejsce  {Gdańsk}
+
+\opiekun  {dr Paweł Żyliński}
 
 \begin{document}
-\section{Podstawowe pojęcia}
-W tym rozdziale zostaną przybliżone podstawowe pojęcia związane z
+
+\begin{abstract}
+\blindtext[1]
+\end{abstract}
+
+\keywords{}
+
+\maketitle
+
+% \introduction
+
+\chapter{Podstawowe pojęcia}
+W tym miejscu zostaną przybliżone podstawowe pojęcia związane z
 geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
 
 \begin{itemize}
-\item{wielokąt wypukły} --- wielokąt prosty którego wnętrze jest
-  zbiorem wypukłym: wszystkie punkty należące do odcinka łączącego dwa
-  dowolne punkty ze zbioru wypukłego należą do tego zbioru
+\item{\emph{wielokąt wypukły}} --- wielokąt prosty którego wnętrze
+  jest zbiorem wypukłym: wszystkie punkty należące do odcinka
+  łączącego dwa dowolne punkty ze zbioru wypukłego należą do tego
+  zbioru
 
   \begin{figure}[htp]
     \centering
@@ -25,13 +52,15 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
     \caption{Figura niebędąca wielokątem wypukłym.}
   \end{figure}
 
-\item{średnica zbioru punktów} --- średnicą zbioru punktów nazywamy
-  największą odległość pomiędzy dwoma punktami należącymi do zbioru
+\item{\emph{średnica zbioru punktów}} --- średnicą zbioru punktów
+  nazywamy największą odległość pomiędzy dwoma punktami należącymi do
+  zbioru
 
-\item{lewoskrętność, prawoskrętność} --- o kącie mówimy, że jest
-  lewoskrętny jeżeli wyznacznik 3 x 3 współrzędnych punktów $p_1, p_2,
-  p_3$ kąta jest dodatni, w przeciwnym przypadku mówimy, że kąt jest
-  prawoskrętny. Jeżeli $p_i = (x_0, y_0)$ to wyznacznik:
+\item{\emph{lewoskrętność, prawoskrętność}} --- o kącie mówimy, że
+  jest lewoskrętny jeżeli wyznacznik 3 x 3 współrzędnych punktów
+  $p_1$, $p_2$, $p_3$ kąta jest dodatni, w przeciwnym przypadku
+  mówimy, że kąt jest prawoskrętny. Jeżeli $p_i = (x_i, y_i)$ to
+  wyznacznik:
 
   \begin{center}
     \begin{math}
@@ -43,25 +72,78 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
     \end{math}
   \end{center}
 
-\item{proste wspierające} --- prostymi wspierającymi dla wielokąta
+\item{\emph{proste wspierające}} --- prostymi wspierającymi dla wielokąta
   nazywamy takie proste, które przechodząc przez wierzchołek wielkąta
   nie przecinają jego wnętrza
 
-\item{punkty antypodyczne} --- taka para wierzchołków wielokąta przez
-  które można poprowadzić równoległe proste wspierające
+\item{\emph{punkty antypodyczne}} --- taka para wierzchołków wielokąta przez
+  które można poprowandzić równoległe proste wspierające
 
-\item{notacja dużego O} --- notacja asymptotycznego tempa wzrostu
-  wartości funkcji względem jej argumentów, w algorytmice stosowana do
-  charakterystyki złożoności obliczeniowej algorytmów opisując ilość
-  potrzebnych zasobów (czasu lub pamięci) w stosunku do rozmiaru
-  danych wejściowych. Mówimy, że funkcja $f$ jest co najwyżej rzędu
-  $g$, gdy istnieją takie stałe $n_0 > 0$ oraz $c > 0$, że:
+\item{\emph{notacja wielkiego O}} --- notacja asymptotycznego tempa
+  wzrostu wartości funkcji względem jej argumentów, w algorytmice
+  stosowana do charakterystyki złożoności obliczeniowej algorytmów
+  opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
+  rozmiaru danych wejściowych. Mówimy, że funkcja $f$ jest co najwyżej
+  rzędu $g$ (jest ograniczona przez funkcję $g$), gdy istnieją takie
+  stałe $n_0 > 0$ oraz $c > 0$, takie że:
 
   \begin{center}
     $\forall n \geq n_0 : f(n) \leq c \cdot g(n)$
   \end{center}
 
+  Najczęściej wyróżniamy następujące rzędy żłożoności obliczeniowej
+  (podane według rosnącej złożoności):
+
+  \begin{itemize}
+    \item{$O(1)$} stała
+    \item{$O(\log n)$} logarytmiczna
+    \item{$O(n)$} liniowa
+    \item{$O(n \log n)$} liniowo-logarytmiczna
+    \item{$O(n^2)$} kwadratowa
+    \item{$O(n^c)$} wielomianowa
+    \item{$O(c^n)$} wykładnicza
+    \item{$O(n!)$} ograniczona przez silnię
+  \end{itemize}
+
+  W tej pracy efektywnym algorytmem będziemy nazywać algorytm o
+  złożoności nie większej niż liniowo-logartymiczna.
 \end{itemize}
+
+\chapter{Przegląd problemów}
+Przedstawione w niniejszym rozdziale problemy są wspólne dla
+wszystkich wielokątów, co pozwala na porównanie rozwiązań i ich
+efektywności dla wielokątów prostych i wypukłych. Przy każdym
+problemie zostanie przedstawione rozwiązanie naiwne, następnie
+rozwiązanie dla wielokąta wypukłego wraz z analizą złożoności oraz
+w miare możliwości dowodem poprawności algorytmu.
+
+\section{Lokalizacja punktu}
+
+% \section{Średnica wielokąta}
+% \section{Przecięcie wielokątów}
+% \subsection{Shamos --- Hoey}
+% \subsection{O'Rourke --- Nador}
+% \subsection{Separating Axes}
+% \section{Zawieranie wielokątów}
+% \section{Wyznaczanie prostokąta zawierającego wielokąt}
+% \section{Wyznaczanie największej odległości między wielokątami}
+% \section{Złączanie wielokątów wypukłych}
+% \section{Znajdowanie krytycznych linii wsparcia}
+
+% \summary
+
+% \appendix
+% \chapter{Generowanie wielokątów wypukłych o zadanej liczbie
+%   wierzchołków}
+
+% \bibliographystyle{unsrt}
+% \bibliography{xml}
+
+% \listoftables
+
+% \listoffigures
+
+% \oswiadczenie
 
 \end{document}
 
