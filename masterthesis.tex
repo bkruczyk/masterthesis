@@ -1,14 +1,14 @@
-\documentclass[11pt,oneside,brudnopis]{xelatex-mgr/xmgr}
+\documentclass[12pt,oneside,brudnopis]{xelatex-mgr/xmgr}
 
 \usepackage{amsmath}
 \usepackage{blindtext}
 
-%\defaultfontfeatures{Scale=MatchLowercase}
-%\setmainfont[Numbers=OldStyle,Ligatures=TeX]{Minion Pro}
-%\setsansfont[Numbers=OldStyle,Ligatures=TeX]{Myriad Pro}
+% \defaultfontfeatures{Scale=MatchLowercase}
+% \setmainfont[Numbers=OldStyle,Ligatures=TeX]{Minion Pro}
+% \setsansfont[Numbers=OldStyle,Ligatures=TeX]{Myriad Pro}
 % for fontspec version < 2.0
-% \setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
-% \setsansfont[Numbers=OldStyle,Mapping=tex-text]{Myriad Pro}
+\setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
+\setsansfont[Numbers=OldStyle,Mapping=tex-text]{Myriad Pro}
 \setmonofont[Scale=0.75]{Monaco}
 
 \wersja   {wersja wstępna [\ymdtoday]}
@@ -23,15 +23,17 @@
 
 \opiekun  {dr Paweł Żyliński}
 
+\newtheorem{problem}{Problem}
+
 \begin{document}
 
-\begin{abstract}
-\blindtext[1]
-\end{abstract}
+% \begin{abstract}
+%   \blindtext[1]
+% \end{abstract}
 
-\keywords{}
+% \keywords{}
 
-\maketitle
+% \maketitle
 
 % \introduction
 
@@ -40,6 +42,9 @@ W tym miejscu zostaną przybliżone podstawowe pojęcia związane z
 geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
 
 \begin{itemize}
+\item{\emph{wielokąt prosty}} --- taki wielokąt, że jedyne punkty
+  płaszczyzny należące jednocześnie do dwóch jego krawędzi są jego
+  wierzchołkami
 \item{\emph{wielokąt wypukły}} --- wielokąt prosty którego wnętrze
   jest zbiorem wypukłym: wszystkie punkty należące do odcinka
   łączącego dwa dowolne punkty ze zbioru wypukłego należą do tego
@@ -113,19 +118,104 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
     \end{tabular}
   \end{table}
 
-  W tej pracy efektywnym algorytmem będziemy nazywać algorytm o
-  złożoności nie większej niż liniowo-logartymiczna.
+  W tej pracy efektywnym algorytmem dla wielokąta wypukłego będziemy
+  nazywać algorytm o mniejszej złożoności obliczeniowej niż najlepszy
+  znany algorytm uogólniony dla wielokąta prostego dla tego samego
+  problemu.
 \end{itemize}
 
 \chapter{Przegląd problemów}
 Przedstawione w niniejszym rozdziale problemy są wspólne dla
 wszystkich wielokątów, co pozwala na porównanie rozwiązań i ich
-efektywności dla wielokątów prostych i wypukłych. Przy każdym
-problemie zostanie przedstawione rozwiązanie naiwne, następnie
-rozwiązanie dla wielokąta wypukłego wraz z analizą złożoności oraz
-w miare możliwości dowodem poprawności algorytmu.
+efektywności dla wielokątów prostych i wypukłych. Przy każdym z nich
+zostanie przedstawiony problem uogólniony dla wielokątów prostych,
+następnie rozwiązanie dla wielokąta wypukłego wraz z analizą
+złożoności oraz poprawności algorytmu.
 
 \section{Lokalizacja punktu}
+W sytuacji gdy płaszczyznę dzielimy na dwa obszary, z których jeden
+jest nieograniczony, drugi natomiast to wielokąt $P$ (na skutek
+podziału płaszczyzny na dwie części oraz na podstawie twierdzenia
+Jordana o krzywej dla wielokątów wiemy, że $P$ jest prosty) możemy
+przedstawić definicję problemu:
+
+\begin{problem}[Lokalizacja punktu]
+  Jeśli dany jest wielokąt prosty $P$ i punkt $z$, sprawdzić czy punkt $z$
+  należy do wnętrza $P$.
+\end{problem}
+
+Problem ten można rozwiązać w czasie $O(n)$ bez przetwarzania
+wstępnego. Przypuśćmy, że istnieje prosta pozioma $l$ przechodząca
+przez punkt $z$. Musimy teraz rozważyć teraz kilka przypadków:
+
+\begin{itemize}
+\item Jeśli $l$ nie przecina $P$ to $z$ leży na zewnątrz wielokąta.
+  \begin{figure}[htp]
+    \centering
+    \caption{(Rysunek) Przypadek 1.}
+  \end{figure}
+\item W przypadku gdy prosta $l$ przecina $P$ i nie przechodzi przez
+  żaden z wierzchołków $P$, jako $p_l$ będziemy oznaczać liczbę
+  przecięć $l$ z wielokątem $P$. Wiemy, że lewy koniec $l$ leży na
+  zawnątrz $P$, więc przesuwając się po prostej $l$ w prawo w kierunku
+  $z$ i przecinając brzeg wielokąta i przechodzimy do jego
+  wnętrza. Przy następnym przecięciu z brzegiem $P$ znowu znajdziemy
+  się na zewnątrz itd. Widzimy stąd, że $z$ jest zewnętrzny dokładnie
+  wtedy gdy $p_l$ jest parzyste.
+  \begin{figure}[htp]
+    \centering
+    \caption{(Rysunek) Przypadek 2.}
+  \end{figure}
+\item Specjalnym przypadkiem jest ten w którym $l$ przechodzi przez
+  jeden lub dwa wierzchołeki. W algorytmie rozważamy przecięcia $l$ z
+  krawędziami $P$, więc musimy się zabezpieczyć przed sytuacją w
+  której policzylibyśmy przecięcie brzegu $P$ dwukrotnie. Stosujemy tu
+  zasadę, że $p_l$ nie zostanie zwiększone dla krawędzi której jeden z
+  wierzchołków znajduję się powyżej prostej $l$.
+  \begin{figure}[htp]
+    \centering
+    \caption{(Rysunek) Przypadek 3.}
+  \end{figure}
+\end{itemize}
+
+Ze względu na to, że każdą krawędź $P$ sprawdzamy tylko raz pod względem
+przecięcia z $l$ to mamy do czynienia ze złożonością liniową zależną od
+liczby krawędzi wielokąta.
+
+Algorytm dla wielokąta wypukłego wymaga pewnego przetwarzania
+wstępnego, ale jest użyteczny w przypadku wykonowyania wielokrotnych
+zapytań o przynależność punktu do danego wielokąta. Weźmy punkt $q$
+leżący wewnątrz wielokąta wypukłego $P$, może to być np.\ jego środek
+wyznaczony przez trzy wierzchołki, a nastąpnie poprowadźmy $N$
+półprostych z $q$ przechodzących przez wierzchołki $P$. Płaszczyzna
+wraz z wielokątem zostanie podzielona na $N$ części, które nazwiemy
+klinami, z których każdy jest podzielony przez krawędź $P$ na dwie
+częsci --- jest to wnętrze i zewnętrze wielokąta.
+
+\begin{figure}[htp]
+  \centering
+  \caption{(Rysunek)}
+\end{figure}
+
+Wyszukiwanie położenia danego punktu $z$ składa się z dwóch
+etapów. Najpierw określany jest klin w którym leży $z$. Można to
+zrobić w czasie $O(\log n)$ używając wyszukiwania binarnego. Punkt $z$
+będzie znajdował się pomiędzy promieniami $p_i$ i $p_{i+n}$
+podzielonej płaszczyzny wtedy i tylko wtedy gdy kąt $(zqp_i)$ będzie
+lewoskrętny, a kąt $(zqp_{i+n})$ prawoskrętny. W następnych krokach
+stopniowo zawężamy nasz obszar poszukiwań, do czasu aż odnajdziemy
+właściwy klin. Następnie określamy czy $z$ należy do wnętrza lub
+zewnętrza znalezionego klinu. Jeśli kąt $(p_{i}p_{i+1}z)$ jest
+lewoskętny to $z$ jest wewnętrzny. Określenie skrętności kąta jest
+operacją o czasie $O(1)$, więc asymptotyczna złożoność tej części
+algorytmu jest logarytmiczna zależna od $N$.
+
+Zastosowane tutaj przeszukiwanie binarne jest możliwe dzięki temu, że
+wierzchołki wielokąta wypukłego występują w kolejności kątowej lub
+inaczej mówiąc w kolejności krążenia wokół punktu $q$. Przetwarzanie
+wstępne dla wielokąta $P$ na które składa się wyznaczenie punktu $q$
+oraz umieszczenie wielokąta w strukturze danych wspierającej
+wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$.
 
 % \section{Średnica wielokąta}
 % \section{Przecięcie wielokątów}
@@ -137,12 +227,13 @@ w miare możliwości dowodem poprawności algorytmu.
 % \section{Wyznaczanie największej odległości między wielokątami}
 % \section{Złączanie wielokątów wypukłych}
 % \section{Znajdowanie krytycznych linii wsparcia}
+% \section{Oświetlenie wielokąta}
 
 % \summary
 
 % \appendix
 % \chapter{Generowanie wielokątów wypukłych o zadanej liczbie
-%   wierzchołków}
+% wierzchołków}
 
 % \bibliographystyle{unsrt}
 % \bibliography{xml}
