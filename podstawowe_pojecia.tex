@@ -1,0 +1,92 @@
+\chapter{Podstawowe pojęcia}
+W tym miejscu zostaną przybliżone podstawowe pojęcia związane z
+geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
+
+\begin{itemize}
+\item{\emph{wielokąt prosty}} --- taki wielokąt, że jedyne punkty
+  płaszczyzny należące jednocześnie do dwóch jego krawędzi są jego
+  wierzchołkami
+\item{\emph{wielokąt wypukły}} --- wielokąt prosty którego wnętrze
+  jest zbiorem wypukłym: wszystkie punkty należące do odcinka
+  łączącego dwa dowolne punkty ze zbioru wypukłego należą do tego
+  zbioru
+
+  \begin{figure}[htp]
+    \centering
+    \includegraphics{img/nonconvex}
+    \caption{Figura niebędąca wielokątem wypukłym.}
+  \end{figure}
+
+\item{\emph{średnica zbioru punktów}} --- średnicą zbioru punktów
+  nazywamy największą odległość pomiędzy dwoma punktami należącymi do
+  zbioru
+
+\item{\emph{lewoskrętność, prawoskrętność}} --- o kącie mówimy, że
+  jest lewoskrętny jeżeli wyznacznik $3 \times 3$ współrzędnych punktów
+  $p_1$, $p_2$, $p_3$ kąta jest dodatni, w przeciwnym przypadku
+  mówimy, że kąt jest prawoskrętny. Jeżeli $p_i = (x_i, y_i)$ to
+  wyznacznik:
+
+  \begin{center}
+    \begin{math}
+      \begin{vmatrix}
+        x_1 & y_1 & 1 \\
+        x_2 & y_2 & 1 \\
+        x_3 & y_3 & 1
+      \end{vmatrix}
+    \end{math}
+  \end{center}
+
+\item{\emph{proste wspierające}} --- prostymi wspierającymi dla wielokąta
+  nazywamy takie proste, które przechodząc przez wierzchołek wielkąta
+  nie przecinają jego wnętrza
+
+\item{\emph{punkty antypodyczne}} --- taka para wierzchołków wielokąta przez
+  które można poprowandzić równoległe proste wspierające
+
+\item{\emph{notacja wielkiego O}} --- notacja asymptotycznego tempa
+  wzrostu wartości funkcji względem jej argumentów, w algorytmice
+  stosowana do charakterystyki złożoności obliczeniowej algorytmów
+  opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
+  rozmiaru danych wejściowych. Mówimy, że funkcja $f$ jest co najwyżej
+  rzędu $g$ (jest ograniczona przez funkcję $g$), gdy istnieją takie
+  stałe $n_0 > 0$ oraz $c > 0$, takie że:
+
+  \begin{center}
+    $\forall n \geq n_0 : f(n) \leq c \cdot g(n)$
+  \end{center}
+
+  \begin{table}[htp]
+    \centering
+    \caption{Najczęściej wyróżniane rzędy żłożoności obliczeniowej,
+      podane według rosnącej złożoności.}
+    \begin{tabular}{c c}
+      $O(1)$ & stała \\
+      \hline
+      $O(\log n)$ & logarytmiczna \\
+      \hline
+      $O(n)$ & liniowa \\
+      \hline
+      $O(n \log n)$ & liniowo-logarytmiczna \\
+      \hline
+      $O(n^2)$ & kwadratowa \\
+      \hline
+      $O(n^c)$ & wielomianowa \\
+      \hline
+      $O(c^n)$ & wykładnicza \\
+      \hline
+      $O(n!)$ & ograniczona przez silnię \\
+    \end{tabular}
+  \end{table}
+
+  W tej pracy efektywnym algorytmem dla wielokąta wypukłego będziemy
+  nazywać algorytm o mniejszej złożoności obliczeniowej niż najlepszy
+  znany algorytm uogólniony dla wielokąta prostego dla tego samego
+  problemu.
+\end{itemize}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "masterthesis"
+%%% TeX-engine: xetex
+%%% End:
