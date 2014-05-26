@@ -1,7 +1,13 @@
-\documentclass[12pt,oneside,brudnopis]{xelatex-mgr/xmgr}
+\documentclass[oneside,brudnopis]{xelatex-mgr/xmgr}
 
 \usepackage{amsmath}
 \usepackage{blindtext}
+\usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\usetikzlibrary{calc}
 
 \defaultfontfeatures{Scale=MatchLowercase}
 \setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
@@ -20,7 +26,11 @@
 
 \opiekun{dr Paweł Żyliński}
 
+\theoremstyle{definition}
+
+\newtheorem{twierdzenie}{Twierdzenie}
 \newtheorem{problem}{Problem}
+\newtheorem{definicja}{Definicja}
 
 \includeonly{
   podstawowe_pojecia,

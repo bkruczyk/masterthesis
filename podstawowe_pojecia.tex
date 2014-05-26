@@ -1,89 +1,113 @@
 \chapter{Podstawowe pojęcia}
-W tym miejscu zostaną przybliżone podstawowe pojęcia związane z
+\label{chap:pojecia}
+
+W tym rozdziale zostaną przybliżone podstawowe pojęcia związane z
 geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
 
-\begin{itemize}
-\item{\emph{wielokąt prosty}} --- taki wielokąt, że jedyne punkty
+\begin{definicja}
+  \emph{Wielokątem prostym} nazywamy taki wielokąt, że jedyne punkty
   płaszczyzny należące jednocześnie do dwóch jego krawędzi są jego
-  wierzchołkami
-\item{\emph{wielokąt wypukły}} --- wielokąt prosty którego wnętrze
-  jest zbiorem wypukłym: wszystkie punkty należące do odcinka
-  łączącego dwa dowolne punkty ze zbioru wypukłego należą do tego
-  zbioru
+  wierzchołkami.
+\end{definicja}
 
-  \begin{figure}[htp]
-    \centering
-    \includegraphics{img/nonconvex}
-    \caption{Figura niebędąca wielokątem wypukłym.}
-  \end{figure}
+\begin{definicja}
+  \emph{Wielokątem wypukłym} nazywamy taki wielokąt prosty którego
+  wnętrze jest \emph{zbiorem wypukłym}, tzn.\ wszystkie punkty
+  należące do odcinka łączącego dwa dowolne punkty ze zbioru wypukłego
+  należą do tego zbioru.
+\end{definicja}
 
-\item{\emph{średnica zbioru punktów}} --- średnicą zbioru punktów
-  nazywamy największą odległość pomiędzy dwoma punktami należącymi do
-  zbioru
+\begin{figure}[htp]
+  \centering
+  \includegraphics{img/nonconvex}
+  \caption{Figura niebędąca wielokątem wypukłym.}
+\end{figure}
 
-\item{\emph{lewoskrętność, prawoskrętność}} --- o kącie mówimy, że
-  jest lewoskrętny jeżeli wyznacznik $3 \times 3$ współrzędnych punktów
-  $p_1$, $p_2$, $p_3$ kąta jest dodatni, w przeciwnym przypadku
-  mówimy, że kąt jest prawoskrętny. Jeżeli $p_i = (x_i, y_i)$ to
-  wyznacznik:
+\begin{definicja}
+  \emph{Średnicą zbioru punktów} nazywamy największą odległość
+  pomiędzy dwoma punktami należącymi do zbioru.
+\end{definicja}
+
+\begin{definicja}
+  Niech $p_{1}=(x_{1},y_{1})$, $p_{2}=(x_{2},y_{2})$,
+  $p_{3}=(x_{3},y_{3})$ będą punktami na płaszczyźnie
+  $R^2$. \emph{Wyznacznikiem} współrzędnych tych punktów nazywamy
+  liczbę
 
   \begin{center}
     \begin{math}
+      X(p_1, p_2, p_3) =
       \begin{vmatrix}
         x_1 & y_1 & 1 \\
         x_2 & y_2 & 1 \\
         x_3 & y_3 & 1
       \end{vmatrix}
+      % = x_1 y_2 + y_1 x_3 + x_2 y_3 - y_2 x_3 - y_1 x_2 - x_1 y_3
     \end{math}
   \end{center}
 
-\item{\emph{proste wspierające}} --- prostymi wspierającymi dla wielokąta
-  nazywamy takie proste, które przechodząc przez wierzchołek wielkąta
-  nie przecinają jego wnętrza
+  Kąt $\angle p_{1},p_{2},p_{3}$ nazywamy, \emph{lewoskrętnym} jeżeli
+  wyznacznik $X(p_1, p_2, p_3)$ jest dodatni kąta jest dodatni, w
+  przeciwnym przypadku mówimy, że kąt jest \emph{prawoskrętny}.
+\end{definicja}
 
-\item{\emph{punkty antypodyczne}} --- taka para wierzchołków wielokąta przez
-  które można poprowandzić równoległe proste wspierające
+\begin{definicja}
+  \emph{Prostymi wspierającymi} dla wielokąta nazywamy takie proste, które
+  przechodząc przez wierzchołek wielkąta nie przecinają jego wnętrza.
+\end{definicja}
 
-\item{\emph{notacja wielkiego O}} --- notacja asymptotycznego tempa
-  wzrostu wartości funkcji względem jej argumentów, w algorytmice
-  stosowana do charakterystyki złożoności obliczeniowej algorytmów
-  opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
-  rozmiaru danych wejściowych. Mówimy, że funkcja $f$ jest co najwyżej
-  rzędu $g$ (jest ograniczona przez funkcję $g$), gdy istnieją takie
-  stałe $n_0 > 0$ oraz $c > 0$, takie że:
+\begin{definicja}
+  Mówimy, że para wierzchołków tworzy \emph{punkty antypodyczne},
+  jeżeli można poprowadzić przez te wierzchołki przynajmniej dwie
+  różne równoległe proste wspierające.
+\end{definicja}
+
+\begin{definicja}
+  \label{def:bigo}
+  Mówimy, że funkcja $f\colon N \to R$ jest co najwyżej rzędu $g$
+  (jest ograniczona przez funkcję $g\colon N \to R$), gdy istnieją
+  takie stałe $n_0 > 0$ oraz $c > 0$, takie~że:
 
   \begin{center}
     $\forall n \geq n_0 : f(n) \leq c \cdot g(n)$
   \end{center}
+\end{definicja}
 
-  \begin{table}[htp]
-    \centering
-    \caption{Najczęściej wyróżniane rzędy żłożoności obliczeniowej,
-      podane według rosnącej złożoności.}
-    \begin{tabular}{c c}
-      $O(1)$ & stała \\
-      \hline
-      $O(\log n)$ & logarytmiczna \\
-      \hline
-      $O(n)$ & liniowa \\
-      \hline
-      $O(n \log n)$ & liniowo-logarytmiczna \\
-      \hline
-      $O(n^2)$ & kwadratowa \\
-      \hline
-      $O(n^c)$ & wielomianowa \\
-      \hline
-      $O(c^n)$ & wykładnicza \\
-      \hline
-      $O(n!)$ & ograniczona przez silnię \\
-    \end{tabular}
-  \end{table}
+W niniejszej pracy do opisu wydajności algorytmów będziemy korzystać z
+\emph{notacji wielkiego O}. Jest to notacja asymptotycznego tempa
+wzrostu wartości funkcji względem jej argumentów, w algorytmice
+stosowana do charakterystyki złożoności obliczeniowej algorytmów
+opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
+rozmiaru danych wejściowych. Zgodnie z notacją, złożoność czasową
+funkcji z definicji~\ref{def:bigo} zapisalibyśmy jako $O(g(n))$.
 
-  W tej pracy efektywnym algorytmem dla wielokąta wypukłego będziemy
-  nazywać algorytm o mniejszej złożoności obliczeniowej niż najlepszy
-  znany algorytm uogólniony dla wielokąta prostego dla tego samego
-  problemu.
-\end{itemize}
+\begin{table}[htp]
+  \centering
+  \caption{Najczęściej wyróżniane rzędy żłożoności obliczeniowej,
+    podane według rosnącej złożoności.}
+  \begin{tabular}{c c}
+    $O(1)$ & stała \\
+    \hline
+    $O(\log n)$ & logarytmiczna \\
+    \hline
+    $O(n)$ & liniowa \\
+    \hline
+    $O(n \log n)$ & liniowo-logarytmiczna \\
+    \hline
+    $O(n^2)$ & kwadratowa \\
+    \hline
+    $O(n^c)$ & wielomianowa \\
+    \hline
+    $O(c^n)$ & wykładnicza \\
+    \hline
+    $O(n!)$ & ograniczona przez silnię \\
+  \end{tabular}
+\end{table}
+
+W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego będziemy
+nazywać algorytm o mniejszej złożoności obliczeniowej niż najlepszy
+znany algorytm uogólniony dla wielokąta prostego dla tego samego
+problemu.
 
 %%% Local Variables:
 %%% mode: latex
