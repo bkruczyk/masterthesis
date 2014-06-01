@@ -1,8 +1,7 @@
-\chapter{Podstawowe pojęcia}
-\label{chap:pojecia}
-
-W tym rozdziale zostaną przybliżone podstawowe pojęcia związane z
-geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
+\chapter{Podstawowe pojęcia}\label{chap:pojecia}
+W tym rozdziale zostaną przybliżone podstawowe pojęcia związane
+z geometrią obliczeniową i problemami dotyczącymi wielokątów
+wypukłych.
 
 \begin{definicja}
   \emph{Wielokątem prostym} nazywamy taki wielokąt, że jedyne punkty
@@ -17,7 +16,7 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
   należą do tego zbioru.
 \end{definicja}
 
-\begin{figure}[htp]
+\begin{figure}[htb]
   \centering
   \includegraphics{img/nonconvex}
   \caption{Figura niebędąca wielokątem wypukłym.}
@@ -42,18 +41,18 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
         x_2 & y_2 & 1 \\
         x_3 & y_3 & 1
       \end{vmatrix}
-      % = x_1 y_2 + y_1 x_3 + x_2 y_3 - y_2 x_3 - y_1 x_2 - x_1 y_3
     \end{math}
   \end{center}
 
-  Kąt $\angle p_{1},p_{2},p_{3}$ nazywamy, \emph{lewoskrętnym} jeżeli
-  wyznacznik $X(p_1, p_2, p_3)$ jest dodatni kąta jest dodatni, w
-  przeciwnym przypadku mówimy, że kąt jest \emph{prawoskrętny}.
+  Kąt $\angle p_{1},p_{2},p_{3}$ nazywamy \emph{lewoskrętnym}, jeżeli
+  wyznacznik $X(p_1, p_2, p_3)$ jest dodatni, w przeciwnym przypadku
+  mówimy, że kąt jest \emph{prawoskrętny}.
 \end{definicja}
 
 \begin{definicja}
-  \emph{Prostymi wspierającymi} dla wielokąta nazywamy takie proste, które
-  przechodząc przez wierzchołek wielkąta nie przecinają jego wnętrza.
+  \emph{Prostymi wspierającymi} dla wielokąta nazywamy takie proste,
+  które przechodząc przez wierzchołek wielkąta nie przecinają jego
+  wnętrza.
 \end{definicja}
 
 \begin{definicja}
@@ -62,46 +61,49 @@ geometrią obliczeniową i problemami dotyczącymi wielokątów wypukłych.
   różne równoległe proste wspierające.
 \end{definicja}
 
-\begin{definicja}
-  \label{def:bigo}
+\begin{definicja}\label{def:bigo}
   Mówimy, że funkcja $f\colon N \to R$ jest co najwyżej rzędu $g$
   (jest ograniczona przez funkcję $g\colon N \to R$), gdy istnieją
-  takie stałe $n_0 > 0$ oraz $c > 0$, takie~że:
+  takie stałe $n_0 > 0$ oraz $c > 0$, takie że:
 
   \begin{center}
     $\forall n \geq n_0 : f(n) \leq c \cdot g(n)$
   \end{center}
 \end{definicja}
 
-W niniejszej pracy do opisu wydajności algorytmów będziemy korzystać z
-\emph{notacji wielkiego O}. Jest to notacja asymptotycznego tempa
+W niniejszej pracy do opisu wydajności algorytmów będziemy korzystać
+z \emph{notacji wielkiego O}. Jest to notacja asymptotycznego tempa
 wzrostu wartości funkcji względem jej argumentów, w algorytmice
 stosowana do charakterystyki złożoności obliczeniowej algorytmów
-opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
-rozmiaru danych wejściowych. Zgodnie z notacją, złożoność czasową
-funkcji z definicji~\ref{def:bigo} zapisalibyśmy jako $O(g(n))$.
+opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku
+do rozmiaru danych wejściowych. Zgodnie z notacją, złożoność czasową
+funkcji z definicji \ref{def:bigo} zapisalibyśmy jako $O(g(n))$.
 
-\begin{table}[htp]
+\begin{table}[htb]
   \centering
+
+  \begin{tabular}{ll}
+    \toprule
+    $O(1)$ & stała \\
+    \midrule
+    $O(\log n)$ & logarytmiczna \\
+    \midrule
+    $O(n)$ & liniowa \\
+    \midrule
+    $O(n \log n)$ & liniowo-logarytmiczna \\
+    \midrule
+    $O(n^2)$ & kwadratowa \\
+    \midrule
+    $O(n^c)$ & wielomianowa \\
+    \midrule
+    $O(c^n)$ & wykładnicza \\
+    \midrule
+    $O(n!)$ & ograniczona przez silnię \\
+    \bottomrule
+  \end{tabular}
+
   \caption{Najczęściej wyróżniane rzędy żłożoności obliczeniowej,
     podane według rosnącej złożoności.}
-  \begin{tabular}{c c}
-    $O(1)$ & stała \\
-    \hline
-    $O(\log n)$ & logarytmiczna \\
-    \hline
-    $O(n)$ & liniowa \\
-    \hline
-    $O(n \log n)$ & liniowo-logarytmiczna \\
-    \hline
-    $O(n^2)$ & kwadratowa \\
-    \hline
-    $O(n^c)$ & wielomianowa \\
-    \hline
-    $O(c^n)$ & wykładnicza \\
-    \hline
-    $O(n!)$ & ograniczona przez silnię \\
-  \end{tabular}
 \end{table}
 
 W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego będziemy
