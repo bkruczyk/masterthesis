@@ -335,7 +335,7 @@ wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$.
     \EndIf
 \EndIf
 
-\While {$((j - i) \mod N) \neq 1$}
+\While {$((j - i) \mod (N-1)) \neq 1$}
     \State $s \gets (i + \lfloor (j - i) / 2 \rfloor) \mod N$
 
     \If {$P(p_{i}, q, z) < 0$

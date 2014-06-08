@@ -1,0 +1,52 @@
+\chapter{Przecięcie wielokątów}
+Problem znalezienia przecięcia dla wielokątów wypukłych zdefiniujmy
+następująco:
+
+\begin{problem}[Znajdowanie przecięcia wielokątów]
+  Gdy dane są dwa wielokąty wypukłe $P$ i $Q$, znaleźć ich
+  \emph{przecięcie} tj.\ obszar należący jednocześnie do $P$ i do $Q$.
+\end{problem}
+
+W niniejszym rozdziale do wielokąta będziemy zaliczać jego wnętrze
+wraz z brzegiem.
+
+Oznaczmy jako $N$ liczbę wierzchołków $P$, a jako $M$ liczbę
+wierzchołków $Q$. Stosując algorytm naiwny polegający na sprawdzeniu
+przecięcia każdej krawędzi $P$ z każdą krawędzią $Q$ można uzyskać
+punkty wszystkich przecięć w czasie $O(NM)$.
+
+\section{Metoda warstwowa}
+Znaną metodą rozwiązywania problemów w algorytmice jest technika
+\emph{dziel i rządź}, polegająca na podziale na mniejsze części,
+znajdowaniu rozwiązań częściowych, a następnie łączeniu ich w końcowy
+rezultat.
+
+Metodę wykorzystującą podział płaszczyzny zaproponowali w 1976 Shamos
+i Hoey. Przez każdy wierzchołek $P$ i $Q$ prowadzimy prostą równoległą
+do osi $y$, tworząc w ten sposób $N+M$ warstw. Znalezienie przecięć
+krawędzi obydwu wielokątów w każdej warstwie pozwoli nam na proste
+wyznaczenie obszaru przecięcia tych wielokątów.
+
+Należy zauważyć, że w każdej warstwie proste ją ograniczające wraz z
+krawędziami wielokąta tworzą czworobok lub gdy jest to wierzchołek
+skrajny na osi $x$ --- trójkąt. W pojedynczej warstwie przecięcie
+dwóch czworoboków możemy wyznaczyć w czasie stałym. Z twierdzenia
+\ref{thm:egdecollision} wiemy, że w każdej warstwie znajdziemy nie
+więcej niż dwa przecięcia.
+
+\begin{twierdzenie}
+\label{thm:egdecollision}
+  Jeżeli dwa wielokąty wypukłe $P$ i $Q$ przecinają się, to każda z
+  krawędzi $P$ przecina $Q$ co najwyżej dwa razy.
+\end{twierdzenie}
+
+Następnie w czasie liniowym łączymy uzyskane kawałki i usuwamy
+nadmiarowe wierzchołki powstałe przy podziale płaszczyzny. Początkowy
+podział płaszczyzny również możemy przeprowadzić w czasie liniowym,
+tak więc złożoność czasowa całego algorytmu wynosi $O(n)$.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "masterthesis"
+%%% TeX-engine: xetex
+%%% End:
