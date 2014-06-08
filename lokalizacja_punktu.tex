@@ -250,7 +250,9 @@ zdefiniowanej przez odcinek $p_{3}q$ oraz półpłaszczyzny $H_2$
 określonej przez obszar na lewo od prostej zdefiniowanej przez odcinek
 $p_{0}q$. W sytuacji gdy kąt klina jest kątem rozwartym punkt $z$ nie
 zostanie wykryty. Z tego powodu przy wyszukiwaniu binarnym powinniśmy
-zaczynać od klina, którego kąt wewnętrzny jest mniejszy.
+zaczynać od klina, którego kąt wewnętrzny jest
+mniejszy. Uwzględniająca ten warunek (wiersze 4--9) procedura została
+przedstawiona na listingu \ref{alg:findwedge}.
 
 \begin{figure}[htp]
   \centering
@@ -318,6 +320,38 @@ oraz umieszczenie wielokąta w strukturze danych wspierającej
 wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$.
 
 % todo: indeksowanie wierzchołków
+
+\begin{figure}[htp]
+\begin{algorithmic}[1]
+\Procedure{Find Wedge}{}
+
+\State $i \gets 0$
+\State $j \gets \lfloor N/2 \rfloor$
+
+\If {$P(p_{i}, q, p_{j}) > 0$}
+    \If {$P(p_{j}, q, z) < 0$ and $P(p_{i}, q, z) > 0$}
+        \State $i \gets j$
+        \State $j \gets 0$
+    \EndIf
+\EndIf
+
+\While {$((j - i) \mod N) \neq 1$}
+    \State $s \gets (i + \lfloor (j - i) / 2 \rfloor) \mod N$
+
+    \If {$P(p_{i}, q, z) < 0$
+      \textbf{and} $P(p_{s}, q, z) > 0$}
+        \State $j \gets s$
+    \Else
+        \State $i \gets s$
+    \EndIf
+\EndWhile
+
+\State $print(p_{i}, p_{j})$
+\EndProcedure
+
+\end{algorithmic}
+\caption{\label{alg:findwedge}}
+\end{figure}
 
 %%% Local Variables:
 %%% mode: latex
