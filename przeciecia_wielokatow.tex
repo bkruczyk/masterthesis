@@ -88,7 +88,7 @@ to krawędzie $P$ i $Q$ nie przecinają się.
 Stosunkowo prosty koncepcyjnie i implementacyjnie algorytm, działający
 w czasie liniowym zaproponował Godfried T. Toussaint.
 
-\subsection{Idea algorytmu}
+\subsection{Opis}
 Rozważmy dwa przecinające się, wypukłe wielokąty $P$ i $Q$, oraz
 otoczkę wypukłą sumy tych wielokątów $CH(P \cup Q)$ [rys]. Niech
 brzegi $P$ i $Q$ przecinają się w $k$ punktach $I_1, I_2, \ldots, I_k$
@@ -104,15 +104,133 @@ będziemy \emph{kieszeniami}, leżących wewnątrz otoczki wypukłej $CH(P
 przypisujemy odpowiadający jej punkt przecięcia $I_v$ oraz krawędź
 otoczki $CH(P \cup Q)$, którą będziemy nazywać \emph{mostem}, łączącą
 wierzchołek $p_i$ wielokąta $P$ oraz wierzchołek $q_j$ wielokąta $Q$ i
-oznaczymy ją jako $B_{v}(p_{i_v}, q_{j_v})$. Nieformalny algorytm
-można przedstawić w następujących trzech krokach:
+oznaczymy ją jako $B_{v}(p_{i_v}, q_{j_v})$. Cały algorytm
+wyznaczający przecięcie wielokątów $P$ i $Q$ można przedstawić w
+trzech krokach (\ref{alg:interconpol}).
 
-\begin{enumerate}
-\item Wyznacz otoczkę wypukłą $P \cup Q$.
-\item Dla każdego mostu $B_i$ znajdź odpowiadający mu punkt przecięcia
-  $I_i$ wielokątów.
-\item Połącz łańcuchy wypukłe łączące sąsiednie punkty przecięcia.
-\end{enumerate}
+
+\begin{figure}[htp]
+\begin{algorithmic}[1]
+\Procedure{Alogrytm Interconpol}{}
+
+\State \emph{(Krok 1)}
+
+\State wyznacz otoczkę wypukłą $CH(P \cup Q)$
+
+\State
+
+\If {$CH(P \cup Q) = P$ (lub $Q$)}
+    \State zwróć $Q$ (lub $P$) jako przecięcie
+
+    \Else
+    \State kontynuuj
+\EndIf
+
+\State
+
+\State \emph{(Krok 2)}
+
+\State \textbf{dla każdego} mostu z $CH(P \cup Q)$:
+\State \hspace{\algorithmicindent} znajdź odpowiadający mu punkt
+przecięcia
+
+\State
+
+\State \emph{(Krok 3)}
+
+\State połącz wewnętrzne łańcuchy należące do $P$ i $Q$
+
+wyznaczone przez punkty przecięcia z znalezione w poprzednim kroku
+
+\EndProcedure
+\end{algorithmic}
+\caption{\label{alg:interconpol}}
+\end{figure}
+
+
+\subsection{Poprawność}
+Poprawność algorytmu opiera się się na poniższych założeniach:
+
+\begin{lemat}
+  Jeżeli $P$ i $Q$ przecinają się to dla każdego mostu $CH(P \cup U)$
+  istnieje jeden związany z nim punkt przecięcia $P \cap U$.
+\end{lemat}
+
+\begin{proof}
+  Jako $L(u, v)$ oznaczmy skierowaną linię przechodzącą przez $u$ i
+  $v$ w kierunku z $u$ do $v$, oraz jako $RH(u, v)$ oznaczmy
+  półpłaszczyznę na prawo od $L(u, v)$. Analogicznie, jako $LH(u, v)$
+  oznaczmy półpłaszczyznę leżącą na lewo od $L(u, v)$.
+
+  Niech $B(p_i, q_j)$ będzie mostem (rys.). $L(p_i, q_j)$ jest linią
+  wsparcia dla $P$ i $Q$ jednocześnie więc $P$ i $Q$ muszą leżeć w
+  półpłaszczyźnie $RH(p_i, q_j)$. Przejdźmy po brzegu $P$ zaczynając
+  od $p_i$ w kierunku zgodnym z ruchem wskazówek zegara dopóki nie
+  natrafimy na krawędź $P$ przecinającą krawędź $Q$. Punkt przecięcia
+  oznaczmy jako $I$. Analogicznie przejdźmy po brzegu $Q$ zaczynając
+  od $q_j$ w kierunku przeciwnym do ruchu wskazówek zegara dopóki nie
+  natrafimy na krawędź $Q$ przecinającą krawędź $P$. Z wypukłości obu
+  wielokątów wynika, że tym razem punktem przecięcia również jest $I$
+  i w ten sposób jest on związany z mostem $B(p_i, q_j)$.
+
+  Z drugiej strony załóżmy, że $I$ jest pewnym punktem przecięcia
+  pomiędzy krawędziami $(p_k, p_{k+1}) \in P$ i $(q_l, q_{l+1}) \in
+  Q$. Ponieważ $P \in RH(p_k, p_{k+1})$ oraz $Q \in RH(q_l, q_{l+1})$,
+  to żadna krawędź inna niż $(p_k, p_{k+1})$ i $(q_l, q_{l+1})$ nie
+  może przecinać się w regionie $R = RH(p_{k+1}, p_k) \cap RH(q_{l+1},
+  q_l)$. Dodatkowo, ponieważ $\angle p_{k}Iq_{l+1} < 180^{\circ}$ musi
+  istnieć krawędź $(p_i, q_j) \in CH(P \cup Q)$, która przecina region
+  $R$ i jest nią most odpowiadający punktowi przecięcia $I$.
+\end{proof}
+
+\begin{lemat}
+  Algorytm poprawnie wyznacza punkt przecięcia dla odpowiadającego mu
+  mostu.
+\end{lemat}
+
+\begin{proof}
+  Zauważmy, że każda kieszeń wraz z odpowiadającym jej mostem oraz
+  punktem przecięcia $I_i$ tworzy wielokąt \emph{żaglokształtny}.
+
+  \begin{definicja}
+    Wielokątem \emph{żaglokształtnym} $P_s$ będziemy nazywać wielokąt
+    zawierający krawędź $(p_{i}p_{i+1})$ będącą \emph{masztem} $P$
+    oraz wierzchołek $p_j$, który będziemy nazywać $czubkiem żagla$,
+    połączony z wierzchołkami $p_i$ i $p_{i+1}$ \emph{łańcuchami
+      wklęsłymi}.
+  \end{definicja}
+
+  \begin{definicja}
+    Łańcuchem $C(p_i,p{i+1},\ldots,p_j)$ będziemy nazywać ciąg
+    kolejnych, następujących po sobie krawędzi i wierzchołków
+    wielokąta prostego zaczynając od wierzchołka $p_i$ do wierzchołka
+    $p_j$. Jeżeli każda krawędź łańcucha wraz z następną krawędzią
+    tworzy kąt prawoskrętny to taki łańcuch nazywamy
+    \emph{wypukłym}. Analogicznie, jeżeli każda krawędź wraz ze swoim
+    następnikiem tworzy kąt lewoskrętny to taki łańcuch nazywamy
+    \emph{łańcuchem wklęsłym}.
+  \end{definicja}
+
+  Ponadto zauważmy, również:
+
+  \begin{lemat}
+    Czubek wielokąta żaglokształtnego jest \emph{uchem}.
+  \end{lemat}
+
+  \begin{definicja}
+    Niech $p_i, p_{i+1}, p_{i+2}$ będą trzema kolejnymi, następującymi
+    po sobie wierzchołkami należącymi do wielokąta $P$. Jeżeli
+    \emph{przekątna} łącząca $p_{i}$ i $p_{i+2}$ leży w $P$ to punkt
+    $p_i$ nazywamy \emph{uchem} wielokąta $P$.
+  \end{definicja}
+
+  \begin{definicja}
+    Odcinek leżący wielokącie $P$ i łączący dwa, nie sąsiadujące
+    wierzchołki $P$ nazywamy \emph{przekątną} $P$.
+  \end{definicja}
+
+
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
