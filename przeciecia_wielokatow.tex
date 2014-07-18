@@ -108,7 +108,6 @@ oznaczymy ją jako $B_{v}(p_{i_v}, q_{j_v})$. Cały algorytm
 wyznaczający przecięcie wielokątów $P$ i $Q$ można przedstawić w
 trzech krokach (\ref{alg:interconpol}).
 
-
 \begin{figure}[htp]
 \begin{algorithmic}[1]
 \Procedure{Alogrytm Interconpol}{}
@@ -213,11 +212,11 @@ Poprawność algorytmu opiera się się na poniższych założeniach:
 
   Ponadto zauważmy, również:
 
-  \begin{lemat}
+  \begin{lemat}\label{lem:sailtip}
     Czubek wielokąta żaglokształtnego jest \emph{uchem}.
   \end{lemat}
 
-  \begin{definicja}
+  \begin{definicja}\label{def:ear}
     Niech $p_i, p_{i+1}, p_{i+2}$ będą trzema kolejnymi, następującymi
     po sobie wierzchołkami należącymi do wielokąta $P$. Jeżeli
     \emph{przekątna} łącząca $p_{i}$ i $p_{i+2}$ leży w $P$ to punkt
@@ -229,8 +228,118 @@ Poprawność algorytmu opiera się się na poniższych założeniach:
     wierzchołki $P$ nazywamy \emph{przekątną} $P$.
   \end{definicja}
 
+  \begin{proof}
+    Rozszerzmy krawędź $(p_j,p_{j-1})$ i $(p_j, p_{j+1})$ tak by
+    przecinały linię $L(p_i, p_{i+1})$ odpowiednio w punktach $x$ i
+    $y$ (rys.). Ze względu na to, że $p_j$ jest połączony z $p_i$
+    łańcuchem wypukłym punkt $x$ musi leżeć odcinku $(p_i, p_{i+1})$
+    będącym masztem $P$. Analogicznie, punkt $y$ musi leżeć na maszcie
+    $P$. Punkty $p_j, p_{j-1}, x, y, p_{j+1}, p_j$, tworzą obszar
+    znajdujący się w całości w $P$, stąd przekątna $(p_{j-1},
+    p_{j+1})$ również musi leżeć w $P$.
+  \end{proof}
 
+  \begin{twierdzenie}[G.H. Meisters 1975]\label{thm:meisters}
+    Każdy wielokąt o $n$ krawędziach ($n > 3$) ma co najmniej dwoje nie
+    nachodzących na siebie uszu.
+  \end{twierdzenie}
+
+  \begin{lemat}\label{lem:sailmast}
+    Uchem jest góra masztu wielokąta żaglokształtnego albo uchem jest
+    jego dół.
+  \end{lemat}
+
+  \begin{proof}
+    Z definicji~\ref{def:ear} wiemy, że tylko wierzchołki wypukłe mogą
+    być uszami, a więc w wielokącie żaglokształtnym $P$ uszami mogą
+    być jedynie $p_i$, $p_{i+1}$, i $p_j$. Z lematu~\ref{lem:sailtip}
+    wiemy, że $p_j$ musi być uchem. Z twierdzenia~\ref{thm:meisters}
+    wiemy, że $P$ musi mieć co najmniej dwoje uszu. Stąd albo $p_i$
+    albo $p_{i+1}$ musi być uchem.
+  \end{proof}
+
+  Lemat~\ref{lem:sailtip} pozwala nam na triangulację $P$ w każdym
+  kroku obcinając ucho będące górą lub dołem masztu dopóki nie
+  dojdziemy do czubka żagla i krawędzi z niego
+  wychodzących. Poprawność wynika z faktu, że w każdym kroku po
+  obcięciu kolejnego ucha, pozostała cześć wielokąta również jest
+  wielokątem żaglokształtnym.
 \end{proof}
+
+W naszym przypadku wierzchołek $p_j$ jest szukanym punktem przecięcia
+$I_i$, tak więc dodatkowo w algorytmie powinniśmy uwzględnić warunek
+sprawdzający czy w bierzącym kroku nadal rozważamy krawędź należącą do
+wielokąta żaglokształtnego. Kompletny algorytm znajdujący czubek żagla
+wielokąta $P$ został przedstawiony na listingu~\ref{alg:stepdown}.
+
+\begin{figure}[htp]
+\begin{algorithmic}[1]
+\Procedure{Stepdown}{}
+
+\State $i \gets 1$
+\State $j \gets 1$
+
+% \State
+
+\Repeat
+\State $koniec \gets true$
+
+% \State
+
+\While{$\angle p_{i}p_{i+1}q_{j+1}$ jest lewoskrętny}
+\State $j \gets j + 1$
+\State $koniec \gets false$
+\EndWhile
+
+% \State
+
+\While{$\angle q_{j}q_{j+1}p_{i+1}$ jest prawoskrętny}
+\State $i \gets i + 1$
+\State $koniec \gets false$
+\EndWhile
+
+\Until{$koniec$}
+
+% \State
+
+\State $p_s \gets p_i$
+\State $q_t \gets q_j$
+
+\EndProcedure
+\end{algorithmic}
+\caption{\label{alg:stepdown}}
+\end{figure}
+
+Wejściem dla procedury jest most $B_k(p_i,p_j)$ należący do $CH(P \cup
+Q)$, a wyjściem para wierzchołków $p_s$ i $q_t$, gdzie $(p_s,p_{s+1})
+\cap (q_t,q_{t+1})$ wyznacza punkt przecięcia $I_k$. Warunek $\angle
+p_{i}p_{i+1}q_{j+1}$ \emph{jest lewoskrętny} oraz $\angle
+q_{j}q_{j+1}p_{i+1}$ \emph{jest prawoskrętny} w pętlach \textbf{while}
+zapewnia, że w każdym kroku odetniemy ucho oraz, że nie przejdziemy
+przez czubek żagla. Przebieg procedury \emph{Stepdown} przedstawia
+rys..
+
+\section{Złożoność}
+Niech $n$ oznaczana liczbę wierzchołków wielokąta $P$, a $m$ liczbę
+wierzchołków wielokąta $Q$. Znalezienie otoczki wypukłej dwóch
+przecinających się wielokątów wypukłych może być wykonane w czasie
+$O(m + n)$ [ref]. Autor algorytmu, Godfried Toussaint proponuje
+wykorzystać algorytm \emph{obracających się suwmiarek (rotating
+  calipers)}[ref], pozwalający w tym samym czasie stwierdzić czy $CH(P
+\cup Q) = P$ lub $CH(P \cup Q) = Q$.
+
+Procedura znajdująca przecięcie $I_k$ jest wywoływana $k$ razy. Każde
+wywołanie wymaga czasu liniowego zależnego od liczby wierzchołków
+należących do danego żagla. Wszystkich takich wierzchołków może być
+maksymalnie $n + m$, stąd ta część algorytmu wymaga czasu $O(n + m)$.
+
+Ostatnią część algorytmu, połączenie uzyskanych \emph{łańcuchów
+  wewnętrznych} można wykonać w czasie liniowym przechodząc przez
+krawędzie obydwu wielokątów, jeżeli podczas szukania punktów przecięć
+oznaczyliśmy kierunek w którym dana część wielokąta staje się
+łańcuchem wewnętrznym.
+
+Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
 
 %%% Local Variables:
 %%% mode: latex
