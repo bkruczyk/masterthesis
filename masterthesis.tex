@@ -38,6 +38,8 @@
 \newtheorem{definicja}{Definicja}[chapter]
 \newtheorem{lemat}{Lemat}[section]
 
+\setcounter{tocdepth}{1}
+
 \begin{document}
 
 \include{title}
@@ -47,15 +49,13 @@
 \include{wyznaczanie_srednicy}
 \include{przeciecia_wielokatow}
 \include{rotating_calipers}
-
-% \chapter{Zawieranie wielokątów}
-% \chapter{Oświetlenie wielokąta}
+\include{zawieranie_wielokatow}
 
 \summary
 
 \appendix
 \chapter{Generowanie wielokątów wypukłych o zadanej liczbie
-wierzchołków}
+  wierzchołków}
 
 \bibliographystyle{unsrt}
 \bibliography{xml}

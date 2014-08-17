@@ -1,0 +1,65 @@
+\chapter{Zawieranie wielokątów}
+Ogólny problem zawierania wielokątów formułujemy następująco:
+
+\begin{problem}[Ogólny problem zawierania wielokątów]
+  Dla dwóch, prostych wielokątów $P$ i $Q$, stwierdzić czy $P$ może
+  być zawarty w $Q$, i jeżeli tak, to podać umiejscowienie $P$, które
+  spełnia zawieranie.
+\end{problem}
+
+\begin{figure}[htp]
+  \caption{Zawieranie}
+\end{figure}
+
+W problemie ogólnym, dopuszczamy translacje i obroty zawieranego
+wielokąta tak by ,,zmieścił się'' on wielokącie
+zawierającym. Rozwiązanie tego problemu w czasie $O(pq^2)$ przedstawił
+B. Chazelle[]. W swojej pracy Chazelle przedstawia także rozwiązanie
+dla uproszczonego problemu w której wielokąty $P$ i $Q$ są wypukłe, a
+dozwolonym działaniem na $P$ jest jedynie translacja.
+
+Niech będzie dany wielokąt wypukły $P = (p_1, p_2, \ldots, p_n)$ oraz
+wielokąt wypukły $Q = (q_1, q_2, \ldots, q_m)$. Zakładamy, że żadna
+para krawędzi $P$ i $Q$ nie jest współliniowa. Niech $H_i$ dla $i = 1,
+\ldots, m$ dla będzie i-tą półpłaszczyzną wyznaczoną przez prostą
+zadaną punktami $q_i, q_{i+1}$ zawierającą wielokąt $Q$. Niech punkt
+$c$ będzie dowolnym punktem należącym do $P$, może być to na przykład
+środek jego masy. Punkt ten będzie wyznaczał umiejscowienie $P$ na
+płaszczyźnie.
+
+Zauważmy, że ,,przesuwając'' $P$ tak, by punkt $c$ znajdował się w jak
+najmniejszej odległości od $H_i$, istnieje jeden wierzchołek $p_j \in
+P$ styczny z prostą $L(q_i, q_{i+1})$ wyznaczającą półpłaszczyznę
+$H_i$. O takim wierzchołku $p_j$ mówimy, że jest \emph{krytyczny} dla
+krawędzi $(q_i, q_{i+1}) \in Q$. Odległość punktu $c$ od
+półpłaszczyzny $H_i$ (i tym samym odległość od $p_j$) oznaczmy jako
+$d_i$.
+
+Możemy również zauważyć, że warunek zawarcia $P$ w $Q$ jest
+równoznaczny z zawieraniem $P$ przecięciu półpłaszczyzn:
+\[
+       \bigcap_{1 \leq i \leq m} H_i
+\]
+
+Rozważmy półpłaszczyznę $H_i'$ wyznaczoną przez równoległą do $L(q_i,
+q_{i+1})$ linię przechodzącą przez punkt $c$. Poprzedni warunek możemy
+przekształcić na zawieranie punktu $c$ w przecięciu półpłaszczyzn
+$H_i'$. Innymi słowy wielokąt $P$ zawiera się w $Q$ dokładnie wtedy
+gdy punkt $c$ należy do przecięcia półpłaszczyzn $H_i'$. Co więcej,
+wspomniane przecięcie zawiera wszystkie możliwe położenia $c$
+spełniające zawieranie $P$ w $Q$.
+
+Algorytm możemy przedstawić w trzech krokach.
+
+\begin{figure}[htp]
+\begin{algorithmic}[1]
+\Procedure{Polygon Containment}{}
+\EndProcedure
+\end{algorithmic}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "masterthesis"
+%%% TeX-engine: xetex
+%%% End:
