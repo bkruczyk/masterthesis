@@ -41,22 +41,179 @@ równoznaczny z zawieraniem $P$ przecięciu półpłaszczyzn:
        \bigcap_{1 \leq i \leq m} H_i
 \]
 
-Rozważmy półpłaszczyznę $H_i'$ wyznaczoną przez równoległą do $L(q_i,
-q_{i+1})$ linię przechodzącą przez punkt $c$. Poprzedni warunek możemy
+Rozważmy półpłaszczyznę $H_i'$ wyznaczoną przez prostą
+$L(q_i,q_{i+1})'$, równoległą do $L(q_i, q_{i+1})$ i przechodzącą
+przez punkt $c$.  $L(q_i,q_{i+1})$ możemy łatwo wyznaczyć posługując
+się odległością punktu $c$ od wierzchołka $p_j$, oznaczoną wcześniej
+jako $d_i$. Poprzedni warunek na zawierania wielokąta możemy
 przekształcić na zawieranie punktu $c$ w przecięciu półpłaszczyzn
 $H_i'$. Innymi słowy wielokąt $P$ zawiera się w $Q$ dokładnie wtedy
 gdy punkt $c$ należy do przecięcia półpłaszczyzn $H_i'$. Co więcej,
 wspomniane przecięcie zawiera wszystkie możliwe położenia $c$
-spełniające zawieranie $P$ w $Q$.
-
-Algorytm możemy przedstawić w trzech krokach.
+spełniające zawieranie $P$ w $Q$. Algorytm dla problemu możemy
+przedstawić następująco:
 
 \begin{figure}[htp]
 \begin{algorithmic}[1]
-\Procedure{Polygon Containment}{}
+\Procedure{Convex Polygon Containment}{}
+
+\State \textbf{dla każdej} krawędzi $(q_i, q_{i+1}) \in Q$
+\State \hspace{\algorithmicindent} wyznacz wierzchołek krytyczny $p_j \in P$
+\State \hspace{\algorithmicindent} wyznacz półpłaszczyznę $H_i'$
+
+\State $placement \gets $ przecięcie półpłaszczyzn $H_i$
+
 \EndProcedure
 \end{algorithmic}
 \end{figure}
+
+Do znalezienia wierzchołków krytycznych możemy się posłużyć
+przedstawioną w rozdziale \ref{chap:calipers} metodą \emph{rotating
+  calipers}. Zauważmy, że dana krawędź $(q_i, q_{i+1})$ wraz z
+odpowiadającym jej wierzchołkiem krytycznym $p_j$ tworzą \emph{parę
+  kopodalną}. Rozważmy sytuację przedstawioną na rysunku (). Niech
+początkowymi liniami wsparcia dla $P$ i $Q$ będą proste równoległe do
+osi $O_x$, styczne do wierzchołka o najmniejszej wartości współrzędnej
+$x$ z $P$ i $Q$ odpowiednio. Niech obydwie proste wspierające będą
+skierowane w tym samym kierunku w ten sposób, żeby wspierany wielokąt
+znajdował się po lewej stronie prostej. Analogicznie jak w rozdziale
+\ref{chap:calipers} zaczynamy obracać równoległe proste wspierające. Przy
+każdym obrocie suwmiarek po którym prosta wspierająca $L_{SQ}$ jest
+styczna z krawędzią $Q$, prosta wspierająca $L_{SP}$ jest styczna z
+punktem krytycznym dla tej krawędzi. Następnie dla każdej krawędzi $Q$
+i odpowiadającemu jej punktowi krytycznemu wyznaczamy półpłaszczyznę
+$H_i'$, tak jak zostało to opisane wcześniej.
+
+Na koniec pozostaje wyznaczenie przecięcia półpłaszczyzn $H_1' \cap
+\ldots \cap H_m'$. Uzyskane półpłaszczyzny podzielmy dwa zbiory: dolny
+i górny. Niech w dolnym zbiorze znajdą się półpłaszczyzny wyznaczone
+przez ,,dolną'' część wielokąta $Q$. Zacznijmy rozpatrywać kolejne
+półpłaszczyzny z dolnego zbioru pod względem nierosnącego nachylenia
+prostej $l_i$ definiującej półpłaszczyznę do osi $O_x$. Włóżmy dwie
+pierwsze proste na stos. Będziemy oznaczmać ostatnią prostą na stosie
+jako $l_o$, a przedostatnią jako $l_p$. Po rozpatrzeniu każdej
+kolejnej półpłaszczyzny będziemy zachowywać następujący niezmiennik:
+na stosie znajdują się te proste z ciągu $l_1, \ldots, l_i$, które
+stanowią brzeg zbioru $H_1' \cap \ldots \cap H_i'$. Postępujemy
+zgodnie z regułą, że jeżeli przecięcie obecnie rozważanej prostej
+$l_i$ z ostatnia prostą na stosie $l_o$ leży na lewo od przecięcia
+$l_o$ i przedostatnią prostą ze stosu $l_p$ to zdejmujemy $l_o$ ze
+stosu i wkładamy na stos prostą $l_i$. Analogicznie postępujemy z
+zbiorem ,,górnych'' półpłaszczyzn. W ostatnim kroku łączymy uzyskane
+dwa obszary wypukłe, poprzez wyznaczenie przecięcia par skrajnych
+półpłaszczyzn z ,,dolnej'' i ,,górnej'' otoczki.
+
+\section{Poprawność}
+Poprawność warunku zawierania $P$ w $Q$ jako warunku zawierania $P$ w
+przecięciu półpłaszczyzn wyznaczonych przez krawędzie $Q$ opiera się
+na następującym założeniu:
+
+\begin{lemat}[Przecięcie półpłaszczyzn]
+  Przecięcie $n$ półpłaszczyzn jest wielokątem wypukłym.
+\end{lemat}
+
+Co wynika bezpośrednio z poniższych:
+
+\begin{twierdzenie}
+  Półpłaszczyzna jest zbiorem wypukłym [].
+\end{twierdzenie}
+
+\begin{twierdzenie}
+  Przecięcie zbiorów wypukłych jest zbiorem wypukłym [].
+\end{twierdzenie}
+
+Drugim założeniem na którym opiera się algorytm jest:
+
+\begin{lemat}
+  Dla każdej krawędzi $Q$ istnieje wierzchołek krytyczny z $P$.
+\end{lemat}
+
+Zakładając, że żadne trzy wierzchołki $P$ nie są współliniowe to z
+wypukłości $P$ wynika, że istnieją co najwyżej dwa najbardziej
+zbliżone do krawędzi $q_i,q_{i+1}$ wierzchołki. Ma to miejsce w
+przypadku, gdy krawędź $q_i,q_{i+1}$ jest równoległa do krawędzi $P$
+zawierającej obydwa wierzchołki krytyczne. W przeciwnym przypadku
+istnieje dokładniej jeden wierzchołek krytyczny.
+
+\begin{lemat}
+  Każdy obrót prostej równoległej wokół $Q$ wyznacza punkt krytyczny
+  dla bieżącej krawędzi $Q$.
+\end{lemat}
+
+\begin{lemat}
+  Algorytm \textsc{Lower Bound Intersection} poprawnie wyznacza
+  ,,dolne'' przecięcie półpłaszczyzn.
+\end{lemat}
+
+Rozważmy rysunek. na którym przedstawiono zbiór ,,dolnych''
+półpłaszczyzn. Możemy zauważyć, że półpłaszczyzna $H_2$ jest
+\emph{nadmiarowa} przy wyznaczeniu przecięcia $H_1 \cap H_2 \cap
+H_3$. Jeżeli wyeliminujemy ze półpłaszczyzny nadmiarowe, możemy w
+prosty sposób wyznaczyć przecięcie. Dzięki temu, że nachylenie
+kolejnych półpłaszczyzn względem osi $O_x$ jest monotoniczne (w
+przypadku ,,dolnego zbioru nierosnące), wystarczy, że wyznaczymy
+punkty przecięć kolejnych pod względem nachylenia półpłaszczyzn
+uzyskując w ten sposób zbiór punktów będących wierzchołkami obszaru
+przecięcia. Do określenia czy dana półpłaszczyzna jest nadmiarowa
+opieramy się na następującym lemacie:
+
+\begin{lemat}[Kevin Brown 1978]
+  Niech będą dane półpłaszczyzny $H_1, H_2, H_3$. Niech $l_i$ oznacza
+  prostą kierunkową półpłaszczyzny $H_i$, natomiast jako $slope(l_i)$
+  oznaczmy kąt nachylenia prostej $l_i$ do osi $O_x$. Półpłaszczyzna
+  $H_2$ jest \emph{nadmiarowa} dla określenia ,,dolnego'' przecięcia
+  $H_1 \cap H_2 \cap H_3$ dokładnie wtedy gdy oba poniższe warunki są
+  spełnione:
+
+  \begin{enumerate}
+    \item Prosta $l_2$ leży poniżej punktu przecięcia prostych $l_1$ i
+      $l_3$
+    \item $slope(l_1) < slope(l_2) < slope(l_3)$
+  \end{enumerate}
+\end{lemat}
+
+Zauważmy, że warunek drugi jest spełniony ze względu na wypukłość
+wielokąta. Natomiast do sprawdzenia warunku pierwszego wystarczające
+jest sprawdzenie czy przecięcie obecnie rozważanej prostej z ostatnią
+prostą na stosie leży na lewo od przecięcia przedostatniej i ostatniej
+prostej ze stosu. Gdy proste są uporządkowane według współczynnika
+nachylenia powyższe warunki są równoważne --- jeżeli $l_2$ przecina
+$l_1$ na lewo od przecięcia $l_1$ i $l_3$, przecięcie $l_1 \cap l_2$
+musi znajdować się powyżej prostej $l_3$.
+
+\section{Złożoność}
+Pierwsza część algorytmu, czyli wyznaczenie wierzchołków krytycznych,
+dzięki zastosowaniu techniki \emph{rotating calipers} można wykonać w
+czasie liniowym. Wyznaczenie początkowej pozycji prostych równoległych
+wymaga rozpatrzenia wszystkich kolejnych wierzchołków $P$ i $Q$ stąd
+wymagany wynosi $O(n + m)$. Po każdym obrocie prostych równoległych
+jedna z nich jest styczna do krawędzi wspieranego wielokąta. Za każdym
+razem gdy, prosta równoległa jest styczna do krawędzi $Q$, wyznaczany
+jest punkt krytyczny dla tej krawędzi. Tak więc po wykonaniu pełnego
+obrotu wokół $P$ i $Q$ wyznaczymy wszystkie wierzchołki
+krytyczne. ,,Przechylenie'' prostej równoległej do krawędzi wielokąta
+wykonujemy w czasie $O(1)$, stąd pełny obrót obydwu prostych
+równoległych wokół wspieranych wielokątów wymaga czasu $O(n + m)$.
+Łącznie złożoność czasowa tej części algorytmu również wynosi $O(n +
+m)$.
+
+Odległość punktu $c$, wyznaczającego umiejscowienie $P$ na
+płaszczyźnie, od krawędzi $Q$ możemy wyznaczyć w czasie $O(1)$, jeżeli
+wyznaczyliśmy wierzchołek krytyczny dla tej krawędzi.
+
+W [], K. Brown dowodzi równoważności między problemem przecięcia
+,,dolnych'' półpłaszczyzn, a problemem otoczki wypukłej, który może
+być rozwiązany w czasie optymalnym $O(n)$. Rozważając złożoność tej
+części algorytmu możemy również spojrzeć w na rozwiązanie w
+następujący sposób: wyznaczając ,,górne'' oraz ,,dolne'' przecięcie
+rozważamy kolejne proste wkładając lub zdejmując je ze stosu. Każda
+prosta może być włożona, oraz zdjęta ze stosu tylko raz, stąd pozbycie
+się nadmiarowych półpłaszczyzn z obu zbiorów przecięć wymaga czasu
+$O(n + m)$. Takiej samej złożoności czasowej wymaga wyznaczenie
+dolnego oraz górnego przecięcia z uzyskanych półpłaszczyzn oraz
+połączenie uzyskanych obszarów wypukłych.
+
+Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
 
 %%% Local Variables:
 %%% mode: latex
