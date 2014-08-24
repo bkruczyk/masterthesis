@@ -40,9 +40,23 @@
 
 \setcounter{tocdepth}{1}
 
+\includeonly{
+  % frontmatter
+  ,wprowadzenie
+  ,podstawowe_pojecia
+  ,lokalizacja_punktu
+  ,wyznaczanie_srednicy
+  ,przeciecia_wielokatow
+  ,rotating_calipers
+  ,zawieranie_wielokatow
+  ,zakonczenie
+  ,bibliography
+  % ,endmatter
+}
+
 \begin{document}
 
-\include{title}
+\include{frontmatter}
 \include{wprowadzenie}
 \include{podstawowe_pojecia}
 \include{lokalizacja_punktu}
@@ -50,20 +64,9 @@
 \include{przeciecia_wielokatow}
 \include{rotating_calipers}
 \include{zawieranie_wielokatow}
-
-\summary
-
-\appendix
-\chapter{Generowanie wielokątów wypukłych o zadanej liczbie
-  wierzchołków}
-
-\bibliographystyle{unsrt}
-\bibliography{xml}
-
-\listoftables
-\listoffigures
-
-\oswiadczenie
+\include{zakonczenie}
+\include{bibliography}
+\include{endmatter}
 
 \end{document}
 
