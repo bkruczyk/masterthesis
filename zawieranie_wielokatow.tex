@@ -1,57 +1,54 @@
 \chapter{Zawieranie wielokątów}
 Ogólny problem zawierania wielokątów formułujemy następująco:
 
-\begin{problem}[Ogólny problem zawierania wielokątów]
+\begin{problem}
   Dla dwóch, prostych wielokątów $P$ i $Q$, stwierdzić czy $P$ może
-  być zawarty w $Q$, i jeżeli tak, to podać umiejscowienie $P$, które
-  spełnia zawieranie.
+  być zawarty w $Q$, i jeżeli tak, to podać \emph{umiejscowienie} $P$,
+  które spełnia zawieranie.
 \end{problem}
 
-\begin{figure}[htp]
-  \caption{Zawieranie}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/containment1}
+  \caption{Wielokąt $(v_1, \ldots, v_4)$ można umieścić w wielokącie
+    $(w_1, \ldots, w_5)$\label{img:containment1}}
 \end{figure}
 
 W problemie ogólnym, dopuszczamy translacje i obroty zawieranego
 wielokąta tak by ,,zmieścił się'' on wielokącie
 zawierającym. Rozwiązanie tego problemu w czasie $O(pq^2)$ przedstawił
-B. Chazelle[]. W swojej pracy Chazelle przedstawia także rozwiązanie
-dla uproszczonego problemu w której wielokąty $P$ i $Q$ są wypukłe, a
-dozwolonym działaniem na $P$ jest jedynie translacja.
+w~\cite{Chazelle83} B. Chazelle. W tej samej pracy przedstawił także
+rozwiązanie dla uproszczonego problemu w której wielokąty $P$ i $Q$ są
+wypukłe, a dozwolonym działaniem na $P$ jest jedynie translacja.
 
 Niech będzie dany wielokąt wypukły $P = (p_1, p_2, \ldots, p_n)$ oraz
-wielokąt wypukły $Q = (q_1, q_2, \ldots, q_m)$. Zakładamy, że żadna
-para krawędzi $P$ i $Q$ nie jest współliniowa. Niech $H_i$ dla $i = 1,
-\ldots, m$ dla będzie i-tą półpłaszczyzną wyznaczoną przez prostą
-zadaną punktami $q_i, q_{i+1}$ zawierającą wielokąt $Q$. Niech punkt
-$c$ będzie dowolnym punktem należącym do $P$, może być to na przykład
-środek jego masy. Punkt ten będzie wyznaczał umiejscowienie $P$ na
-płaszczyźnie.
+wielokąt wypukły $Q = (q_1, q_2, \ldots, q_m)$. Dla uproszczenia
+zakładamy, że żadna para krawędzi $P$ i $Q$ nie jest do siebie
+równoległa. Niech $H_i$ dla $i = 1, \ldots, m$ dla będzie i-tą
+półpłaszczyzną zadaną przez prostą współliniową do krawędzi $q_i,
+q_{i+1}$ i zawierającą wielokąt $Q$. Niech punkt $c$ będzie dowolnym
+punktem należącym do $P$, może być to na przykład środek jego
+masy. Punkt ten będzie wyznaczał umiejscowienie $P$ na płaszczyźnie.
 
-Zauważmy, że ,,przesuwając'' $P$ tak, by punkt $c$ znajdował się w jak
-najmniejszej odległości od $H_i$, istnieje jeden wierzchołek $p_j \in
-P$ styczny z prostą $L(q_i, q_{i+1})$ wyznaczającą półpłaszczyznę
+Gdy ,,przesuniemy $P$ tak, by punkt $c$ znajdował się w jak
+najmniejszej odległości od $H_i$, to jeden wierzchołek $p_j \in P$
+będzie styczny z prostą $L(q_i, q_{i+1})$ wyznaczającą półpłaszczyznę
 $H_i$. O takim wierzchołku $p_j$ mówimy, że jest \emph{krytyczny} dla
-krawędzi $(q_i, q_{i+1}) \in Q$. Odległość punktu $c$ od
-półpłaszczyzny $H_i$ (i tym samym odległość od $p_j$) oznaczmy jako
-$d_i$.
-
-Możemy również zauważyć, że warunek zawarcia $P$ w $Q$ jest
-równoznaczny z zawieraniem $P$ przecięciu półpłaszczyzn:
-\[
-       \bigcap_{1 \leq i \leq m} H_i
-\]
+krawędzi $(q_i, q_{i+1})$. Odległość punktu $c$ od półpłaszczyzny
+$H_i$ oznaczmy jako $d_i$.
 
 Rozważmy półpłaszczyznę $H_i'$ wyznaczoną przez prostą
 $L(q_i,q_{i+1})'$, równoległą do $L(q_i, q_{i+1})$ i przechodzącą
-przez punkt $c$.  $L(q_i,q_{i+1})$ możemy łatwo wyznaczyć posługując
-się odległością punktu $c$ od wierzchołka $p_j$, oznaczoną wcześniej
-jako $d_i$. Poprzedni warunek na zawierania wielokąta możemy
-przekształcić na zawieranie punktu $c$ w przecięciu półpłaszczyzn
-$H_i'$. Innymi słowy wielokąt $P$ zawiera się w $Q$ dokładnie wtedy
-gdy punkt $c$ należy do przecięcia półpłaszczyzn $H_i'$. Co więcej,
-wspomniane przecięcie zawiera wszystkie możliwe położenia $c$
-spełniające zawieranie $P$ w $Q$. Algorytm dla problemu możemy
-przedstawić następująco:
+przez punkt $c$.  $L(q_i,q_{i+1})'$ możemy łatwo wyznaczyć jeśli znamy
+wierzchołek krytyczny dla $(q_i, q_{q+1})$. Zauważmy, że $P$ jest
+zawarty w $Q$ wtedy i tylko wtedy, gdy jest zawarty w przecięciu
+półpłaszczyzn $H_1 \cap \ldots \cap H_m$. Warunek ten jest równoważny
+zawieraniu punktu $c$ w przecięciu półpłaszczyzn $H_i'$. Innymi słowy:
+wielokąt $P$ zawiera się w $Q$ dokładnie wtedy gdy punkt $c$ należy do
+przecięcia półpłaszczyzn $H_i'$. Co więcej, wspomniane przecięcie
+zawiera wszystkie możliwe umiejscowienia $c$ spełniające zawieranie
+$P$ w $Q$. Algorytm rozwiązujący problemu zawierania wielokąta $P$ w
+$Q$ możemy przedstawić następująco.
 
 \begin{figure}[htp]
 \begin{algorithmic}[1]
@@ -60,8 +57,8 @@ przedstawić następująco:
 \State \textbf{dla każdej} krawędzi $(q_i, q_{i+1}) \in Q$
 \State \hspace{\algorithmicindent} wyznacz wierzchołek krytyczny $p_j \in P$
 \State \hspace{\algorithmicindent} wyznacz półpłaszczyznę $H_i'$
-
-\State $placement \gets $ przecięcie półpłaszczyzn $H_i$
+\State
+\State wyznacz przecięcie otrzymanych półpłaszczyzn $H_i$
 
 \EndProcedure
 \end{algorithmic}
@@ -71,55 +68,72 @@ Do znalezienia wierzchołków krytycznych możemy się posłużyć
 przedstawioną w rozdziale \ref{chap:calipers} metodą \emph{rotating
   calipers}. Zauważmy, że dana krawędź $(q_i, q_{i+1})$ wraz z
 odpowiadającym jej wierzchołkiem krytycznym $p_j$ tworzą \emph{parę
-  kopodalną}. Rozważmy sytuację przedstawioną na rysunku (). Niech
-początkowymi liniami wsparcia dla $P$ i $Q$ będą proste równoległe do
-osi $O_x$, styczne do wierzchołka o najmniejszej wartości współrzędnej
-$x$ z $P$ i $Q$ odpowiednio. Niech obydwie proste wspierające będą
-skierowane w tym samym kierunku w ten sposób, żeby wspierany wielokąt
-znajdował się po lewej stronie prostej. Analogicznie jak w rozdziale
-\ref{chap:calipers} zaczynamy obracać równoległe proste wspierające. Przy
-każdym obrocie suwmiarek po którym prosta wspierająca $L_{SQ}$ jest
-styczna z krawędzią $Q$, prosta wspierająca $L_{SP}$ jest styczna z
-punktem krytycznym dla tej krawędzi. Następnie dla każdej krawędzi $Q$
-i odpowiadającemu jej punktowi krytycznemu wyznaczamy półpłaszczyznę
-$H_i'$, tak jak zostało to opisane wcześniej.
+  kopodalną}. Niech początkowymi liniami wsparcia dla $P$ i $Q$ będą
+równoległe proste poziome, styczne do wierzchołka o najmniejszej
+wartości współrzędnej $x$ z $P$ i $Q$ odpowiednio. Niech obydwie
+proste wspierające będą skierowane w tym samym kierunku w ten sposób,
+żeby wspierany wielokąt znajdował się po lewej stronie
+prostej. Analogicznie jak w rozdziale~\ref{chap:calipers} zaczynamy
+obracać równoległe proste wspierające. Przy każdym obrocie suwmiarek
+po którym prosta wspierająca $L_{SQ}$ jest styczna z krawędzią $Q$,
+prosta wspierająca $L_{SP}$ jest styczna z punktem krytycznym dla tej
+krawędzi (rysunek~\ref{img:calipers5}). Następnie dla każdej krawędzi
+$Q$ i odpowiadającemu jej punktowi krytycznemu wyznaczamy
+półpłaszczyznę $H_i'$, tak jak zostało to opisane wcześniej.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=1]{img/containment3}
+  \caption{\label{img:containment3}}
+\end{figure}
 
 Na koniec pozostaje wyznaczenie przecięcia półpłaszczyzn $H_1' \cap
 \ldots \cap H_m'$. Uzyskane półpłaszczyzny podzielmy dwa zbiory: dolny
 i górny. Niech w dolnym zbiorze znajdą się półpłaszczyzny wyznaczone
 przez ,,dolną'' część wielokąta $Q$. Zacznijmy rozpatrywać kolejne
-półpłaszczyzny z dolnego zbioru pod względem nierosnącego nachylenia
-prostej $l_i$ definiującej półpłaszczyznę do osi $O_x$. Włóżmy dwie
-pierwsze proste na stos. Będziemy oznaczmać ostatnią prostą na stosie
-jako $l_o$, a przedostatnią jako $l_p$. Po rozpatrzeniu każdej
-kolejnej półpłaszczyzny będziemy zachowywać następujący niezmiennik:
-na stosie znajdują się te proste z ciągu $l_1, \ldots, l_i$, które
-stanowią brzeg zbioru $H_1' \cap \ldots \cap H_i'$. Postępujemy
-zgodnie z regułą, że jeżeli przecięcie obecnie rozważanej prostej
-$l_i$ z ostatnia prostą na stosie $l_o$ leży na lewo od przecięcia
-$l_o$ i przedostatnią prostą ze stosu $l_p$ to zdejmujemy $l_o$ ze
-stosu i wkładamy na stos prostą $l_i$. Analogicznie postępujemy z
-zbiorem ,,górnych'' półpłaszczyzn. W ostatnim kroku łączymy uzyskane
-dwa obszary wypukłe, poprzez wyznaczenie przecięcia par skrajnych
-półpłaszczyzn z ,,dolnej'' i ,,górnej'' otoczki.
+półpłaszczyzny z dolnego zbioru pod względem nierosnącego
+współczynnika kierunkowego prostej $l_i$ określającej półpłaszczyznę
+$H_i'$. Włóżmy dwie pierwsze proste na stos. Będziemy oznaczać
+ostatnią prostą na stosie jako $l_o$, a przedostatnią jako $l_p$. Po
+rozpatrzeniu każdej kolejnej półpłaszczyzny będziemy zachowywać
+następujący niezmiennik: na stosie znajdują się te proste z ciągu
+$l_1, \ldots, l_i$, które stanowią brzeg zbioru $H_1' \cap \ldots \cap
+H_i'$. Postępujemy zgodnie z regułą, że jeżeli przecięcie obecnie
+rozważanej prostej $l_i$ z ostatnia prostą na stosie $l_o$ leży na
+lewo od przecięcia $l_o$ i przedostatnią prostą ze stosu $l_p$ to
+zdejmujemy $l_o$ ze stosu i wkładamy na stos prostą $l_i$. Tę metodę
+obrazuje sytuacja z rysunku~\ref{img:containment2}. Na stos zostały
+włożone proste $l, l_p, l_o$, rozważana jest prosta $l_i$. Punkt $q' =
+l_i \cap l_o$, leży na lewo od $q = l_o \cap l_p$. Wobec tego
+zdejmujemy nadmiarową prostą $l_o$ ze stosu, a wkładamy na niego
+prostą $l_i$. Analogicznie postępujemy z zbiorem ,,górnych''
+półpłaszczyzn. W ostatnim kroku łączymy uzyskane dwa obszary wypukłe,
+poprzez wyznaczenie przecięcia par skrajnych półpłaszczyzn z
+,,dolnej'' i ,,górnej'' otoczki.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.6]{img/containment2}
+  \caption{\label{img:containment2}}
+\end{figure}
 
 \section{Poprawność}
 Poprawność warunku zawierania $P$ w $Q$ jako warunku zawierania $P$ w
 przecięciu półpłaszczyzn wyznaczonych przez krawędzie $Q$ opiera się
-na następującym założeniu:
+na następującym założeniu.
 
-\begin{lemat}[Przecięcie półpłaszczyzn]
+\begin{lemat}
   Przecięcie $n$ półpłaszczyzn jest wielokątem wypukłym.
 \end{lemat}
 
 Co wynika bezpośrednio z poniższych:
 
 \begin{twierdzenie}
-  Półpłaszczyzna jest zbiorem wypukłym [].
+  Półpłaszczyzna jest zbiorem wypukłym.
 \end{twierdzenie}
 
 \begin{twierdzenie}
-  Przecięcie zbiorów wypukłych jest zbiorem wypukłym [].
+  Przecięcie zbiorów wypukłych jest zbiorem wypukłym.
 \end{twierdzenie}
 
 Drugim założeniem na którym opiera się algorytm jest:
@@ -136,31 +150,26 @@ zawierającej obydwa wierzchołki krytyczne. W przeciwnym przypadku
 istnieje dokładniej jeden wierzchołek krytyczny.
 
 \begin{lemat}
-  Każdy obrót prostej równoległej wokół $Q$ wyznacza punkt krytyczny
-  dla bieżącej krawędzi $Q$.
+  Algorytm poprawnie wyznacza ,,dolne'' przecięcie półpłaszczyzn.
 \end{lemat}
 
-\begin{lemat}
-  Algorytm \textsc{Lower Bound Intersection} poprawnie wyznacza
-  ,,dolne'' przecięcie półpłaszczyzn.
-\end{lemat}
+Rozważmy rysunek~\ref{img:containment2} na którym przedstawiono zbiór
+,,dolnych'' półpłaszczyzn. Możemy zauważyć, że półpłaszczyzna zadana
+przez prostą $l_o$ jest \emph{nadmiarowa} przy wyznaczeniu przecięcia
+$l \cap l_p \cap l_o \cap l_i$. Jeżeli wyeliminujemy ze półpłaszczyzny
+nadmiarowe, możemy w prosty sposób wyznaczyć przecięcie.
 
-Rozważmy rysunek. na którym przedstawiono zbiór ,,dolnych''
-półpłaszczyzn. Możemy zauważyć, że półpłaszczyzna $H_2$ jest
-\emph{nadmiarowa} przy wyznaczeniu przecięcia $H_1 \cap H_2 \cap
-H_3$. Jeżeli wyeliminujemy ze półpłaszczyzny nadmiarowe, możemy w
-prosty sposób wyznaczyć przecięcie. Dzięki temu, że nachylenie
-kolejnych półpłaszczyzn względem osi $O_x$ jest monotoniczne (w
-przypadku ,,dolnego zbioru nierosnące), wystarczy, że wyznaczymy
-punkty przecięć kolejnych pod względem nachylenia półpłaszczyzn
-uzyskując w ten sposób zbiór punktów będących wierzchołkami obszaru
-przecięcia. Do określenia czy dana półpłaszczyzna jest nadmiarowa
-opieramy się na następującym lemacie:
+Dzięki temu, że nachylenie kolejnych półpłaszczyzn jest monotoniczne
+(w przypadku ,,dolnego'' zbioru --- nierosnące), wystarczy, że
+wyznaczymy punkty przecięć kolejnych pod względem tym względem
+półpłaszczyzn uzyskując w ten sposób zbiór punktów będących
+wierzchołkami obszaru przecięcia. Do określenia czy dana
+półpłaszczyzna jest nadmiarowa opieramy się na następującym założeniu.
 
-\begin{lemat}[Kevin Brown 1978]
+\begin{lemat}[Brown 1978~\cite{Brown78}]
   Niech będą dane półpłaszczyzny $H_1, H_2, H_3$. Niech $l_i$ oznacza
   prostą kierunkową półpłaszczyzny $H_i$, natomiast jako $slope(l_i)$
-  oznaczmy kąt nachylenia prostej $l_i$ do osi $O_x$. Półpłaszczyzna
+  oznaczmy współczynniki kierunkowy prostej $l_i$. Półpłaszczyzna
   $H_2$ jest \emph{nadmiarowa} dla określenia ,,dolnego'' przecięcia
   $H_1 \cap H_2 \cap H_3$ dokładnie wtedy gdy oba poniższe warunki są
   spełnione:
@@ -201,10 +210,10 @@ Odległość punktu $c$, wyznaczającego umiejscowienie $P$ na
 płaszczyźnie, od krawędzi $Q$ możemy wyznaczyć w czasie $O(1)$, jeżeli
 wyznaczyliśmy wierzchołek krytyczny dla tej krawędzi.
 
-W [], K. Brown dowodzi równoważności między problemem przecięcia
-,,dolnych'' półpłaszczyzn, a problemem otoczki wypukłej, który może
-być rozwiązany w czasie optymalnym $O(n)$. Rozważając złożoność tej
-części algorytmu możemy również spojrzeć w na rozwiązanie w
+W~\cite{Brown78} K. Brown dowodzi równoważności między problemem
+przecięcia ,,dolnych'' półpłaszczyzn, a problemem otoczki wypukłej,
+który może być rozwiązany w czasie $O(n \log n)$. Rozważając złożoność
+tej części algorytmu możemy również spojrzeć w na rozwiązanie w
 następujący sposób: wyznaczając ,,górne'' oraz ,,dolne'' przecięcie
 rozważamy kolejne proste wkładając lub zdejmując je ze stosu. Każda
 prosta może być włożona, oraz zdjęta ze stosu tylko raz, stąd pozbycie

@@ -10,30 +10,31 @@ wypukłych.
 \end{definicja}
 
 \begin{definicja}
-  \emph{Wielokątem wypukłym} nazywamy taki wielokąt prosty którego
-  wnętrze jest \emph{zbiorem wypukłym}, tzn.\ wszystkie punkty
-  należące do odcinka łączącego dwa dowolne punkty ze zbioru wypukłego
-  należą do tego zbioru.
+  \emph{Wielokątem wypukłym} nazywamy wielokąt prosty którego wnętrze
+  jest \emph{zbiorem wypukłym}, tzn.\ wszystkie punkty należące do
+  odcinka łączącego dwa dowolne punkty ze zbioru należą do tego
+  zbioru.
 \end{definicja}
 
 % brzeg wielokąta, wnętrze i zewnętrze wielokąta
+% rysunki !
 
 \begin{figure}[htb]
   \centering
   \includegraphics{img/nonconvex}
-  \caption{Figura niebędąca wielokątem wypukłym.}
+  \caption{Przykład czworokąta, który nie jest wypukły.}
 \end{figure}
 
 \begin{definicja}
   \emph{Średnicą zbioru punktów} nazywamy największą odległość
-  pomiędzy dwoma punktami należącymi do zbioru.
+  pomiędzy dwoma punktami należącymi do tego zbioru.
 \end{definicja}
 
 \begin{definicja}
   Niech $p_{1}=(x_{1},y_{1})$, $p_{2}=(x_{2},y_{2})$,
   $p_{3}=(x_{3},y_{3})$ będą punktami na płaszczyźnie
-  $R^2$. \emph{Wyznacznikiem} współrzędnych tych punktów nazywamy
-  liczbę
+  $\mathbb{R}^2$. \emph{Wyznacznikiem} współrzędnych tych punktów
+  nazywamy liczbę
 
   \begin{center}
     \begin{math}
@@ -46,9 +47,9 @@ wypukłych.
     \end{math}
   \end{center}
 
-  Kąt $\angle p_{1},p_{2},p_{3}$ nazywamy \emph{lewoskrętnym}, jeżeli
+  Kąt $\angle p_{1}p_{2}p_{3}$ nazywamy \emph{lewoskrętnym}, jeżeli
   wyznacznik $X(p_1, p_2, p_3)$ jest dodatni, w przeciwnym przypadku
-  mówimy, że kąt jest \emph{prawoskrętny}.
+  mówimy, że kąt ten jest \emph{prawoskrętny}.
 \end{definicja}
 
 \begin{definicja}
@@ -64,22 +65,24 @@ wypukłych.
 \end{definicja}
 
 \begin{definicja}\label{def:bigo}
-  Mówimy, że funkcja $f\colon N \to R$ jest co najwyżej rzędu $g$
-  (jest ograniczona przez funkcję $g\colon N \to R$), gdy istnieją
-  takie stałe $n_0 > 0$ oraz $c > 0$, takie że:
+  Mówimy, że funkcja $f\colon \mathbb{N} \to \mathbb{R}$ jest co
+  najwyżej rzędu $g$ (jest \emph{ograniczona} przez funkcję $g\colon
+  \mathbb{N} \to \mathbb{R}$), gdy istnieją takie stałe $n_0 > 0$ oraz
+  $c > 0$, że:
 
   \begin{center}
-    $\forall n \geq n_0 : f(n) \leq c \cdot g(n)$
+    $\forall n \geq n_0\ f(n) \leq c \cdot g(n)$
   \end{center}
 \end{definicja}
 
-W niniejszej pracy do opisu wydajności algorytmów będziemy korzystać
-z \emph{notacji wielkiego O}. Jest to notacja asymptotycznego tempa
+W niniejszej pracy do opisu wydajności algorytmów będziemy korzystać z
+\emph{notacji wielkiego O}. Jest to notacja asymptotycznego tempa
 wzrostu wartości funkcji względem jej argumentów, w algorytmice
 stosowana do charakterystyki złożoności obliczeniowej algorytmów
-opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku
-do rozmiaru danych wejściowych. Zgodnie z notacją, złożoność czasową
-funkcji z definicji \ref{def:bigo} zapisalibyśmy jako $O(g(n))$.
+opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
+rozmiaru danych wejściowych. Zgodnie z notacją, złożoność czasową
+algorytmu o czasie działania $T(n) = f(n)$, gdzie $f(n)$ spełnia
+definicję~\ref{def:bigo} zapisalibyśmy jako $T(n) = O(g(n))$.
 
 \begin{table}[htb]
   \centering
@@ -104,14 +107,16 @@ funkcji z definicji \ref{def:bigo} zapisalibyśmy jako $O(g(n))$.
     \bottomrule
   \end{tabular}
 
-  \caption{Najczęściej wyróżniane rzędy żłożoności obliczeniowej,
+  \caption{Najczęściej wyróżniane rzędy złożoności obliczeniowej,
     podane według rosnącej złożoności.}
 \end{table}
-nn
+
 W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego będziemy
 nazywać algorytm o mniejszej złożoności obliczeniowej niż najlepszy
 znany algorytm uogólniony dla wielokąta prostego dla tego samego
 problemu.
+
+% przyjęte oznaczenia
 
 %%% Local Variables:
 %%% mode: latex

@@ -21,170 +21,168 @@
   \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) -- (p5) -- cycle;
 }
 
-\chapter{Lokalizacja punktu}
+\chapter{Lokalizacja punktu\label{chap:point_location}}
 Problem lokalizacji punktu sformułowany jest następująco.
 
 \begin{problem}[Lokalizacja punktu]
   Jeśli dany jest wielokąt prosty $P$ i punkt $z$ na płaszczyźnie,
-  sprawdzić czy punkt $z$ należy do wnętrza $P$.
+  sprawdzić, czy punkt $z$ należy do $P$.
 \end{problem}
 
 Problem ten można rozwiązać w czasie $O(n)$ bez przetwarzania
 wstępnego. Rozważmy poziomą prostą $l$ przechodząca przez punkt
 $z$. Musimy rozważyć kilka przypadków.
 
-\begin{itemize}
-\item Jeśli $l$ nie przecina $P$, to $z$ leży na zewnątrz wielokąta.
-  \begin{figure}[htp]
-    \centering
-    \begin{tikzpicture}
-      \convexA
+Jeśli $l$ nie przecina $P$, to $z$ leży na zewnątrz wielokąta.
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \convexA
 
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-      label={right:$p_0$}] at (p0) {};
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={right:$p_0$}] at (p0) {};
 
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-      label={45:$p_1$}] at (p1) {};
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={45:$p_1$}] at (p1) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={above:$p_2$}] at (p2) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={above:$p_2$}] at (p2) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={135:$p_3$}] at (p3) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={135:$p_3$}] at (p3) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={left:$p_4$}] at (p4) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={left:$p_4$}] at (p4) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={below:$p_5$}] at (p5) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={315:$p_6$}] at (p6) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={315:$p_6$}] at (p6) {};
 
-      \coordinate (z) at (3,-1);
-      \coordinate (l) at (-1,-1);
+    \coordinate (z) at (3,-1);
+    \coordinate (l) at (-1,-1);
 
-      \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
+    \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={below:$z$}] at (z) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={below:$z$}] at (z) {};
 
-      \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
-    \end{tikzpicture}
-    \caption{}
-  \end{figure}
+    \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
+  \end{tikzpicture}
+  \caption{}
+\end{figure}
 
-\item W przypadku, gdy prosta $l$ przecina $P$ i nie przechodzi przez
-  żaden z wierzchołków $P$, oznaczmy jako $p_l$ liczbę przecięć $l$
-  z wielokątem $P$. Wiemy, że lewy koniec $l$ leży na zewnątrz $P$,
-  więc przesuwając się po prostej $l$ w prawo w kierunku $z$
-  i przecinając brzeg wielokąta, przechodzimy do jego wnętrza. Przy
-  następnym przecięciu z brzegiem $P$ znowu znajdziemy się na zewnątrz
-  itd. Widzimy stąd, że $z$ jest na zewnątrz wielokąta $P$ dokładnie
-  wtedy, gdy $p_l$ jest parzyste.
+W przypadku, gdy prosta $l$ przecina $P$ i nie przechodzi przez
+żaden z wierzchołków $P$, oznaczmy jako $p_l$ liczbę przecięć $l$ z
+wielokątem $P$. Wiemy, że lewy koniec $l$ leży na zewnątrz $P$, więc
+przesuwając się po prostej $l$ w prawo w kierunku $z$ i przecinając
+brzeg wielokąta, przechodzimy do jego wnętrza. Przy następnym
+przecięciu z brzegiem $P$ znowu znajdziemy się na zewnątrz
+itd. Widzimy stąd, że $z$ jest na zewnątrz wielokąta $P$ wtedy i
+tylko wtedy, gdy $p_l$ jest parzyste.
 
-  \begin{figure}[htp]
-    \centering
-    \begin{tikzpicture}
-      \convexA
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \convexA
 
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-      label={right:$p_0$}] at (p0) {};
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={right:$p_0$}] at (p0) {};
 
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-      label={45:$p_1$}] at (p1) {};
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={45:$p_1$}] at (p1) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={above:$p_2$}] at (p2) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={above:$p_2$}] at (p2) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={135:$p_3$}] at (p3) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={135:$p_3$}] at (p3) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={left:$p_4$}] at (p4) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={left:$p_4$}] at (p4) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={below:$p_5$}] at (p5) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={315:$p_6$}] at (p6) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={315:$p_6$}] at (p6) {};
 
-      \coordinate (z) at (3,2.5);
-      \coordinate (l) at (-1,2.5);
+    \coordinate (z) at (3,2.5);
+    \coordinate (l) at (-1,2.5);
 
-      \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
+    \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={below:$z$}] at (z) {};
-      \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
-    \end{tikzpicture}
-    \caption{}
-  \end{figure}
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={below:$z$}] at (z) {};
+    \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
+  \end{tikzpicture}
+  \caption{}
+\end{figure}
 
-\item Specjalnym przypadkiem jest ten, w którym $l$ przechodzi przez
-  jeden lub dwa wierzchołki. W algorytmie rozważamy przecięcia $l$ z
-  krawędziami $P$, więc musimy się zabezpieczyć przed sytuacją, w
-  której policzylibyśmy przecięcie brzegu $P$ dwukrotnie. Stosujemy tu
-  zasadę, że $p_l$ nie zostanie zwiększone dla krawędzi, której jeden
-  z wierzchołków znajduje się powyżej prostej $l$. W przypadku gdy
-  prosta $l$ przechodzi przez oba wierzchołki krawędzi wielokąta,
-  przecięcie nie jest zliczane.
+Specjalnym przypadkiem jest ten, w którym $l$ przechodzi przez
+jeden lub dwa wierzchołki. W algorytmie rozważamy przecięcia $l$ z
+krawędziami $P$, więc musimy się zabezpieczyć przed sytuacją, w
+której policzylibyśmy przecięcie brzegu $P$ dwukrotnie. Stosujemy tu
+zasadę, że $p_l$ zostanie zwiększone dla przecinanej krawędzi,
+której jeden z wierzchołków znajduje się powyżej prostej
+$l$. Zauważmy, że w przypadku gdy prosta $l$ przechodzi przez oba
+wierzchołki krawędzi $e$ wielokąta, przecięcie z $e$ nie jest
+zliczane.
 
-  \begin{figure}[htp]
-    \centering
-    \begin{tikzpicture}
-      \convexA
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \convexA
 
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-      label={-10:$p_0$}] at (p0) {};
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={-10:$p_0$}] at (p0) {};
 
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-      label={45:$p_1$}] at (p1) {};
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={45:$p_1$}] at (p1) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={above:$p_2$}] at (p2) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={above:$p_2$}] at (p2) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={135:$p_3$}] at (p3) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={135:$p_3$}] at (p3) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={235:$p_4$}] at (p4) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={235:$p_4$}] at (p4) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={below:$p_5$}] at (p5) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={315:$p_6$}] at (p6) {};
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={315:$p_6$}] at (p6) {};
 
-      \coordinate (z) at (3,2);
-      \coordinate (l) at (-1,2);
+    \coordinate (z) at (3,2);
+    \coordinate (l) at (-1,2);
 
-      \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
+    \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=0.5pt,label={below:$z$}] at (z) {};
-      \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
-    \end{tikzpicture}
-    \caption{Przecięcie zostanie policzone dla krawędzi $p_{4}p_{5}$
-      oraz $p_{6}p_{0}$.}
-  \end{figure}
-
-\end{itemize}
+    \node [anchor=center,circle,draw,fill,inner
+    sep=0.5pt,label={below:$z$}] at (z) {};
+    \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
+  \end{tikzpicture}
+  \caption{Przecięcie zostanie policzone dla krawędzi $p_{4}p_{5}$
+    oraz $p_{6}p_{0}$.}
+\end{figure}
 
 Ze względu na to, że każdą krawędź $P$ sprawdzamy tylko raz
 pod względem przecięcia z $l$, mamy do czynienia ze złożonością
 liniową zależną od liczby krawędzi wielokąta.
 
-Algorytm dla wielokąta wypukłego wymaga pewnego przetwarzania
-wstępnego, ale jest użyteczny w przypadku wykonywania wielokrotnych
-zapytań o przynależność punktu do danego wielokąta. Weźmy punkt $q$
-leżący wewnątrz wielokąta wypukłego $P$, może to być np.\ środek
-ciężkości trójkąta wyznaczony przez trzy dowolne jego wierzchołki,
-a następnie poprowadźmy $N$ półprostych z $q$ przechodzących przez
-wierzchołki $P$. Płaszczyzna wraz z wielokątem zostanie podzielona
-na $N$ części, które nazwiemy \emph{klinami}, z których każdy jest
-podzielony przez krawędź $P$ na dwie częsci --- jest to wnętrze
-i zewnętrze wielokąta.
+Algorytm dla wielokąta wypukłego wymaga przetwarzania wstępnego, ale
+jest użyteczny w przypadku wykonywania wielokrotnych zapytań o
+przynależność punktu do danego wielokąta. Weźmy punkt $q$ leżący
+wewnątrz wielokąta wypukłego $P$ o $N$ wierzchołkach, może to być na
+przykład środek ciężkości trójkąta wyznaczony przez trzy dowolne jego
+wierzchołki, a następnie poprowadźmy $N$ półprostych z $q$
+przechodzących przez wierzchołki $P$. Płaszczyzna wraz z wielokątem
+zostaje podzielona na $N$ części, które nazywamy \emph{klinami}, z
+których każdy jest podzielony przez krawędź $P$ na dwie części ---
+jest to wnętrze i zewnętrze wielokąta.
 
 \begin{figure}[htp]
   \centering
@@ -228,133 +226,151 @@ i zewnętrze wielokąta.
   \caption{}
 \end{figure}
 
-Wyszukiwanie położenia danego punktu $z$ składa się z dwóch
-etapów. Najpierw określany jest klin, w którym leży $z$. Można
-to zrobić w czasie $O(\log n)$ używając wyszukiwania binarnego. Punkt
-$z$ będzie znajdował się pomiędzy promieniami $p_i$ i $p_{i+n}$
-podzielonej płaszczyzny wtedy i tylko wtedy, gdy kąt $\angle p_{i}qz$
-będzie lewoskrętny, a kąt $\angle p_{i+n}qz$ prawoskrętny. W
-następnych krokach stopniowo zawężamy nasz obszar poszukiwań, do czasu
-aż odnajdziemy właściwy klin. Następnie określamy, czy $z$ należy
-do wnętrza lub zewnętrza znalezionego klinu. Jeśli kąt $\angle
-p_{i}p_{i+1}z$ jest lewoskrętny, to $z$ jest wewnętrzny. Określenie
-skrętności kąta jest operacją o czasie $O(1)$, więc asymptotyczna
-złożoność tej części algorytmu jest rzędu $O(\log N)$.
+Załóżmy, że brzeg wielokąta $P$ tworzą wierzchołki $p_0, \ldots,
+p_{N-1}$, ponumerowane w kolejności przeciwnej do ruchu wskazówek
+zegara. Wyszukiwanie położenia danego punktu $z$ składa się z dwóch
+etapów. Najpierw określany jest klin, w którym leży $z$. Można to
+zrobić w czasie $O(\log N)$ używając wyszukiwania binarnego.
 
-Umieszczenie wielokąta w strukturze danych umożliwiającej
-przeszukiwanie binarne wymaga rozważenia przypadku zobrazowanego na
-rysunku \ref{fig:binstruct}. By punkt $z$ został zakwalifikowany jako
-należący do klina $(p_{3},p_{0})$ musi leżeć na przecięciu
-półpłaszczyzny $H_1$ określonej przez obszar na prawo od prostej
-zdefiniowanej przez odcinek $p_{3}q$ oraz półpłaszczyzny $H_2$
-określonej przez obszar na lewo od prostej zdefiniowanej przez odcinek
-$p_{0}q$. W sytuacji gdy kąt klina jest kątem rozwartym punkt $z$ nie
-zostanie wykryty. Z tego powodu przy wyszukiwaniu binarnym powinniśmy
-zaczynać od klina, którego kąt wewnętrzny jest
-mniejszy. Uwzględniająca ten warunek (wiersze 4--9) procedura została
-przedstawiona na listingu \ref{alg:findwedge}.
+% % nie działa w pewnych przypadkach
+% Punkt $z$ będzie znajdował się pomiędzy promieniami $p_i$ i $p_{i+n}$
+% podzielonej płaszczyzny wtedy i tylko wtedy, gdy kąt $\angle p_{i}qz$
+% będzie lewoskrętny, a kąt $\angle p_{i+n}qz$ prawoskrętny. W
+% następnych krokach stopniowo zawężamy nasz obszar poszukiwań, do czasu
+% aż odnajdziemy właściwy klin.
 
-\begin{figure}[htp]
-  \centering
-  \begin{tikzpicture}
-    \convexB
+Następnie określamy, czy $z$ należy do wnętrza lub zewnętrza
+znalezionego klinu. Jeśli kąt $\angle p_{i}p_{i+1}z$ jest lewoskrętny,
+to $z$ jest wewnętrzny. Określenie skrętności kąta jest operacją o
+czasie $O(1)$, więc asymptotyczna złożoność tej części algorytmu jest
+rzędu $O(\log N)$.
 
-    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={90:$p_0$}] at (p0) {};
+% Umieszczenie wielokąta w strukturze danych umożliwiającej
+% przeszukiwanie binarne wymaga rozważenia przypadku zobrazowanego na
+% rysunku \ref{fig:binstruct}. By punkt $z$ został zakwalifikowany jako
+% należący do klina $(p_{3},p_{0})$ musi leżeć na przecięciu
+% półpłaszczyzny $H_1$ określonej przez obszar na prawo od prostej
+% zdefiniowanej przez odcinek $p_{3}q$ oraz półpłaszczyzny $H_2$
+% określonej przez obszar na lewo od prostej zdefiniowanej przez odcinek
+% $p_{0}q$. W sytuacji gdy kąt klina jest kątem rozwartym punkt $z$ nie
+% zostanie wykryty. Z tego powodu przy wyszukiwaniu binarnym powinniśmy
+% zaczynać od klina, którego kąt wewnętrzny jest
+% mniejszy. Uwzględniająca ten warunek (wiersze 4--9) procedura została
+% przedstawiona na listingu \ref{alg:findwedge}.
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={100:$p_1$}] at (p1) {};
+% \begin{figure}[htp]
+%   \centering
+%   \begin{tikzpicture}
+%     \convexB
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={180:$p_2$}] at (p2) {};
+%     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+%     label={90:$p_0$}] at (p0) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={[label distance=0.2cm]-90:$p_3$}] at (p3) {};
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={100:$p_1$}] at (p1) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={-45:$p_4$}] at (p4) {};
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={180:$p_2$}] at (p2) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={[label distance=0.1cm]0:$p_5$}] at (p5) {};
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={[label distance=0.2cm]-90:$p_3$}] at (p3) {};
 
-    \coordinate (q) at (2,2);
-    \coordinate (z) at (3.25,3);
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={-45:$p_4$}] at (p4) {};
 
-    \draw [dashed,shorten >=-0.5cm] (q) -- (p0);
-    \draw [dashed,shorten >=-0.5cm] (q) -- (p1);
-    \draw [dashed,shorten >=-0.5cm] (q) -- (p2);
-    \draw [dashed,shorten >=-0.5cm] (q) -- (p3);
-    \draw [dashed,shorten >=-0.5cm] (q) -- (p4);
-    \draw [dashed,shorten >=-0.5cm] (q) -- (p5);
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={[label distance=0.1cm]0:$p_5$}] at (p5) {};
 
-    \draw [name path=p4--q,green,dashed,shorten >=-4cm,shorten <=-2cm,->] (p3) -- (q);
-    \draw [name path=p1--q,blue,dashed,shorten >=-4cm,shorten <=-1.5cm,->] (p0) -- (q);
+%     \coordinate (q) at (2,2);
+%     \coordinate (z) at (3.25,3);
 
-    % \path [name intersections={of=p4--q and p1--q,by=i1}];
+%     \draw [dashed,shorten >=-0.5cm] (q) -- (p0);
+%     \draw [dashed,shorten >=-0.5cm] (q) -- (p1);
+%     \draw [dashed,shorten >=-0.5cm] (q) -- (p2);
+%     \draw [dashed,shorten >=-0.5cm] (q) -- (p3);
+%     \draw [dashed,shorten >=-0.5cm] (q) -- (p4);
+%     \draw [dashed,shorten >=-0.5cm] (q) -- (p5);
 
-    % \fill [red] ($(q)!(-2,0)!(p1)$) circle [radius=2pt];
-    % \fill [blue] ($(q)!(11,0)!(p1)$) circle [radius=2pt];
+%     \draw [name path=p4--q,green,dashed,shorten >=-4cm,shorten <=-2cm,->] (p3) -- (q);
+%     \draw [name path=p1--q,blue,dashed,shorten >=-4cm,shorten <=-1.5cm,->] (p0) -- (q);
 
-    \filldraw [color=blue,opacity=0.2] (6,5) --
-    ($(q)!(11,0)!(p0)$) -- ($(q)!(-2,0)!(p0)$) -- (6,-1.2);
+%     %     \path [name intersections={of=p4--q and p1--q,by=i1}];
 
-    % \fill [red] ($(p4)!(-2.5,0)!(q)$) circle [radius=2pt];
-    % \fill [red] ($(p4)!(6.5,0)!(q)$) circle [radius=2pt];
+%     %     \fill [red] ($(q)!(-2,0)!(p1)$) circle [radius=2pt];
+%     %     \fill [blue] ($(q)!(11,0)!(p1)$) circle [radius=2pt];
 
-    \filldraw [color=green,opacity=0.2] ($(p3)!(-2.5,0)!(q)$) --
-    ($(p3)!(6.5,0)!(q)$) -- (6,-1.2) -- (-2.7,-1.2);
+%     \filldraw [color=blue,opacity=0.2] (6,5) --
+%     ($(q)!(11,0)!(p0)$) -- ($(q)!(-2,0)!(p0)$) -- (6,-1.2);
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={-170:$q$}] at (q) {};
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={below:$z$}] at (z) {};
-  \end{tikzpicture}
-  \caption{\label{fig:binstruct}}
-\end{figure}
+%     %     \fill [red] ($(p4)!(-2.5,0)!(q)$) circle [radius=2pt];
+%     %     \fill [red] ($(p4)!(6.5,0)!(q)$) circle [radius=2pt];
+
+%     \filldraw [color=green,opacity=0.2] ($(p3)!(-2.5,0)!(q)$) --
+%     ($(p3)!(6.5,0)!(q)$) -- (6,-1.2) -- (-2.7,-1.2);
+
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={-170:$q$}] at (q) {};
+%     \node [anchor=center,circle,draw,fill,inner
+%     sep=0.5pt,label={below:$z$}] at (z) {};
+%   \end{tikzpicture}
+%   \caption{\label{fig:binstruct}}
+% \end{figure}
 
 Zastosowane tutaj przeszukiwanie binarne jest możliwe dzięki temu, że
 wierzchołki wielokąta wypukłego występują w kolejności kątowej lub
 inaczej mówiąc w kolejności krążenia wokół punktu $q$. Przetwarzanie
 wstępne dla wielokąta $P$, na które składa się wyznaczenie punktu $q$
 oraz umieszczenie wielokąta w strukturze danych wspierającej
-wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$.
+wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$. Algorytm
+wyszukiwania klina został przedstawiony za pomocą pseudokodu z
+listingu~\ref{alg:findwedge}. Należy zauważyć, że indeksy wierzchołków
+są wyliczane za pomocą działania \emph{modulo} $N$. Innymi słowy
+następnikiem wierzchołka $p_{N-1}$ jest wierzchołek $p_0$.
 
-% todo: indeksowanie wierzchołków
+% Przyjęto także założenie, że brzeg $P$ należy do jego wnętrza.
 
 \begin{figure}[htp]
-\begin{algorithmic}[1]
-\Procedure{Find Wedge}{}
+  \begin{algorithmic}[1]
+    \Procedure{Find Wedge}{}
 
-\State $i \gets 0$
-\State $j \gets \lfloor N/2 \rfloor$
+    \State {$j \gets \lfloor N/2 \rfloor$}
+    \State {$i \gets 0$}
 
-\If {$P(p_{i}, q, p_{j}) > 0$}
-    \If {$P(p_{j}, q, z) < 0$ and $P(p_{i}, q, z) > 0$}
-        \State $i \gets j$
-        \State $j \gets 0$
-    \EndIf
-\EndIf
+    \State
 
-\While {$((j - i) \mod (N-1)) \neq 1$}
-    \State $s \gets (i + \lfloor (j - i) / 2 \rfloor) \mod N$
-
-    \If {$P(p_{i}, q, z) < 0$
-      \textbf{and} $P(p_{s}, q, z) > 0$}
-        \State $j \gets s$
+    \If {$z$ leży w klinie $p_jqp_i$}
+        \State {kontynuuj}
     \Else
-        \State $i \gets s$
+        \State {$i \gets j$}
+        \State {$j \gets N$}
     \EndIf
-\EndWhile
 
-\State $print(p_{i}, p_{j})$
-\EndProcedure
+    \State
 
-\end{algorithmic}
-\caption{\label{alg:findwedge}}
-\end{figure}
+    \While {nie wyznaczono pojedynczego klina}
+        \State $s \gets \lfloor (j-i)/2 \rfloor$
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "masterthesis"
-%%% TeX-engine: xetex
-%%% End:
+        \State
+
+        \If {$z$ leży w klinie rozpiętym przez $p_sqp_i$}
+                \State {$j \gets s$}
+        \Else
+                \State {$i \gets s$}
+        \EndIf
+    \EndWhile
+
+    \State
+
+    \State $print(p_i, p_j)$
+
+    \EndProcedure
+
+    \end{algorithmic}
+    \caption{\label{alg:findwedge}}
+  \end{figure}
+
+  %%% Local Variables:
+  %%% mode: latex
+  %%% TeX-master: "masterthesis"
+  %%% TeX-engine: xetex
+  %%% End:

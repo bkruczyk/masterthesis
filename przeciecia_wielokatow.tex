@@ -1,44 +1,53 @@
 \chapter{Przecięcie wielokątów}
 Problem znalezienia przecięcia dla wielokątów wypukłych zdefiniujmy
-następująco:
+następująco.
 
 \begin{problem}[Znajdowanie przecięcia wielokątów]
-  Gdy dane są dwa wielokąty wypukłe $P$ i $Q$, znaleźć ich
+  Mając dane dwa wielokąty wypukłe $P$ i $Q$, znaleźć ich
   \emph{przecięcie} tj.\ obszar należący jednocześnie do $P$ i do $Q$.
 \end{problem}
 
 W niniejszym rozdziale do wielokąta będziemy zaliczać jego wnętrze
-wraz z brzegiem.
+wraz z brzegiem. Jako $N$ będziemy oznaczać liczbę wierzchołków $P$, a
+jako $M$ liczbę wierzchołków $Q$. Stosując algorytm naiwny polegający
+na sprawdzeniu przecięcia każdej krawędzi $P$ z każdą krawędzią $Q$
+można uzyskać punkty wszystkich przecięć w czasie $O(NM)$.
 
-Oznaczmy jako $N$ liczbę wierzchołków $P$, a jako $M$ liczbę
-wierzchołków $Q$. Stosując algorytm naiwny polegający na sprawdzeniu
-przecięcia każdej krawędzi $P$ z każdą krawędzią $Q$ można uzyskać
-punkty wszystkich przecięć w czasie $O(NM)$.
-
-\section{Algorytm Shamos-Hoey}
+\section{Algorytm Shamosa-Hoeya}
 Znaną metodą rozwiązywania problemów w algorytmice jest technika
-\emph{dziel i rządź}, polegająca na podziale na mniejsze części,
+\emph{dziel i zwyciężaj}, polegająca na podziale na mniejsze części,
 znajdowaniu rozwiązań częściowych, a następnie łączeniu ich w końcowy
 rezultat.
 
-Metodę wykorzystującą podział płaszczyzny zaproponowali w 1976 Shamos
-i Hoey. Przez każdy wierzchołek $P$ i $Q$ prowadzimy prostą równoległą
-do osi $y$, tworząc w ten sposób $N+M$ warstw. Znalezienie przecięć
-krawędzi obydwu wielokątów w każdej warstwie pozwoli nam na proste
-wyznaczenie obszaru przecięcia tych wielokątów.
+Metodę wykorzystującą podział płaszczyzny zaproponowali w
+\cite{ShamosHoey76} Shamos i Hoey. Przez każdy wierzchołek $P$ i $Q$
+prowadzimy prostą pionową, tworząc w ten sposób $N+M$
+warstw. Znalezienie przecięć krawędzi obydwu wielokątów w każdej
+warstwie pozwoli nam na proste wyznaczenie obszaru przecięcia tych
+wielokątów. Wynika to z poniższego twierdzenia \cite{ShamosHoey76}.
 
-Należy zauważyć, że w każdej warstwie proste ją ograniczające wraz z
-krawędziami wielokąta tworzą czworobok lub gdy jest to wierzchołek
-skrajny na osi $x$ --- trójkąt. W pojedynczej warstwie przecięcie
-dwóch czworoboków możemy wyznaczyć w czasie stałym. % Z twierdzenia
-% \ref{thm:egdecollision} wiemy, że w każdej warstwie znajdziemy nie
-% więcej niż dwa przecięcia.
+\begin{twierdzenie}
+  Przecięcie wielokątów wypukłych $P = (p_1, \ldots, p_n)$ i $Q =
+  (q_1, \ldots, q_m)$ jest wielokątem wypukłym o sumie wierzchołków
+  nie większej niż $n + m$.
+\end{twierdzenie}
 
-% \begin{twierdzenie}
-% \label{thm:egdecollision}
-%   Jeżeli dwa wielokąty wypukłe $P$ i $Q$ przecinają się, to każda z
-%   krawędzi $P$ przecina $Q$ co najwyżej dwa razy.
-% \end{twierdzenie}
+\begin{proof}
+  Przecięcie $P$ i $Q$ jest przecięciem $n + m$ wewnętrznym
+  półpłaszczyzn wyznaczonych przez krawędzie obydwu wielokątów.
+\end{proof}
+
+Zauważmy, że w każdej warstwie proste ją ograniczające wraz z
+krawędziami wielokąta tworzą trójkąt lub czworobok
+(rysunek~\ref{img:ShamosHoey76}). Natomiast w pojedynczej warstwie
+przecięcie dwóch czworoboków (trójkątów) możemy wyznaczyć w czasie
+stałym.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/ShamosHoey76}
+  \caption{\label{img:ShamosHoey76}}
+\end{figure}
 
 Następnie w czasie liniowym łączymy uzyskane kawałki i usuwamy
 nadmiarowe wierzchołki powstałe przy podziale płaszczyzny. Początkowy
@@ -46,67 +55,140 @@ podział płaszczyzny również możemy przeprowadzić w czasie liniowym,
 tak więc złożoność czasowa całego algorytmu wynosi $O(n)$.
 
 \section{Algorytm O'Rourke-Chien-Olson-Naddor}
-Kolejną metoda, zaproponowana przez O'Rourke, Chiena, Olsona i
-Naddora (1982) jest rozwinięciem algorytmu naiwnego.
+Kolejną metoda, zaproponowana przez O'Rourke i in.~\cite{Orourke98}
+jest rozwinięciem algorytmu naiwnego.
 
 Załóżmy, że $P$ i $Q$ przecinają się, oraz oznaczmy ich przecięcie $P
-\cap Q$ jako $R$ (\ref{fig:scythes}). Zauważmy, że brzeg $R$ składa
-się naprzemiennie z krawędzi należących do $P$ i $Q$. Jeżeli dany
-fragment brzegu $R$ należy do $Q$, to jest on ,,objęty'' na zewnątrz
-przez fragment krawędzi $P$ i na odwrót, fragmenty brzegu $R$, które
-należą do $P$ są otoczone przez krawędzie należące do $Q$.
+\cap Q$ jako $R$. Przyjmijmy również, że żadne dwie krawędzie z $P$
+i$Q$ nie są do siebie równoległe. Zauważmy, że brzeg $R$ składa się z
+ciągu krawędzi należących do $P$, a następnie z ciągu krawędzie
+należących do $Q$. Jeżeli dany fragment brzegu $R$ należy do $Q$, to
+jest on ,,objęty'' na zewnątrz przez fragment krawędzi $P$ i na
+odwrót, fragmenty brzegu $R$, które należą do $P$ są otoczone przez
+krawędzie należące do $Q$.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/Orourke98}
+  \caption{\label{img:sickles}}
+\end{figure}
 
 Możemy zauważyć, że przechodząc w odpowiedniej kolejności,
-jednocześnie po zewnętrznych i wewnętrznych krawędziach sierpa
-ograniczymy sprawdzanie przecięć do krawędzi początkowych i końcowych
-danego sierpa. Z tego względu przy wyborze krawędzi do której mamy
-przejść w danym kroku, kierujemy się tym czy krawędź bieżąca może
-zawierać przecięcie, które dopiero mają być wykryte.
+jednocześnie po zewnętrznych i wewnętrznych krawędziach ,,sierpa''
+(rysunek~\ref{img:sickles}) ograniczymy sprawdzanie przecięć do
+krawędzi początkowych i końcowych danego sierpa. Z tego względu przy
+wyborze krawędzi, do której mamy przejść w danym kroku, kierujemy się
+tym, czy krawędź bieżąca może zawierać przecięcie, które dopiero ma
+być wykryte. Algorytm można przedstawić w postaci pseudokodu z
+listingu~\ref{alg:Orourke98}.
 
-Wybierzmy dowolną krawędź $p_{i-1}p_{i}$ z $P$ oraz dowolną krawędź
-$q_{j-1}q_{j}$ z $Q$. Będziemy przechodzić po krawędziach obu
-wielokątów w kierunku przeciwnym do ruch wskazówek zegara. W każdym
-kroku sprawdzamy przecięcie bieżących krawędzi $P$ i $Q$, oraz
-wybieramy krawędź do której podążymy w następnym kroku. Rozważmy
-sytuację z rysunku \ref{fig:advance}. Wektor krawędzi $p_{i-1}p_{i}$
-oznaczyliśmy jako $A$, a wektor krawędzi $q_{j-1}q_{j}$ jako $B$.
-Krawędzie obu wielokątów mają szanse przeciąć się tylko, jeżeli ich
-wektory są skierowane ku sobie. Ponadto, jeżeli $A \times B > 0$ i
-$p_{i}$ leży w półpłaszczyźnie $H(B)$ zdefiniowanej jako obszar na
-lewo od $B$, to wiemy, że powinniśmy przejść po krawędzi
-$q_{j}q_{j+1}$. Tak samo w sytuacji, jeżeli $A \times B < 0$ i $p_{i}$
-nie należy do $H(B)$. W przeciwnym przypadku przechodzimy po
-$p_{i}p_{i+1}$.
+\begin{figure}[htp]
 
-Jeżeli $P$ i $Q$ przecinają się to przecięcie zostanie znalezione po
-$O(L+M)$ krokach. Znając punkty przecięć dodatkowe $L+M$ kroków
-wystarcza do wyznaczenia brzegów przecięcia. Możemy tym samym
-stwierdzić, że jeżeli po $2(L+M)$ krokach nie odnajdziemy przecięcia
-to krawędzie $P$ i $Q$ nie przecinają się.
+  \begin{algorithmic}[1]
+    \Procedure{Intersection of Convex Polygons}{}
 
-\section{Algorytm Toussaint}
+    \State {$A \gets (p_0, p_1) \in P$}
+    \State {$B \gets (q_0, q_1) \in Q$}
+
+     \Repeat
+        \State {sprawdź przecięcie krawędzi $A$ z krawędzią $B$}
+        \State {w zależności od warunków przejdź po $A$ lub po $B$}
+     \Until {$A$ i $B$ nie ,,okrążą'' swoich wielokątów}
+
+    \EndProcedure
+  \end{algorithmic}
+  \caption{\label{alg:Orourke98}}
+\end{figure}
+
+Wybierzmy dowolną krawędź $A \in P$ oraz dowolną krawędź $B \in
+Q$. Będziemy przechodzić po krawędziach obu wielokątów w kierunku
+przeciwnym do ruch wskazówek zegara. W każdym kroku sprawdzamy
+przecięcie bieżących krawędzi $P$ i $Q$, i wybieramy krawędź, do
+której podążymy w następnym kroku.  Chcemy osiągnąć następujący
+działanie: jeżeli krawędź $B$ jest ,,skierowana'' w kierunku krawędzi
+$A$, ale jej nie przecina, to zbliżamy się do $A$ przechodząc po
+krawędzi $Q$ w miejsce możliwego przecięcia.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.7]{img/vectors}
+  \caption{\label{img:advance}}
+\end{figure}
+
+Rozważmy sytuację z rysunku~\ref{img:advance}. Niech $H(A)$ oznacza
+półpłaszczyznę po lewej stronie prostej współliniowej do krawędzi
+$A$. Pogrubiona strzałka to wektor krawędzi $A$, pozostałe to wektory
+krawędzi $B$.  Jako $A \times B > 0$ zapiszmy warunek, taki że
+współrzędna $z$ iloczynu wektorowego wektorów krawędzi $A$ i $B$ jest
+dodatnia (na rysunku~\ref{img:advance} oznaczone linią ciągłą). Jako
+$a$ oznaczmy ,,skierowany'' wierzchołek należący do krawędzi $A$, zaś
+jako $b$ ,,skierowany'' wierzchołek należący do krawędzi $B$. Przy
+wyborze krawędzi po której przejdziemy w bieżącym kroku stosujemy
+poniższą regułę. Jeżeli
+
+\begin{center}
+$A \times B > 0 $ i $b \notin H(A)$ lub $A \times B < 0 $ i $b \in H(A)$
+\end{center}
+
+to przechodzimy po B. W przypadku przeciwnym przechodzimy po $A$.
+
+Jeżeli $P$ i $Q$ przecinają się, to przecięcie zostanie znalezione po
+$O(N+M)$ krokach. Znając punkty przecięć, dodatkowe $N+M$ kroków
+wystarcza do wyznaczenia wszystkich wierzchołków tworzących brzeg
+przecięcia $P \cap Q$. Możemy tym samym stwierdzić, że jeżeli po
+$2(N+M)$ krokach nie odnajdziemy przecięcia to krawędzie $P$ i $Q$ nie
+przecinają się. Na koniec, jeżeli nie odnotowano przecięcia krawędzi,
+pozostaje sprawdzanie trzech końcowych warunków z
+listingu~\ref{alg:OrourkeFinalTerms}. Sprawdzenie, czy punkt zawiera
+się w wielokącie, tak jak to zostało pokazana w
+rozdziale~\ref{chap:point_location}, dla wielokąta prostego można
+wykonać w czasie liniowym, stąd złożoność czasowa całego algorytmy
+wynosi $O(n + m)$.
+
+\begin{figure}
+  \begin{algorithmic}[1]
+    \If {$p_i$ leży w $Q$}
+        \State $P$ zawiera się $Q$
+    \Else
+        \If {$q_j$ leży w $P$}
+                \State $Q$ zawiera się $P$
+        \Else
+                \State $P$ i $Q$ nie przecinają się
+        \EndIf
+    \EndIf
+  \end{algorithmic}
+  \caption{\label{alg:OrourkeFinalTerms}}
+\end{figure}
+
+\section{Algorytm Toussainta}
 Stosunkowo prosty koncepcyjnie i implementacyjnie algorytm, działający
-w czasie liniowym zaproponował Godfried T. Toussaint.
+w czasie liniowym zaproponował G. T. Toussaint w~\cite{ToussaintInt}.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.7]{img/toussaint1}
+  \caption{\label{img:toussaint1}}
+\end{figure}
 
 \subsection{Opis}
 Rozważmy dwa przecinające się, wypukłe wielokąty $P$ i $Q$, oraz
-otoczkę wypukłą sumy tych wielokątów $CH(P \cup Q)$ [rys]. Niech
-brzegi $P$ i $Q$ przecinają się w $k$ punktach $I_1, I_2, \ldots, I_k$
-ponumerowanych zgodnie z kierunkiem przeciwnym do ruchu wskazówek
-zegara. Brzegi $P$ i $Q$ oraz otoczka wypukła $CH(P \cup Q)$ dzielą
-płaszczyznę na $2k + 1$ ograniczonych regionów: obszar przecięcia
-wielokątów $P \cap Q$ wyznaczony przez punkty $I_1, I_2, \ldots, I_k$,
-$k$ regionów gdzie $P$ lub $Q$ należy do otoczki wypukłej $CH(P \cup
-Q)$, ale nie należy do obszaru $P \cap Q$ przecięcia tych wielokątów
-oraz analogiczne $k$ obszarów $K_1, K_2, \ldots, K_k$, które nazywać
-będziemy \emph{kieszeniami}, leżących wewnątrz otoczki wypukłej $CH(P
-\cup Q$), ale leżących na zewnątrz $P \cup Q$. Każdej kieszeni $K_v$
-przypisujemy odpowiadający jej punkt przecięcia $I_v$ oraz krawędź
-otoczki $CH(P \cup Q)$, którą będziemy nazywać \emph{mostem}, łączącą
-wierzchołek $p_i$ wielokąta $P$ oraz wierzchołek $q_j$ wielokąta $Q$ i
-oznaczymy ją jako $B_{v}(p_{i_v}, q_{j_v})$. Cały algorytm
-wyznaczający przecięcie wielokątów $P$ i $Q$ można przedstawić w
-trzech krokach (\ref{alg:interconpol}).
+otoczkę wypukłą sumy tych wielokątów $CH(P \cup Q)$
+(rysunek~\ref{img:toussaint1}). Niech brzegi $P$ i $Q$ przecinają się
+w $k$ punktach $I_1, I_2, \ldots, I_k$ ponumerowanych zgodnie z
+kierunkiem przeciwnym do ruchu wskazówek zegara. Brzegi $P$ i $Q$ oraz
+otoczka wypukła $CH(P \cup Q)$ dzielą płaszczyznę na $2k + 1$
+ograniczonych regionów: obszar przecięcia wielokątów $P \cap Q$
+wyznaczony przez punkty $I_1, I_2, \ldots, I_k$, $k$ regionów gdzie
+$P$ lub $Q$ należy do otoczki wypukłej $CH(P \cup Q)$, ale nie należy
+do obszaru $P \cap Q$ przecięcia tych wielokątów, oraz analogiczne $k$
+,,kieszonek'' $K_1, K_2, \ldots, K_k$, leżących wewnątrz otoczki
+wypukłej $CH(P \cup Q$), ale leżących na zewnątrz $P \cup Q$. Każdej
+kieszeni $K_v$ przypisujemy odpowiadający jej punkt przecięcia $I_v$
+oraz krawędź otoczki $CH(P \cup Q)$, którą będziemy nazywać
+\emph{mostem}, łączącą wierzchołek $p_i$ wielokąta $P$ oraz
+wierzchołek $q_j$ wielokąta $Q$ i oznaczymy ją jako $B_{v}(p_{i_v},
+q_{j_v})$. Cały algorytm wyznaczający przecięcie wielokątów $P$ i $Q$
+można przedstawić w trzech krokach (\ref{alg:interconpol}).
 
 \begin{figure}[htp]
 \begin{algorithmic}[1]
@@ -161,8 +243,9 @@ Poprawność algorytmu opiera się się na poniższych założeniach:
   półpłaszczyznę na prawo od $L(u, v)$. Analogicznie, jako $LH(u, v)$
   oznaczmy półpłaszczyznę leżącą na lewo od $L(u, v)$.
 
-  Niech $B(p_i, q_j)$ będzie mostem (rys.). $L(p_i, q_j)$ jest linią
-  wsparcia dla $P$ i $Q$ jednocześnie więc $P$ i $Q$ muszą leżeć w
+  Niech $B(p_i, q_j)$ będzie mostem
+  (rysunek~\ref{img:toussaint2}). $L(p_i, q_j)$ jest linią wsparcia
+  dla $P$ i $Q$ jednocześnie więc $P$ i $Q$ muszą leżeć w
   półpłaszczyźnie $RH(p_i, q_j)$. Przejdźmy po brzegu $P$ zaczynając
   od $p_i$ w kierunku zgodnym z ruchem wskazówek zegara dopóki nie
   natrafimy na krawędź $P$ przecinającą krawędź $Q$. Punkt przecięcia
@@ -181,6 +264,12 @@ Poprawność algorytmu opiera się się na poniższych założeniach:
   istnieć krawędź $(p_i, q_j) \in CH(P \cup Q)$, która przecina region
   $R$ i jest nią most odpowiadający punktowi przecięcia $I$.
 \end{proof}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.7]{img/toussaint2}
+  \caption{\label{img:toussaint2}}
+\end{figure}
 
 \begin{lemat}
   Algorytm poprawnie wyznacza punkt przecięcia dla odpowiadającego mu
@@ -216,6 +305,13 @@ Poprawność algorytmu opiera się się na poniższych założeniach:
     Czubek wielokąta żaglokształtnego jest \emph{uchem}.
   \end{lemat}
 
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.7]{img/toussaint3}
+    \caption{\label{img:toussaint3}}
+  \end{figure}
+
+
   \begin{definicja}\label{def:ear}
     Niech $p_i, p_{i+1}, p_{i+2}$ będą trzema kolejnymi, następującymi
     po sobie wierzchołkami należącymi do wielokąta $P$. Jeżeli
@@ -231,15 +327,15 @@ Poprawność algorytmu opiera się się na poniższych założeniach:
   \begin{proof}
     Rozszerzmy krawędź $(p_j,p_{j-1})$ i $(p_j, p_{j+1})$ tak by
     przecinały linię $L(p_i, p_{i+1})$ odpowiednio w punktach $x$ i
-    $y$ (rys.). Ze względu na to, że $p_j$ jest połączony z $p_i$
-    łańcuchem wypukłym punkt $x$ musi leżeć odcinku $(p_i, p_{i+1})$
-    będącym masztem $P$. Analogicznie, punkt $y$ musi leżeć na maszcie
-    $P$. Punkty $p_j, p_{j-1}, x, y, p_{j+1}, p_j$, tworzą obszar
-    znajdujący się w całości w $P$, stąd przekątna $(p_{j-1},
-    p_{j+1})$ również musi leżeć w $P$.
+    $y$ (rysunek~\ref{img:toussaint3}). Ze względu na to, że $p_j$ jest
+    połączony z $p_i$ łańcuchem wypukłym punkt $x$ musi leżeć odcinku
+    $(p_i, p_{i+1})$ będącym masztem $P$. Analogicznie, punkt $y$ musi
+    leżeć na maszcie $P$. Punkty $p_j, p_{j-1}, x, y, p_{j+1}, p_j$,
+    tworzą obszar znajdujący się w całości w $P$, stąd przekątna
+    $(p_{j-1}, p_{j+1})$ również musi leżeć w $P$.
   \end{proof}
 
-  \begin{twierdzenie}[G.H. Meisters 1975]\label{thm:meisters}
+  \begin{twierdzenie}[Meisters 1975~\cite{Meisters75}]\label{thm:meisters}
     Każdy wielokąt o $n$ krawędziach ($n > 3$) ma co najmniej dwoje nie
     nachodzących na siebie uszu.
   \end{twierdzenie}
@@ -316,17 +412,16 @@ Q)$, a wyjściem para wierzchołków $p_s$ i $q_t$, gdzie $(p_s,p_{s+1})
 p_{i}p_{i+1}q_{j+1}$ \emph{jest lewoskrętny} oraz $\angle
 q_{j}q_{j+1}p_{i+1}$ \emph{jest prawoskrętny} w pętlach \textbf{while}
 zapewnia, że w każdym kroku odetniemy ucho oraz, że nie przejdziemy
-przez czubek żagla. Przebieg procedury \emph{Stepdown} przedstawia
-rys..
+przez czubek żagla.
 
 \subsection{Złożoność}
 Niech $n$ oznaczana liczbę wierzchołków wielokąta $P$, a $m$ liczbę
 wierzchołków wielokąta $Q$. Znalezienie otoczki wypukłej dwóch
 przecinających się wielokątów wypukłych może być wykonane w czasie
-$O(m + n)$ [ref]. Autor algorytmu, Godfried Toussaint proponuje
-wykorzystać algorytm \emph{obracających się suwmiarek (rotating
-  calipers)}[ref], pozwalający w tym samym czasie stwierdzić czy $CH(P
-\cup Q) = P$ lub $CH(P \cup Q) = Q$.
+$O(m + n)$\cite{Toussaint83}. W~\cite{ToussaintInt}, G. Toussaint
+proponuje wykorzystać technikę \emph{rotating calipers}, pozwalający
+w tym samym czasie stwierdzić czy $CH(P \cup Q) = P$ lub $CH(P \cup Q)
+= Q$.
 
 Procedura znajdująca przecięcie $I_k$ jest wywoływana $k$ razy. Każde
 wywołanie wymaga czasu liniowego zależnego od liczby wierzchołków

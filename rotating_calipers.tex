@@ -1,4 +1,5 @@
-\chapter{Algorytmy z wykorzystaniem techniki \emph{rotating calipers}\label{chap:calipers}}
+\chapter{Algorytmy z wykorzystaniem techniki \emph{rotating
+    calipers}\label{chap:calipers}}
 Użyty w rozdziale~\ref{chap:diameter} algorytm można zobrazować jako
 zestaw obracających się suwmiarek i jako ogólną metodę można
 zastosować przy rozwiązywaniu innych problemów geometrycznych dla
@@ -9,28 +10,31 @@ w czasie $O(n)$.
 W tej sekcji zostanie przedstawiony algorytm wyznaczania średnicy z
 poprzedniego rozdziału w kontekście techniki \emph{rotating calipers}.
 
-% \subsection{Opis algorytmu}
 Niech $P = (p_1, p_2, \ldots, p_n)$ będzie wielokątem
-wypukłym. Algorytm z rozdziału \ref{chap:diameter} znajduję wszystkie
-pary antypodyczne, a następnie wybiera tę parę, która jest najbardziej
-od siebie oddalona, będącą średnicą (na podstawie
-tw. \ref{thm:yagbol}). Do znalezienia punktów antypodycznych możemy
-użyć suwmiarki składającej się z dwóch równoległych linii
-wsparcia. Rozważmy rysunek (). Jako początkową pozycję linii wsparcia
+wypukłym. Algorytm z rozdziału~\ref{chap:diameter} znajduję wszystkie
+pary antypodyczne, a następnie wybiera z nich najbardziej od siebie
+oddalona parę wierzchołków, będących średnicą (na podstawie
+twierdzenia~\ref{thm:yagbol}). Do znalezienia punktów antypodycznych
+możemy użyć suwmiarki składającej się z dwóch równoległych linii
+wsparcia. Rozważmy rysunek~\ref{img:calipers1}. Jako początkową pozycję linii wsparcia
 wyznaczmy prostą równoległą do osi $x$ przechodząca przez wierzchołek
 $P$ położony najwyżej względem osi $y$ oraz równoległą do niej prostą
 przechodząca przez wierzchołek $P$ położony najniżej na osi
 $y$. Punkty $p_i$ i $p_j$ są pierwszą znalezioną parą
 antypodyczną. Aby znaleźć następną, rozważmy kąty, które tworzy linia
 wsparcia przechodząca przez $p_i$ z krawędzią $(p_i, p_{i+1})$ oraz
-linia wsparcie przechodząca przez $p_j$ z krawędzią $(p_j, p_{j+1})$.
+linia wsparcia przechodząca przez $p_j$ z krawędzią $(p_j, p_{j+1})$.
 Jeżeli $\angle{\theta_j} < \angle{\theta_i}$ to obracamy linie
 wsparcia o kąt $\theta_j$, w przeciwnym przypadku obracamy linie
 wsparcia o kąt $\theta_i$. Punkty $(p_{j+1}, p_i)$ stają się następną
 parą antypodyczną. Proces powtarzamy do momentu gdy linie wsparcia
 wykonają pełny obrót tj. gdy $p_j = p_{i_0}$ i $p_i = p_{j_0}$.
 
-% rysunek
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/calipers1}
+  \caption{\label{img:calipers1}}
+\end{figure}
 
 % pseudokod
 
@@ -49,14 +53,14 @@ optymalnego upakowania.
 
 Algorytm z wykorzystaniem suwmiarek opiera się na twierdzeniu:
 
-\begin{twierdzenie}[Freeman-Shapira]
+\begin{twierdzenie}[Freeman-Shapira 1975~\cite{FreeShap75}]
   Najmniejszy prostokąt zawierający wielokąt $P$, posiada bok
-  \emph{kolinearny} z bokiem $P$.
+  współliniowy z bokiem $P$.
 \end{twierdzenie}
 
 Jako $L_s(p_i)$ będziemy oznaczać skierowaną linię wsparcia wielokąta
 w wierzchołku $p_i$, taką, że $P$ znajduję się po prawej stronie
-linii. Rozważmy rysunek (). W pierwszym kroku znajdujemy wierzchołki,
+linii. Rozważmy rysunek~\ref{img:calipers2}. W pierwszym kroku znajdujemy wierzchołki,
 o minimalnych i maksymalnych współrzędnych $x$ i $y$. Oznaczmy te
 wierzchołki jako $p_i$, $p_j$, $p_k$, $p_l$. Niech para linii
 $L_s(p_j)$ i $L_s(p_l)$ będzie \emph{suwmiarką} pierwszą suwmiarką,
@@ -73,6 +77,12 @@ prostokąty zawierające tj. obydwie suwmiarki wykonają pełny obrót
 wokół $P$. Ze wszystkich wyznaczonych w ten sposób prostokątów
 zawierający wybieramy najmniejszy.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/calipers2}
+  \caption{\label{img:calipers2}}
+\end{figure}
+
 \section{Największa odległość\label{sec:max_dist}}
 \begin{problem}
   Niech $P = (p_1, p_2, \ldots, p_n)$ oraz $Q = (q_1, q_2, \ldots,
@@ -87,32 +97,44 @@ wypukłymi nie musi być równa średnicy otoczki wypukłej $P \cup Q$,
 więc nie możemy wykorzystać algorytmu wyznaczającego średnicę do
 rozwiązania tego problemu.
 
-Rozważmy rysunek (). W pierwszym kroku znajdźmy dwa punkty z których
-jeden $p_i$ należy do $P$, a drugi $q_j$ do $Q$, tak aby linie
-wsparcia $L_s(p_i)$ i $L_s(p_j)$ były równoległe. Możemy na przykład
-wybrać punkty o skrajnym położeniu względem osi $y$. Niech $L_s(p_i)$
-i $L_s(q_j)$ będą liniami skierowanymi w przeciwnych
+Rozważmy rysunek~\ref{img:calipers3}. W pierwszym kroku znajdźmy dwa
+punkty z których jeden $p_i$ należy do $P$, a drugi $q_j$ do $Q$, tak
+aby linie wsparcia $L_s(p_i)$ i $L_s(p_j)$ były równoległe. Możemy na
+przykład wybrać punkty o skrajnym położeniu względem osi $y$. Niech
+$L_s(p_i)$ i $L_s(q_j)$ będą liniami skierowanymi w przeciwnych
 kierunkach. Utworzone w ten sposób linie wsparcia tworzą kąt
 $\angle{\theta_i}$ z krawędzią $(p_i, p_{i+1}) \in P$ oraz
 kat$\angle{\phi_j}$ z krawędzią $(q_j, q_{j+1}) \in Q$. Wyznaczamy
 odległość między $p_i$ i $q_j$. Wybieramy mniejszy z kątów $\phi$ i
 $\theta$, a następnie obracamy obydwie linie wsparcia o ten
 kąt. Proces powtarzamy do czasu gdy linie wsparcia wykonają pełny
-obrót wokół wielokątów. W ostatnim kroku wybieramy najmniejszą z
+obrót wokół wielokątów. W ostatnim kroku wybieramy największą z
 wyznaczonych odległości między punktami.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/calipers3}
+  \caption{\label{img:calipers3}}
+\end{figure}
 
 \section{Łączenie otoczek wypukłych}
 \begin{problem}
-  Dla $CH(P)$ i $CH(Q)$ będącymi \emph{otoczkami wypukłymi} zbiorów $P$ i
+  Dla $CH(P)$ i $CH(Q)$ będącymi otoczkami wypukłymi zbiorów $P$ i
   $Q$, znaleźć otoczkę wypukłą $CH(CH(P) \cup CH(Q))$.
 \end{problem}
 
-W algorytmach typu \emph{dziel i rządź} wyznaczających otoczkę wypukłą
-zbioru punktów, końcowym etapem jest łączenie otoczek uzyskanych w
-poprzednim kroku, uzyskując w ten sposób coraz większe otoczki, aż do
-uzyskania otoczki wypukłej całego zbioru. Jeśli łącznie zostałoby
-przeprowadzone w czasie liniowym, złożoność czasowa całego algorytmu
-wyniesie $O(n \log n)$[].
+W algorytmach typu \emph{dziel i zwyciężaj} wyznaczających otoczkę
+wypukłą zbioru punktów, końcowym etapem jest łączenie otoczek
+uzyskanych w poprzednim kroku, uzyskując w ten sposób coraz większe
+otoczki, aż do uzyskania otoczki wypukłej całego zbioru. Jeśli łącznie
+zostałoby przeprowadzone w czasie liniowym, złożoność czasowa całego
+algorytmu w najlepszym przypadku wyniesie $O(n \log n)$~\cite{Graham72}.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.5]{img/calipers4}
+  \caption{\label{img:calipers4}}
+\end{figure}
 
 Rozważmy dwa wielokąty wypukłe $P$ i $Q$ będącymi otoczkami wypukłymi
 pewnych zbiorów punktów (rys). W tym przypadku wyznaczenie otoczki
@@ -124,7 +146,7 @@ q_k)$ i $(p_j, q_l)$ będziemy nazywać \emph{mostami}, a wierzchołki
 tworzące most będziemy nazywać \emph{punktami mostu}.
 
 Algorytm wykorzystujący suwmiarki do wyznaczania mostów opiera się na
-następującym twierdzeniu:
+następującym twierdzeniu~\cite{Toussaint83}.
 
 \begin{twierdzenie}
 \label{thm:bridge}
@@ -135,7 +157,10 @@ następującym twierdzeniu:
 \end{twierdzenie}
 
 \begin{definicja}
-  Para kopodalna
+  Niech będą dane dwa wielokąty wypukłe $P$ i $Q$. Para punktów $p \in
+  P$ i $q \in Q$ jest \emph{parą kopodoalną między $P$ i $Q$}, jeżeli
+  można skonstruować równoległe proste wspierające styczne do
+  wierzchołków $p$ i $q$ odpowiednio.
 \end{definicja}
 
 Po wyznaczeniu pozycji suwmiarek, analogicznie jak w algorytmie
@@ -146,8 +171,8 @@ punkcie $p_i$ z krawędzią $(p_{i+1}, p_{i+2})$ oraz linia wsparcia
 wielokąta $Q$ z krawędzią $(q_{j+1}, q_{j+2})$. Obydwie suwmiarki
 obracamy o mniejszy z tych kątów. Przed każdym kolejnym obrotem
 sprawdzamy czy aktualna para wierzchołków $p_i, q_j$ spełnia warunek
-zawarty w tw.\ref{thm:bridge}. Ponieważ przy każdym obrocie suwmiarek
-generowana jest nowa para kopodalną, pozostaje sprawdzić czy
+zawarty w twierdzenie~\ref{thm:bridge}. Ponieważ przy każdym obrocie
+suwmiarek generowana jest nowa para kopodalną, pozostaje sprawdzić czy
 wierzchołki $p_{i-1}, p_{i+1}, q_{j-1}, q_{j+1}$ leżą po tej samej
 stronie prostej $L(p_i, q_j)$. Algorytm znajdowania mostów w przypadku
 łączenia otoczek rozdzielnych wypukłych, tak jak ma to miejsce w
@@ -155,8 +180,8 @@ przypadku algorytmu dziel i rządź wyznaczania otoczki wypukłej zbioru
 punktów, można zakończyć po znalezieniu obydwu mostów.
 
 Niech liczba wierzchołków $P$ wynosi $n$, a liczba wierzchołków $Q$
-wynosi $m$. Par ko-podalnych jest $k < n + m$. Sprawdzenie czy para
-ko-podalna jest mostem odpobywa się w czasie $O(1)$, stąd złożoność
+wynosi $m$. Par kopodalnych jest $k < n + m$. Sprawdzenie czy para
+kopodalna jest mostem odpobywa się w czasie $O(1)$, stąd złożoność
 czasowa algorytmu wyznaczającego mosty jest liniowa i wynosi $O(k)$.
 
 %%% Local Variables:
