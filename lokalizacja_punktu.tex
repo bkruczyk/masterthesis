@@ -21,46 +21,56 @@
   \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) -- (p5) -- cycle;
 }
 
+\newcommand{\nonconvex}{
+  \coordinate (p0) at (4.5,2);
+  \coordinate (p1) at (2,4);
+  \coordinate (p2) at (0,3);
+  \coordinate (p3) at (1.5,2);
+  \coordinate (p4) at (2,0);
+  \coordinate (p5) at (3,1.5);
+
+  \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) -- (p5) -- cycle;
+}
+
 \chapter{Lokalizacja punktu\label{chap:point_location}}
 Problem lokalizacji punktu sformułowany jest następująco.
 
 \begin{problem}[Lokalizacja punktu]
-  Jeśli dany jest wielokąt prosty $P$ i punkt $z$ na płaszczyźnie,
-  sprawdzić, czy punkt $z$ należy do $P$.
+  Jeśli dany jest wielokąt prosty $P$ i punkt $z$ na płaszczyźnie
+  $\mathbb{R}^2$, sprawdzić, czy punkt $z$ należy do $P$.
 \end{problem}
 
-Problem ten można rozwiązać w czasie $O(n)$ bez przetwarzania
+Problem ten można rozwiązać w czasie liniowym bez przetwarzania
 wstępnego. Rozważmy poziomą prostą $l$ przechodząca przez punkt
 $z$. Musimy rozważyć kilka przypadków.
 
-Jeśli $l$ nie przecina $P$, to $z$ leży na zewnątrz wielokąta.
+Jeśli $l$ nie przecina $P$, to $z$ leży na zewnątrz wielokąta
+(rysunek~\ref{fig:location1}).
+
 \begin{figure}[htp]
   \centering
   \begin{tikzpicture}
-    \convexA
+    \nonconvex
 
     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
     label={right:$p_0$}] at (p0) {};
 
     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={45:$p_1$}] at (p1) {};
+    label={above:$p_1$}] at (p1) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={above:$p_2$}] at (p2) {};
+    sep=0.5pt,label={left:$p_2$}] at (p2) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={135:$p_3$}] at (p3) {};
+    sep=0.5pt,label={190:$p_3$}] at (p3) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={left:$p_4$}] at (p4) {};
+    sep=0.5pt,label={below:$p_4$}] at (p4) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    sep=0.5pt,label={300:$p_5$}] at (p5) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={315:$p_6$}] at (p6) {};
-
-    \coordinate (z) at (3,-1);
+    \coordinate (z) at (2.5,-1);
     \coordinate (l) at (-1,-1);
 
     \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
@@ -68,105 +78,98 @@ Jeśli $l$ nie przecina $P$, to $z$ leży na zewnątrz wielokąta.
     \node [anchor=center,circle,draw,fill,inner
     sep=0.5pt,label={below:$z$}] at (z) {};
 
-    \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
+    \node [label={[label distance=0.3cm]177:$l$}] at (l) {};
   \end{tikzpicture}
-  \caption{}
+  \caption{\label{fig:location1}}
 \end{figure}
 
 W przypadku, gdy prosta $l$ przecina $P$ i nie przechodzi przez
-żaden z wierzchołków $P$, oznaczmy jako $p_l$ liczbę przecięć $l$ z
+żaden z wierzchołków $P$, oznaczmy przez $p_l$ liczbę przecięć $l$ z
 wielokątem $P$. Wiemy, że lewy koniec $l$ leży na zewnątrz $P$, więc
 przesuwając się po prostej $l$ w prawo w kierunku $z$ i przecinając
 brzeg wielokąta, przechodzimy do jego wnętrza. Przy następnym
 przecięciu z brzegiem $P$ znowu znajdziemy się na zewnątrz
 itd. Widzimy stąd, że $z$ jest na zewnątrz wielokąta $P$ wtedy i
-tylko wtedy, gdy $p_l$ jest parzyste.
+tylko wtedy, gdy $p_l$ jest parzyste (rysunek~\ref{fig:location2}).
 
 \begin{figure}[htp]
   \centering
   \begin{tikzpicture}
-    \convexA
+    \nonconvex
 
     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
     label={right:$p_0$}] at (p0) {};
 
     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={45:$p_1$}] at (p1) {};
+    label={above:$p_1$}] at (p1) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={above:$p_2$}] at (p2) {};
+    sep=0.5pt,label={left:$p_2$}] at (p2) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={135:$p_3$}] at (p3) {};
+    sep=0.5pt,label={190:$p_3$}] at (p3) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={left:$p_4$}] at (p4) {};
+    sep=0.5pt,label={below:$p_4$}] at (p4) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    sep=0.5pt,label={300:$p_5$}] at (p5) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={315:$p_6$}] at (p6) {};
-
-    \coordinate (z) at (3,2.5);
+    \coordinate (z) at (2.5,2.5);
     \coordinate (l) at (-1,2.5);
 
     \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
 
     \node [anchor=center,circle,draw,fill,inner
     sep=0.5pt,label={below:$z$}] at (z) {};
-    \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
+    \node [label={[label distance=0.3cm]177:$l$}] at (l) {};
   \end{tikzpicture}
-  \caption{}
+  \caption{\label{fig:location2}}
 \end{figure}
 
-Specjalnym przypadkiem jest ten, w którym $l$ przechodzi przez
-jeden lub dwa wierzchołki. W algorytmie rozważamy przecięcia $l$ z
-krawędziami $P$, więc musimy się zabezpieczyć przed sytuacją, w
-której policzylibyśmy przecięcie brzegu $P$ dwukrotnie. Stosujemy tu
-zasadę, że $p_l$ zostanie zwiększone dla przecinanej krawędzi,
-której jeden z wierzchołków znajduje się powyżej prostej
-$l$. Zauważmy, że w przypadku gdy prosta $l$ przechodzi przez oba
-wierzchołki krawędzi $e$ wielokąta, przecięcie z $e$ nie jest
-zliczane.
+Szczególnym przypadkiem jest ten, w którym $l$ przechodzi przez jeden
+lub dwa wierzchołki. W algorytmie rozważamy przecięcia $l$ z
+krawędziami $P$, więc musimy się zabezpieczyć przed sytuacją, w której
+policzylibyśmy przecięcie brzegu $P$ dwukrotnie. Stosujemy tu zasadę,
+że $p_l$ zostanie zwiększone dla przecinanej krawędzi, której jeden z
+wierzchołków znajduje się powyżej prostej $l$. Zauważmy, że w
+przypadku, gdy prosta $l$ przechodzi przez oba wierzchołki krawędzi
+$e$ wielokąta, przecięcie z $e$ nie jest zliczane.
 
 \begin{figure}[htp]
   \centering
   \begin{tikzpicture}
-    \convexA
+    \nonconvex
 
     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={-10:$p_0$}] at (p0) {};
+    label={below:$p_0$}] at (p0) {};
 
     \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={45:$p_1$}] at (p1) {};
+    label={above:$p_1$}] at (p1) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={above:$p_2$}] at (p2) {};
+    sep=0.5pt,label={left:$p_2$}] at (p2) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={135:$p_3$}] at (p3) {};
+    sep=0.5pt,label={190:$p_3$}] at (p3) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={235:$p_4$}] at (p4) {};
+    sep=0.5pt,label={below:$p_4$}] at (p4) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    sep=0.5pt,label={300:$p_5$}] at (p5) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={315:$p_6$}] at (p6) {};
-
-    \coordinate (z) at (3,2);
+    \coordinate (z) at (2.5,2);
     \coordinate (l) at (-1,2);
 
     \draw [shorten >=-3cm, shorten <=-1cm] (l) -- (z);
 
     \node [anchor=center,circle,draw,fill,inner
     sep=0.5pt,label={below:$z$}] at (z) {};
-    \node [label={[label distance=-0.2cm]above:$l$}] at (l) {};
+    \node [label={[label distance=0.3cm]177:$l$}] at (l) {};
   \end{tikzpicture}
-  \caption{Przecięcie zostanie policzone dla krawędzi $p_{4}p_{5}$
-    oraz $p_{6}p_{0}$.}
+  \caption{Przecięcie zostanie policzone dla krawędzi $p_{2}p_{3}$
+    oraz $p_{0}p_{1}$.}
 \end{figure}
 
 Ze względu na to, że każdą krawędź $P$ sprawdzamy tylko raz
@@ -182,7 +185,7 @@ wierzchołki, a następnie poprowadźmy $N$ półprostych z $q$
 przechodzących przez wierzchołki $P$. Płaszczyzna wraz z wielokątem
 zostaje podzielona na $N$ części, które nazywamy \emph{klinami}, z
 których każdy jest podzielony przez krawędź $P$ na dwie części ---
-jest to wnętrze i zewnętrze wielokąta.
+jest to wnętrze i zewnętrze wielokąta (rysunek~\ref{fig:location3}).
 
 \begin{figure}[htp]
   \centering
@@ -223,22 +226,21 @@ jest to wnętrze i zewnętrze wielokąta.
     \node [anchor=center,circle,draw,fill,inner
     sep=0.5pt,label={-170:$q$}] at (z) {};
   \end{tikzpicture}
-  \caption{}
+  \caption{\label{fig:location3}}
 \end{figure}
 
-Załóżmy, że brzeg wielokąta $P$ tworzą wierzchołki $p_0, \ldots,
-p_{N-1}$, ponumerowane w kolejności przeciwnej do ruchu wskazówek
-zegara. Wyszukiwanie położenia danego punktu $z$ składa się z dwóch
-etapów. Najpierw określany jest klin, w którym leży $z$. Można to
-zrobić w czasie $O(\log N)$ używając wyszukiwania binarnego.
-
+W tej pracy będziemy zakładać, że brzeg wielokąta $P$ tworzą
+wierzchołki $p_0, \ldots, p_{N-1}$, ponumerowane w kolejności
+przeciwnej do ruchu wskazówek zegara. Wyszukiwanie położenia danego
+punktu $z$ składa się z dwóch etapów. Najpierw określany jest klin, w
+którym leży $z$. Można to zrobić w czasie $O(\log N)$ używając
+wyszukiwania binarnego.
 % % nie działa w pewnych przypadkach
 % Punkt $z$ będzie znajdował się pomiędzy promieniami $p_i$ i $p_{i+n}$
 % podzielonej płaszczyzny wtedy i tylko wtedy, gdy kąt $\angle p_{i}qz$
 % będzie lewoskrętny, a kąt $\angle p_{i+n}qz$ prawoskrętny. W
 % następnych krokach stopniowo zawężamy nasz obszar poszukiwań, do czasu
 % aż odnajdziemy właściwy klin.
-
 Następnie określamy, czy $z$ należy do wnętrza lub zewnętrza
 znalezionego klinu. Jeśli kąt $\angle p_{i}p_{i+1}z$ jest lewoskrętny,
 to $z$ jest wewnętrzny. Określenie skrętności kąta jest operacją o
@@ -324,7 +326,7 @@ oraz umieszczenie wielokąta w strukturze danych wspierającej
 wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$. Algorytm
 wyszukiwania klina został przedstawiony za pomocą pseudokodu z
 listingu~\ref{alg:findwedge}. Należy zauważyć, że indeksy wierzchołków
-są wyliczane za pomocą działania \emph{modulo} $N$. Innymi słowy
+są wyliczane za pomocą działania \emph{modulo} $N$. Innymi słowy,
 następnikiem wierzchołka $p_{N-1}$ jest wierzchołek $p_0$.
 
 % Przyjęto także założenie, że brzeg $P$ należy do jego wnętrza.
