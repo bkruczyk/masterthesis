@@ -44,6 +44,7 @@ wypukłych.
         x_2 & y_2 & 1 \\
         x_3 & y_3 & 1
       \end{vmatrix}
+      .
     \end{math}
   \end{center}
 
@@ -68,10 +69,10 @@ wypukłych.
   Mówimy, że funkcja $f\colon \mathbb{N} \to \mathbb{R}$ jest co
   najwyżej rzędu $g$ (jest \emph{ograniczona} przez funkcję $g\colon
   \mathbb{N} \to \mathbb{R}$), gdy istnieją takie stałe $n_0 > 0$ oraz
-  $c > 0$, że:
+  $c > 0$, że
 
   \begin{center}
-    $\forall n \geq n_0\ f(n) \leq c \cdot g(n)$
+    $\forall n \geq n_0\ f(n) \leq c \cdot g(n)$.
   \end{center}
 \end{definicja}
 
@@ -80,9 +81,9 @@ W niniejszej pracy do opisu wydajności algorytmów będziemy korzystać z
 wzrostu wartości funkcji względem jej argumentów, w algorytmice
 stosowana do charakterystyki złożoności obliczeniowej algorytmów
 opisując ilość potrzebnych zasobów (czasu lub pamięci) w stosunku do
-rozmiaru danych wejściowych. Zgodnie z notacją, złożoność czasową
+rozmiaru danych wejściowych. Zgodnie z tą notacją złożoność czasową
 algorytmu o czasie działania $T(n) = f(n)$, gdzie $f(n)$ spełnia
-definicję~\ref{def:bigo} zapisalibyśmy jako $T(n) = O(g(n))$.
+definicję~\ref{def:bigo}, zapisalibyśmy jako $T(n) = O(g(n))$.
 
 \begin{table}[htb]
   \centering
@@ -101,7 +102,7 @@ definicję~\ref{def:bigo} zapisalibyśmy jako $T(n) = O(g(n))$.
     \midrule
     $O(n^c)$ & wielomianowa \\
     \midrule
-    $O(c^n)$ & wykładnicza \\
+    $O(c^n)$ & wykładnicza $(c > 1)$ \\
     \midrule
     $O(n!)$ & ograniczona przez silnię \\
     \bottomrule
@@ -111,9 +112,9 @@ definicję~\ref{def:bigo} zapisalibyśmy jako $T(n) = O(g(n))$.
     podane według rosnącej złożoności.}
 \end{table}
 
-W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego będziemy
-nazywać algorytm o mniejszej złożoności obliczeniowej niż najlepszy
-znany algorytm uogólniony dla wielokąta prostego dla tego samego
+W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego
+będziemy nazywać algorytm o mniejszej złożoności obliczeniowej niż
+najlepszy znany algorytm dla wielokąta prostego dla tego samego
 problemu.
 
 % przyjęte oznaczenia
