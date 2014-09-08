@@ -1,34 +1,39 @@
-\chapter{Algorytmy z wykorzystaniem techniki \emph{rotating
-    calipers}\label{chap:calipers}}
+\chapter{Metoda \emph{rotating calipers}\label{chap:calipers}}
 Użyty w rozdziale~\ref{chap:diameter} algorytm można zobrazować jako
 zestaw obracających się suwmiarek i jako ogólną metodę można
 zastosować przy rozwiązywaniu innych problemów geometrycznych dla
-wielokątów wypukłych, pozwalająca na uzyskanie algorytmów działających
-w czasie $O(n)$.
+wielokątów wypukłych; pozwala to na uzyskanie algorytmów działających
+w czasie liniowym.
 
 \section{Wyznaczanie średnicy}
 W tej sekcji zostanie przedstawiony algorytm wyznaczania średnicy z
-poprzedniego rozdziału w kontekście techniki \emph{rotating calipers}.
+poprzedniego rozdziału z użyciem techniki \emph{rotating calipers}.
 
-Niech $P = (p_1, p_2, \ldots, p_n)$ będzie wielokątem
-wypukłym. Algorytm z rozdziału~\ref{chap:diameter} znajduję wszystkie
-pary antypodyczne, a następnie wybiera z nich najbardziej od siebie
-oddalona parę wierzchołków, będących średnicą (na podstawie
-twierdzenia~\ref{thm:yagbol}). Do znalezienia punktów antypodycznych
-możemy użyć suwmiarki składającej się z dwóch równoległych linii
-wsparcia. Rozważmy rysunek~\ref{img:calipers1}. Jako początkową pozycję linii wsparcia
-wyznaczmy prostą równoległą do osi $x$ przechodząca przez wierzchołek
-$P$ położony najwyżej względem osi $y$ oraz równoległą do niej prostą
-przechodząca przez wierzchołek $P$ położony najniżej na osi
-$y$. Punkty $p_i$ i $p_j$ są pierwszą znalezioną parą
-antypodyczną. Aby znaleźć następną, rozważmy kąty, które tworzy linia
-wsparcia przechodząca przez $p_i$ z krawędzią $(p_i, p_{i+1})$ oraz
-linia wsparcia przechodząca przez $p_j$ z krawędzią $(p_j, p_{j+1})$.
-Jeżeli $\angle{\theta_j} < \angle{\theta_i}$ to obracamy linie
-wsparcia o kąt $\theta_j$, w przeciwnym przypadku obracamy linie
-wsparcia o kąt $\theta_i$. Punkty $(p_{j+1}, p_i)$ stają się następną
-parą antypodyczną. Proces powtarzamy do momentu gdy linie wsparcia
-wykonają pełny obrót tj. gdy $p_j = p_{i_0}$ i $p_i = p_{j_0}$.
+Niech $P = (p_0, p_2, \ldots, p_{n-1})$ będzie wielokątem wypukłym
+oraz niech jego wierzchołki będą ponumerowane zgodnie z ruchem
+wskazówek zegara. Algorytm z rozdziału~\ref{chap:diameter} znajduje
+wszystkie pary antypodyczne, a następnie wybiera z nich najbardziej od
+siebie oddalona parę wierzchołków, definiujących średnicę (na
+podstawie twierdzenia~\ref{thm:yagbol}). Do znalezienia punktów
+antypodycznych możemy użyć suwmiarki składającej się z dwóch
+równoległych prostych wspierających. Rozważmy
+rysunek~\ref{img:calipers1}. Jako początkową pozycję prostych
+wspierających wyznaczmy prostą równoległą do osi $x$ przechodząca
+przez wierzchołek wielokąta $P$ położony najwyżej względem osi $y$
+oraz równoległą do niej prostą przechodząca przez wierzchołek
+wielokąta $P$ położony najniżej względem osi $y$. Punkty $p_i$ i $p_j$
+są pierwszą znalezioną parą antypodyczną. Aby znaleźć następną,
+rozważmy kąty, które tworzy prosta wspierająca przechodząca przez
+$p_i$ z krawędzią $(p_i, p_{i+1})$ oraz prosta wspierająca
+przechodząca przez $p_j$ z krawędzią $(p_j, p_{j+1})$.  Jeżeli
+$\angle{\theta_j} < \angle{\theta_i}$ to obracamy proste wspierające o
+kąt $\theta_j$, w przeciwnym przypadku obracamy proste wspierające o
+kąt $\theta_i$. Para $(p_{j+1}, p_i)$ staje się następną parą
+antypodyczną. Proces powtarzamy do momentu, gdy proste wspierające
+zamienią się miejscami tj. gdy $p_j = p_{i_0}$ i $p_i = p_{j_0}$,
+gdzie $p_{i_0}$ to wierzchołek styczny do początkowej pozycji
+pierwszej prostej wspierającej, a $p_{j_0}$ to wierzchołek styczny do
+początkowej pozycji drugiej prostej wspierającej.
 
 \begin{figure}[htb]
   \centering
@@ -39,43 +44,44 @@ wykonają pełny obrót tj. gdy $p_j = p_{i_0}$ i $p_i = p_{j_0}$.
 % pseudokod
 
 \section{Najmniejszy prostokąt zawierający}
-Problem najmniejszego prostokąta zawierającego zdefiniujmy
-następująco:
+Problem najmniejszego prostokąta zawierającego zdefiniowany
+następująco.
 
 \begin{problem}[Najmniejszy prostokąt zawierający]
   Dla wielokąta wypukłego $P$ znaleźć najmniejszy prostokąt taki, żeby
   $P$ był w nim zawarty.
 \end{problem}
 
-Rozwiązanie tego problemu ma swoje zastosowanie m. in. w przetwarzaniu
-obrazów, grach komputerowych i pewnych algorytmach dotyczących
-optymalnego upakowania.
+Rozwiązanie tego problemu ma swoje zastosowanie m.\ in.\ w
+przetwarzaniu obrazów, grach komputerowych i niektórych algorytmach
+dotyczących optymalnego upakowania.
 
-Algorytm z wykorzystaniem suwmiarek opiera się na twierdzeniu:
+Algorytm z wykorzystaniem suwmiarek opiera się na następującym
+twierdzeniu.
 
-\begin{twierdzenie}[Freeman-Shapira 1975~\cite{FreeShap75}]
-  Najmniejszy prostokąt zawierający wielokąt $P$, posiada bok
+\begin{twierdzenie}[Freeman-Shapira 1975]
+  Najmniejszy prostokąt zawierający wielokąt $P$ posiada bok
   współliniowy z bokiem $P$.
 \end{twierdzenie}
 
-Jako $L_s(p_i)$ będziemy oznaczać skierowaną linię wsparcia wielokąta
-w wierzchołku $p_i$, taką, że $P$ znajduję się po prawej stronie
-linii. Rozważmy rysunek~\ref{img:calipers2}. W pierwszym kroku znajdujemy wierzchołki,
-o minimalnych i maksymalnych współrzędnych $x$ i $y$. Oznaczmy te
-wierzchołki jako $p_i$, $p_j$, $p_k$, $p_l$. Niech para linii
-$L_s(p_j)$ i $L_s(p_l)$ będzie \emph{suwmiarką} pierwszą suwmiarką,
-natomiast para $L_s(p_i)$, $L_s(p_k)$ drugą. Analogicznie jak w
-algorytmie wyznaczającym średnice, mamy tym razem do rozważenia cztery
-kąty: $\angle{\theta_i}, \angle{\theta_j}, \angle{\theta_k},
-\angle{\theta_l}$. Obróćmy teraz wszystkie cztery linie wsparcia o
-najmniejszy z nich. Wyznaczmy pole prostokąta wyznaczonego przez
-punkty przecięć linii wsparcia $L_s(p_i), L_s(p_j), L_s(p_k)$ i
-$L_s(p_l)$. Czynność tą powtarzamy z nowo powstałymi kątami
-$\angle{\theta_i}, \angle{\theta_j}, \angle{\theta_k},
-\angle{\theta_l}$ do czasu gdy rozpatrzone zostaną wszystkie możliwe
-prostokąty zawierające tj. obydwie suwmiarki wykonają pełny obrót
-wokół $P$. Ze wszystkich wyznaczonych w ten sposób prostokątów
-zawierający wybieramy najmniejszy.
+Jako $L_s(p_i)$ będziemy oznaczać skierowaną prostą wspierającą
+wielokąta w wierzchołku $p_i$ taką, że $P$ znajduje się po prawej
+stronie prostej. Rozważmy rysunek~\ref{img:calipers2}. W pierwszym
+kroku znajdujemy wierzchołki o minimalnych i maksymalnych
+współrzędnych $x$ i $y$. Oznaczmy te wierzchołki jako $p_i$, $p_j$,
+$p_k$, $p_l$. Niech para prostych $L_s(p_j)$ i $L_s(p_l)$ będzie
+,,pierwszą suwmiarką'', natomiast para $L_s(p_i)$ i $L_s(p_k)$
+drugą. Analogicznie jak w algorytmie wyznaczającym średnicę, mamy tym
+razem do rozważenia cztery kąty: $\angle{\theta_i}, \angle{\theta_j},
+\angle{\theta_k}, \angle{\theta_l}$. Obróćmy teraz wszystkie cztery
+proste wspierające o najmniejszy z nich. Wyznaczmy pole prostokąta
+wyznaczonego przez punkty przecięć prostych wspierających $L_s(p_i),
+L_s(p_j), L_s(p_k)$ i $L_s(p_l)$. Czynność tę powtarzamy z nowo
+powstałymi kątami $\angle{\theta_i}, \angle{\theta_j},
+\angle{\theta_k}, \angle{\theta_l}$ do czasu, gdy rozpatrzone zostaną
+wszystkie możliwe prostokąty zawierające, tj.\ obydwie suwmiarki
+wykonają pełny obrót wokół $P$. Ze wszystkich wyznaczonych w ten
+sposób prostokątów wybieramy najmniejszy.
 
 \begin{figure}[htb]
   \centering
@@ -86,30 +92,31 @@ zawierający wybieramy najmniejszy.
 \section{Największa odległość\label{sec:max_dist}}
 \begin{problem}
   Niech $P = (p_1, p_2, \ldots, p_n)$ oraz $Q = (q_1, q_2, \ldots,
-  q_n)$ będą wielokątami wypukłymi. Największą odległość między $P$ i
-  $Q$ oznaczamy jako $d_{\max}(P, Q)$ i definiujemy jako: $d_{\max}(P,
-  Q) = \max{\{ d(p_i, q_j) \mid i, j = 1, 2, \ldots, n \}}$ gdzie
-  $d(p_i, q_j)$ oznacza odległość euklidesową pomiędzy $p_i$ i $q_j$.
+  q_m)$ będą wielokątami wypukłymi. Największą odległość między $P$ i
+  $Q$ oznaczamy jako $d_{\max}(P, Q)$ i definiujemy
+  jako: $$d_{\max}(P, Q) := \max{\{ d(p_i, q_j) \mid i = 1, 2, \ldots,
+    n; j = 1, 2, \ldots, m \}}$$ gdzie $d(p_i, q_j)$ oznacza odległość
+  euklidesową pomiędzy $p_i$ i $q_j$.
 \end{problem}
 
 Należy zauważyć, że największa odległość między dwoma wielokątami
-wypukłymi nie musi być równa średnicy otoczki wypukłej $P \cup Q$,
-więc nie możemy wykorzystać algorytmu wyznaczającego średnicę do
-rozwiązania tego problemu.
+wypukłymi nie musi być równa średnicy otoczki wypukłej $P \cup Q$
+(rysunek [x]), więc nie możemy wykorzystać algorytmu wyznaczającego
+średnicę do rozwiązania tego problemu.
 
-Rozważmy rysunek~\ref{img:calipers3}. W pierwszym kroku znajdźmy dwa
+Rozważmy rysunek~\ref{img:calipers3}. W pierwszym kroku znajdujemy dwa
 punkty z których jeden $p_i$ należy do $P$, a drugi $q_j$ do $Q$, tak
-aby linie wsparcia $L_s(p_i)$ i $L_s(p_j)$ były równoległe. Możemy na
-przykład wybrać punkty o skrajnym położeniu względem osi $y$. Niech
-$L_s(p_i)$ i $L_s(q_j)$ będą liniami skierowanymi w przeciwnych
-kierunkach. Utworzone w ten sposób linie wsparcia tworzą kąt
-$\angle{\theta_i}$ z krawędzią $(p_i, p_{i+1}) \in P$ oraz
-kat$\angle{\phi_j}$ z krawędzią $(q_j, q_{j+1}) \in Q$. Wyznaczamy
-odległość między $p_i$ i $q_j$. Wybieramy mniejszy z kątów $\phi$ i
-$\theta$, a następnie obracamy obydwie linie wsparcia o ten
-kąt. Proces powtarzamy do czasu gdy linie wsparcia wykonają pełny
-obrót wokół wielokątów. W ostatnim kroku wybieramy największą z
-wyznaczonych odległości między punktami.
+aby proste wspierające $L_s(p_i)$ i $L_s(p_j)$ były równoległe. Możemy
+na przykład wybrać punkty o skrajnym położeniu względem osi $y$. Niech
+$L_s(p_i)$ i $L_s(q_j)$ będą prostymi skierowanymi w przeciwnych
+kierunkach. Utworzone w ten sposób proste wspierające tworzą kąt
+$\angle{\theta_i}$ z krawędzią $(p_i, p_{i+1}) \in P$ oraz kąt
+$\angle{\phi_j}$ z krawędzią $(q_j, q_{j+1}) \in Q$. Wyznaczamy i
+zapamiętujemy odległość między $p_i$ i $q_j$. Wybieramy mniejszy z
+kątów $\phi_j$ i $\theta_i$, a następnie obracamy obydwie proste
+wspierające o ten kąt. Proces powtarzamy do czasu, gdy proste
+wspierające zamienia się początkowymi pozycjami. W ostatnim kroku
+wybieramy największą z wyznaczonych odległości między punktami.
 
 \begin{figure}[htb]
   \centering
@@ -120,15 +127,16 @@ wyznaczonych odległości między punktami.
 \section{Łączenie otoczek wypukłych}
 \begin{problem}
   Dla $CH(P)$ i $CH(Q)$ będącymi otoczkami wypukłymi zbiorów $P$ i
-  $Q$, znaleźć otoczkę wypukłą $CH(CH(P) \cup CH(Q))$.
+  $Q$ znaleźć otoczkę wypukłą $CH(CH(P) \cup CH(Q))$.
 \end{problem}
 
 W algorytmach typu \emph{dziel i zwyciężaj} wyznaczających otoczkę
-wypukłą zbioru punktów, końcowym etapem jest łączenie otoczek
+wypukłą zbioru punktów końcowym etapem jest łączenie otoczek
 uzyskanych w poprzednim kroku, uzyskując w ten sposób coraz większe
 otoczki, aż do uzyskania otoczki wypukłej całego zbioru. Jeśli łącznie
 zostałoby przeprowadzone w czasie liniowym, złożoność czasowa całego
-algorytmu w najlepszym przypadku wyniesie $O(n \log n)$~\cite{Graham72}.
+algorytmu w najlepszym przypadku będzie
+liniowo-logarytmiczna~\cite{Graham72}.
 
 \begin{figure}[htb]
   \centering
@@ -137,18 +145,22 @@ algorytmu w najlepszym przypadku wyniesie $O(n \log n)$~\cite{Graham72}.
 \end{figure}
 
 Rozważmy dwa wielokąty wypukłe $P$ i $Q$ będącymi otoczkami wypukłymi
-pewnych zbiorów punktów (rys). W tym przypadku wyznaczenie otoczki
-wypukłej obydwu wielokątów wymaga znalezienia dwóch par wierzchołków
-$p_i, p_j$ oraz $q_k, q_l$, takich, że krawędzie $(p_i, q_k)$ i $(p_j,
-q_l)$, wraz z łańcuchami wypukłymi $(p_i, p_{i+1}, \ldots, p_j)$ i
-$(q_k, q_{k+1}, \ldots, q_l)$ tworzy $CH(P \cup Q)$. Krawędzie $(p_i,
-q_k)$ i $(p_j, q_l)$ będziemy nazywać \emph{mostami}, a wierzchołki
-tworzące most będziemy nazywać \emph{punktami mostu}.
+pewnych zbiorów punktów (rysunek~\ref{img:calipers4}). W tym przypadku
+wyznaczenie otoczki wypukłej obydwu wielokątów wymaga znalezienia
+dwóch par wierzchołków $(p_i, p_j)$, $(q_k, q_l)$ takich, że krawędzie
+$(p_i, q_k)$ i $(p_j, q_l)$ wraz z łańcuchami wypukłymi $(p_i,
+p_{i+1}, \ldots, p_j)$ i $(q_k, q_{k+1}, \ldots, q_l)$ tworzą $CH(P
+\cup Q)$. Krawędzie $(p_i, q_k)$ i $(p_j, q_l)$ będziemy nazywać
+\emph{mostami}, a wierzchołki tworzące most będziemy nazywać
+\emph{punktami mostu}. Ponadto mówimy, że para punktów $p \in P$ i $q
+\in Q$ jest \emph{parą kopodoalną między $P$ i $Q$}, jeżeli można
+skonstruować równoległe proste wspierające styczne do wierzchołków $p$
+i $q$ odpowiednio.
 
 Algorytm wykorzystujący suwmiarki do wyznaczania mostów opiera się na
 następującym twierdzeniu~\cite{Toussaint83}.
 
-\begin{twierdzenie}
+\begin{twierdzenie}[Toussaint 1983]
 \label{thm:bridge}
   Dwa wierzchołki $p_i \in P$ i $q_j \in Q$ są \emph{punktami mostu}
   wtedy i tylko wtedy, gdy tworzą \emph{parę kopodalną} i wierzchołki
@@ -156,33 +168,26 @@ następującym twierdzeniu~\cite{Toussaint83}.
   prostej $L(p_i, q_j)$.
 \end{twierdzenie}
 
-\begin{definicja}
-  Niech będą dane dwa wielokąty wypukłe $P$ i $Q$. Para punktów $p \in
-  P$ i $q \in Q$ jest \emph{parą kopodoalną między $P$ i $Q$}, jeżeli
-  można skonstruować równoległe proste wspierające styczne do
-  wierzchołków $p$ i $q$ odpowiednio.
-\end{definicja}
-
 Po wyznaczeniu pozycji suwmiarek, analogicznie jak w algorytmie
 \ref{sec:max_dist}, skierowanych w przeciwnych kierunkach, zaczynamy
 obracać je wokół wielokątów. Podobnie jak w poprzednich problemach
-rozważamy kąt jaki tworzy skierowana linia wsparcia wielokąta $P$ w
-punkcie $p_i$ z krawędzią $(p_{i+1}, p_{i+2})$ oraz linia wsparcia
-wielokąta $Q$ z krawędzią $(q_{j+1}, q_{j+2})$. Obydwie suwmiarki
-obracamy o mniejszy z tych kątów. Przed każdym kolejnym obrotem
-sprawdzamy czy aktualna para wierzchołków $p_i, q_j$ spełnia warunek
-zawarty w twierdzenie~\ref{thm:bridge}. Ponieważ przy każdym obrocie
-suwmiarek generowana jest nowa para kopodalną, pozostaje sprawdzić czy
-wierzchołki $p_{i-1}, p_{i+1}, q_{j-1}, q_{j+1}$ leżą po tej samej
-stronie prostej $L(p_i, q_j)$. Algorytm znajdowania mostów w przypadku
-łączenia otoczek rozdzielnych wypukłych, tak jak ma to miejsce w
-przypadku algorytmu dziel i rządź wyznaczania otoczki wypukłej zbioru
-punktów, można zakończyć po znalezieniu obydwu mostów.
+rozważamy kąt jaki tworzy skierowana prosta wspierająca wielokąta $P$
+w punkcie $p_i$ z krawędzią $(p_{i+1}, p_{i+2})$ oraz prosta
+wspierająca wielokąta $Q$ z krawędzią $(q_{j+1}, q_{j+2})$. Obydwie
+suwmiarki obracamy o mniejszy z tych kątów. Przed każdym kolejnym
+obrotem sprawdzamy czy aktualna para wierzchołków $(p_i, q_j)$ spełnia
+warunek zawarty w twierdzeniu~\ref{thm:bridge}. Ponieważ przy każdym
+obrocie suwmiarek generowana jest nowa para kopodalna, pozostaje
+sprawdzić czy wierzchołki $p_{i-1}, p_{i+1}, q_{j-1}, q_{j+1}$ leżą po
+tej samej stronie prostej $L(p_i, q_j)$. Algorytm znajdowania mostów w
+przypadku łączenia otoczek wypukłych można zakończyć po znalezieniu
+obydwu mostów.
 
 Niech liczba wierzchołków $P$ wynosi $n$, a liczba wierzchołków $Q$
-wynosi $m$. Par kopodalnych jest $k < n + m$. Sprawdzenie czy para
-kopodalna jest mostem odpobywa się w czasie $O(1)$, stąd złożoność
-czasowa algorytmu wyznaczającego mosty jest liniowa i wynosi $O(k)$.
+wynosi $m$. Par kopodalnych jest mniej niż $n + m$. Sprawdzenie czy
+para kopodalna jest mostem odpobywa się w czasie $O(1)$, stąd
+złożoność czasowa algorytmu wyznaczającego mosty jest rzędu $O(n +
+m)$.
 
 %%% Local Variables:
 %%% mode: latex
