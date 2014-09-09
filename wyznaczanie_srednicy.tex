@@ -1,8 +1,8 @@
 \chapter{Wyznaczanie średnicy\label{chap:diameter}}
 Problem średnicy dowolnego zbioru punktów można przedstawić
-następująco: \emph{mając danych $N$ punktów na płaszczyźnie, znaleźć
+następująco: \emph{mając danych $n$ punktów na płaszczyźnie, znaleźć
   dwa punkty najbardziej odległe od siebie}. Problem można rozwiązać
-metodą naiwną wyznaczając odległość wszystkich $N(N-1)/2$ par punktów
+metodą naiwną wyznaczając odległość wszystkich $n(n-1)/2$ par punktów
 i wybierając największą z nich. Naturalnym jest jednak szukanie
 bardziej efektywnych rozwiązań.
 
@@ -25,7 +25,13 @@ wypukłą, dlatego zdefiniujmy następujący problem.
 \end{problem}
 
 Zauważmy, że średnica wielokąta wypukłego jest w istocie najdłuższym z
-odcinków łączących dwa jego wierzchołki \ldots
+odcinków łączących dwa jego wierzchołki. Weźmy dowolny punkt $o$
+należący do wielokąta wypukłego $P$. Ze względu na wypukłość, punkt
+$p_i$ od niego najdalszy musi być jednym z wierzchołków wielokąta $P$
+--- rozważając kolejne punkty na krawędzi $(p_{i-1}, p_i)$ zgodnie z
+ruchem wskazówek zegara ich odległość od $o$ zwiększa się osiągając
+maksimum w punkcie $q_i$, maleje z kolei wzdłuż krawędzi $(p_i,
+p_{i+1})$.
 
 Kluczowym dla algorytmu korzystającego z wypukłości wielokąta przy
 wyznaczaniu średnicy jest następujące twierdzenie.
@@ -37,9 +43,9 @@ wyznaczaniu średnicy jest następujące twierdzenie.
 \end{twierdzenie}
 
 Proste wspierające nie mogą przechodzić przez każdą parę punktów. Na
-przykład żadne, dwie różne proste wpierające przechodzące przez $p_0$
-i $p_5$ wielokąta z rysunku~\ref{fig:antipodal} nie mogą być
-równoległe, więc para $(p_{0},p_{5})$ nie definiuje
+przykład żadne, dwie różne proste wpierające przechodzące przez $p_3$
+i $p_6$ wielokąta z rysunku~\ref{fig:antipodal} nie mogą być
+równoległe, więc para $(p_{3},p_{6})$ nie może definiować
 średnicy. Przypomnijmy --- para punktów, przez które mogą przechodzić
 proste wspierające, jest nazywana punktami antypodycznymi. Z
 twierdzenia~\ref{thm:yagbol} wynika, że szukając średnicy nie musimy
@@ -47,32 +53,41 @@ badać wszystkich par punktów, a jedynie pary antypodyczne.
 
 \begin{figure}[htp]
   \centering
-  \begin{tikzpicture}[scale=0.8]
-    \convexA
+  \begin{tikzpicture}
+    \coordinate (p3) at (5, 3);
+    \coordinate (p4) at (4, 4.5);
+    \coordinate (p5) at (2, 5);
+    \coordinate (p6) at (0, 3);
+    \coordinate (p0) at (-1, 0);
+    \coordinate (p1) at (3, 0);
+    \coordinate (p2) at (5, 1);
 
-    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={right:$p_0$}] at (p0) {};
+    \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) --  (p5) -- (p6) -- cycle;
 
-    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-    label={45:$p_1$}] at (p1) {};
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={250:$p_0$}] at (p0) {};
 
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={above:$p_2$}] at (p2) {};
-
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={135:$p_3$}] at (p3) {};
-
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={left:$p_4$}] at (p4) {};
-
-    \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={below:$p_5$}] at (p5) {};
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={below:$p_1$}] at (p1) {};
 
     \node [anchor=center,circle,draw,fill,inner
-    sep=0.5pt,label={315:$p_6$}] at (p6) {};
+    sep=1pt,label={right:$p_2$}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$p_3$}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$p_4$}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$p_5$}] at (p5) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_6$}] at (p6) {};
 
   \end{tikzpicture}
-  \caption{\label{fig:antipodal}}
+  \caption{Para wierzchołków $(p_3,p_6)$ nie może definiować
+    średnicy.\label{fig:antipodal}}
 \end{figure}
 
 Przedstawiony zostanie teraz sposób znajdowania par punktów
@@ -96,8 +111,73 @@ efektywnie uzyskać wszystkie pary antypodyczne.
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.3\textwidth]{img/diameter}
-  \caption{Rysunek roboczy.\label{fig:diameter}}
+  \begin{tikzpicture}
+    \coordinate (p3) at (5, 3);
+    \coordinate (p4) at (4, 4.5);
+    \coordinate (p5) at (2, 5);
+    \coordinate (p6) at (0, 3);
+    \coordinate (p0) at (-1, 0);
+    \coordinate (p1) at (3, 0);
+    \coordinate (p2) at (5, 1);
+
+    \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) --  (p5) -- (p6) --
+    cycle;
+
+    \draw (p0) -- (p1);
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={}] at (p0) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={}] at (p1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p5) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={below:$p_{i+1}$}] at (p1) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={below:$p_{i}$}] at (p0) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={120:$p_{i-1}$}] at (p6) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={right:$q_r$}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={above:$q_l$}] at (p5) {};
+
+    \draw [dashed,blue,shorten >= -3cm] (p0) -- (p6);
+    \draw [dashed,blue,shorten >= -5cm] (p0) -- (p1);
+
+    \draw pic["$\alpha_i$",draw=blue, dashed, angle eccentricity=1.5, angle
+    radius=0.75cm]{angle=p6--p0--p1};
+
+    \draw [dashed,red,shorten >= -3cm] (p4) -- (p5);
+    \draw [dashed,red,shorten >= -4.5cm] (p4) -- (p3);
+
+    \draw pic["$\alpha_s$",draw=red, dashed, angle eccentricity=1.5, angle
+    radius=0.75cm]{angle=p3--p4--p5};
+
+    \coordinate (x1) at (intersection of p0--p6 and p4--p5);
+    \coordinate (x2) at (intersection of p0--p1 and p4--p3);
+
+    \draw [shorten >= -1cm, shorten <= -1cm] (x1) -- (x2);
+
+        \node [label={[label distance=3cm]327:$l$}] at (x1) {};
+  \end{tikzpicture}
+  \caption{Prosta $l$ przecina $\alpha_i$ i $\alpha_s$.\label{fig:diameter}}
 \end{figure}
 
 Wejściem dla algorytmu jest wielokąt zadany jako lista wierzchołków ze
@@ -108,16 +188,16 @@ tego wielokąta nie jest równoległa. Do określenia, który punkt leży
 najdalej od odcinka $p_{i}p_{i+1}$, korzystamy z funkcji ,,podwojonego
 pola ze znakiem trójkąta'' $p_{0}p_{i+1}p$, którą przedstawiono w
 rozdziale~\ref{chap:pojecia} do wyznaczenia skrętności kąta. W
-pierwszej części algorytmu w pętli \texttt{while} szukamy pierwszego
+pierwszej części algorytmu w pętli \textbf{while} szukamy pierwszego
 najdalszego wierzchołka i oznaczamy go jako $q_0$. Następnie
 wyznaczamy łańcuch $C(p_i)$, używając wskaźników $p$ i $q$
 poruszających się w kierunku odwrotnym do ruchu wskazówek zegara,
 zaczynając odpowiednio od $p_0$ i $q_0$ do momentu, aż wskaźnik $q$
 wróci do pozycji $p_0$. Po tym kroku zostaną wypisane wszystkie pary
 antypodyczne. Znalezienie wierzchołka $q_0$ zajmuje w pesymistycznym
-przypadku $N-1$ kroków, natomiast przejście po łańuchach $p_{0},
-\ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $N$ kroków. Mamy więc
-do czynienia ze złożonością czasową rzędu $O(N)$.
+przypadku $n-1$ kroków, natomiast przejście po łańuchach $p_{0},
+\ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $n$ kroków. Mamy więc
+do czynienia ze złożonością czasową rzędu $O(n)$.
 
 % Specjalną sytuacją jest przypadek, gdy dwie krawędzie są równoległe
 % (wtedy pole ze znakiem trójkąta jest równe dla dwóch wierzchołków
@@ -177,7 +257,8 @@ jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
 \EndProcedure
 
   \end{algorithmic}
-  \caption{\label{alg:antipodal}}
+  \caption{Algorytm wypisujący wszystkie pary
+    antypodalne.\label{alg:antipodal}}
 \end{figure}
 
 \begin{table}[htb]
@@ -195,36 +276,34 @@ jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
     \midrule
     & $p_2$ & & 5 \\
     \midrule
-    & $p_3$ & & 5 \\
-    \midrule
     $p_0$& & & 13 \\
     \midrule
-    & & $(p_0, p_3)$ & 14 \\
+    & & $(p_0, p_2)$ & 14 \\
+    \midrule
+    & $p_3$ & & 17 \\
+    \midrule
+    & & $(p_0, p_3)$ & 21 \\
     \midrule
     & $p_4$ & & 17 \\
     \midrule
     & & $(p_0, p_4)$ & 21 \\
     \midrule
-    $p_1$& & & 13 \\
-    \midrule
-    & & $(p_1, p_4)$ & 14 \\
-    \midrule
     & $p_5$ & & 17 \\
     \midrule
-    & & $(p_1, p_5)$ & 21 \\
+    & & $(p_0, p_5)$ & 21 \\
     \midrule
-    $p_2$& & & 13 \\
+    $p_1$ & & & 13 \\
+    \midrule
+    & & $(p_1, p_5)$ & 14 \\
+    \midrule
+    $p_2$ & & & 13 \\
     \midrule
     & & $(p_2, p_5)$ & 14 \\
-    \midrule
-    $p_3$& & & 13 \\
-    \midrule
-    & & $(p_3, p_5)$ & 14 \\
-    \midrule
+     \midrule
     & $p_6$ & & 17 \\
     \midrule
-    & & $(p_3, p_6)$ & 21 \\
-    \midrule
+    & & $(p_2, p_6)$ & 21 \\
+     \midrule
     & $p_0$ & & 17 \\
     \bottomrule
   \end{tabular}

@@ -72,7 +72,7 @@ $P$, są otoczone przez krawędzie należące do $Q$.
 \begin{figure}[htb]
   \centering
   \includegraphics[scale=0.5]{img/Orourke98}
-  \caption{\label{img:sickles}}
+  \caption{Sierpy a przecięcie wielokątów.\label{img:sickles}}
 \end{figure}
 
 Możemy zauważyć, że przechodząc w odpowiedniej kolejności,
@@ -99,7 +99,8 @@ listingu~\ref{alg:Orourke98}.
 
     \EndProcedure
   \end{algorithmic}
-  \caption{\label{alg:Orourke98}}
+  \caption{Algorytm wyznaczania przecięcia metodą O'Rourke i
+    in.\label{alg:Orourke98}}
 \end{figure}
 
 Wybierzmy dowolną krawędź $A \in P$ oraz dowolną krawędź $B \in
@@ -218,6 +219,7 @@ trzech krokach (listing~\ref{alg:interconpol}).
     \State \textbf{dla każdego} mostu z $CH(P \cup Q)$:
     \State \hspace{\algorithmicindent} znajdź odpowiadający mu punkt
     przecięcia
+    \State \textbf{end}
 
     \State
 
@@ -297,9 +299,8 @@ Zanim omówimy dowód powyższego twierdzenia wprowadźmy definicje.
 \begin{definicja}
   Wielokątem \emph{żaglokształtnym} będziemy nazywać wielokąt
   zawierający krawędź $(p_{i}p_{i+1})$ będącą \emph{masztem} oraz
-  wierzchołek $p_j$, który będziemy nazywać $czubkiem żagla$,
-  połączony z wierzchołkami $p_i$ i $p_{i+1}$ \emph{łańcuchami
-    wklęsłymi}.
+  wierzchołek $p_j$, który będziemy \emph{czubkiem żagla}, połączony z
+  wierzchołkami $p_i$ i $p_{i+1}$ \emph{łańcuchami wklęsłymi}.
 \end{definicja}
 
 \begin{definicja}
@@ -418,7 +419,9 @@ Q)$, a wyjściem para wierzchołków $p_s$ i $q_t$, gdzie $(p_s,p_{s+1})
 p_{i}p_{i+1}q_{j+1}$ jest lewoskrętny'' oraz ,,$\angle
 q_{j}q_{j+1}p_{i+1}$ jest prawoskrętny'' w pętlach \textbf{while}
 zapewniają, że w każdym kroku odetniemy ucho oraz że nie przejdziemy
-przez czubek żagla.
+przez czubek żagla. Przebieg działania procedury \textsc{Stepdown} dla
+mostu z rysunku~\ref{fig:bridge} przedstawiają
+rysunki~\ref{fig:stepdown1}--\ref{fig:stepdown5}.
 
 \subsection{Złożoność}
 Niech $n$ oznaczana liczbę wierzchołków wielokąta $P$, a $m$ liczbę
@@ -441,6 +444,333 @@ kierunek w którym dana część wielokąta staje się łańcuchem
 wewnętrznym.
 
 Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
+
+\begin{figure}[tp]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (q4) at (6, 5);
+    \coordinate (q3) at (4, 4.5);
+    \coordinate (q2) at (2.5, 3.5);
+    \coordinate (q1) at (1.5, 1.5);
+    \coordinate (q0) at (2, -0.25);
+    \coordinate (q6) at (5, 0);
+    \coordinate (q5) at (7, 2);
+
+    \draw [blue] (q0) -- (q1) -- (q2) -- (q3) -- (q4) --  (q5) -- (q6) -- cycle;
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={250:$q_0$}] at (q0) {};
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={left:$q_1$}] at (q1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$q_2$}] at (q2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$q_3$}] at (q3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$q_4$}] at (q4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$q_5$}] at (q5) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$q_6$}] at (q6) {};
+
+    \coordinate (p4) at (2, 3);
+    \coordinate (p3) at (1, 4.5);
+    \coordinate (p2) at (-1, 5);
+    \coordinate (p1) at (-3, 3);
+    \coordinate (p0) at (0, 0);
+    \coordinate (p5) at (2, 1);
+
+    \draw [red] (p0) -- (p1) -- (p2) -- (p3) --  (p4) -- (p5) -- cycle;
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={right:$p_1$}] at (p1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$p_2$}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$p_3$}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_4$}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$p_5$}] at (p5) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$p_0$}] at (p0) {};
+
+    \draw [dashed, shorten >= -2cm, shorten <= -2cm] (p2) -- (q4);
+  \end{tikzpicture}
+  \caption{Przerywaną linią oznaczono most.\label{fig:bridge}}
+\end{figure}
+
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (q4) at (6, 5);
+    \coordinate (q3) at (4, 4.5);
+    \coordinate (q2) at (2.5, 3.5);
+    \coordinate (q1) at (1.5, 1.5);
+    \coordinate (q0) at (2, -0.25);
+    \coordinate (q6) at (5, 0);
+    \coordinate (q5) at (7, 2);
+
+    \draw [blue] (q1) -- (q2) -- (q3) -- (q4);
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={}] at (q1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (q2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$q_{j+1}$}] at (q3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$q_j$}] at (q4) {};
+
+    \coordinate (p4) at (2, 3);
+    \coordinate (p3) at (1, 4.5);
+    \coordinate (p2) at (-1, 5);
+    \coordinate (p1) at (-3, 3);
+    \coordinate (p0) at (0, 0);
+    \coordinate (p5) at (2, 1);
+
+    \draw [red] (p2) -- (p3) --  (p4) -- (p5);
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$p_i$}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i+1}$}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p5) {};
+
+    \draw (p2) -- (q4);
+    \draw [dashed] (p2) -- (q3);
+  \end{tikzpicture}
+  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest lewoskrętny więc
+    odcinamy ucho $q_j$.\label{fig:stepdown1}}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (q4) at (6, 5);
+    \coordinate (q3) at (4, 4.5);
+    \coordinate (q2) at (2.5, 3.5);
+    \coordinate (q1) at (1.5, 1.5);
+    \coordinate (q0) at (2, -0.25);
+    \coordinate (q6) at (5, 0);
+    \coordinate (q5) at (7, 2);
+
+    \draw [blue] (q1) -- (q2) -- (q3) -- (q4);
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={}] at (q1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (q2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$q_{j}$}] at (q3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$q_{j+1}$}] at (q2) {};
+
+    \coordinate (p4) at (2, 3);
+    \coordinate (p3) at (1, 4.5);
+    \coordinate (p2) at (-1, 5);
+    \coordinate (p1) at (-3, 3);
+    \coordinate (p0) at (0, 0);
+    \coordinate (p5) at (2, 1);
+
+    \draw [red] (p2) -- (p3) --  (p4) -- (p5);
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={above:$p_i$}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i+1}$}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p5) {};
+
+    \draw (p2) -- (q3);
+    \draw [dashed] (q3) -- (p3);
+  \end{tikzpicture}
+  \caption{Kąt $\angle{p_{j}p_{j+1},q_{i+1}}$ jest prawoskrętny więc
+    odcinamy ucho $p_i$.}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (q4) at (6, 5);
+    \coordinate (q3) at (4, 4.5);
+    \coordinate (q2) at (2.5, 3.5);
+    \coordinate (q1) at (1.5, 1.5);
+    \coordinate (q0) at (2, -0.25);
+    \coordinate (q6) at (5, 0);
+    \coordinate (q5) at (7, 2);
+
+    \draw [blue] (q1) -- (q2) -- (q3) -- (q4);
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={}] at (q1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (q2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={below:$q_{j}$}] at (q3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$q_{j+1}$}] at (q2) {};
+
+    \coordinate (p4) at (2, 3);
+    \coordinate (p3) at (1, 4.5);
+    \coordinate (p2) at (-1, 5);
+    \coordinate (p1) at (-3, 3);
+    \coordinate (p0) at (0, 0);
+    \coordinate (p5) at (2, 1);
+
+    \draw [red] (p2) -- (p3) --  (p4) -- (p5);
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i}$}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i+1}$}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p5) {};
+
+    \draw (q3) -- (p3);
+    \draw [dashed] (p3) -- (q2);
+
+  \end{tikzpicture}
+  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest lewoskrętny więc
+    odcinamy ucho $q_j$.}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (q4) at (6, 5);
+    \coordinate (q3) at (4, 4.5);
+    \coordinate (q2) at (2.5, 3.5);
+    \coordinate (q1) at (1.5, 1.5);
+    \coordinate (q0) at (2, -0.25);
+    \coordinate (q6) at (5, 0);
+    \coordinate (q5) at (7, 2);
+
+    \draw [blue] (q1) -- (q2) -- (q3) -- (q4);
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={250:$q_{j+1}$}] at (q1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (q3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$q_{j}$}] at (q2) {};
+
+    \coordinate (p4) at (2, 3);
+    \coordinate (p3) at (1, 4.5);
+    \coordinate (p2) at (-1, 5);
+    \coordinate (p1) at (-3, 3);
+    \coordinate (p0) at (0, 0);
+    \coordinate (p5) at (2, 1);
+
+    \draw [red] (p2) -- (p3) --  (p4) -- (p5);
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i}$}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i+1}$}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p5) {};
+
+    \draw (p3) -- (q2);
+    \draw [dashed] (p4) -- (q2);
+  \end{tikzpicture}
+  \caption{Kąt $\angle{q_{j}q_{j+1}p_{i+1}}$ jest prawoskrętny więc
+    odcinamy ucho $p_i$.}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (q4) at (6, 5);
+    \coordinate (q3) at (4, 4.5);
+    \coordinate (q2) at (2.5, 3.5);
+    \coordinate (q1) at (1.5, 1.5);
+    \coordinate (q0) at (2, -0.25);
+    \coordinate (q6) at (5, 0);
+    \coordinate (q5) at (7, 2);
+
+    \draw [blue] (q1) -- (q2) -- (q3) -- (q4);
+
+    \node [anchor=center,circle,draw,fill,inner sep=1pt,
+    label={250:$q_{j+1}$}] at (q1) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (q3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$q_{j}$}] at (q2) {};
+
+    \coordinate (p4) at (2, 3);
+    \coordinate (p3) at (1, 4.5);
+    \coordinate (p2) at (-1, 5);
+    \coordinate (p1) at (-3, 3);
+    \coordinate (p0) at (0, 0);
+    \coordinate (p5) at (2, 1);
+
+    \draw [red] (p2) -- (p3) --  (p4) -- (p5);
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p2) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={}] at (p3) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={left:$p_{i}$}] at (p4) {};
+
+    \node [anchor=center,circle,draw,fill,inner
+    sep=1pt,label={right:$p_{i+1}$}] at (p5) {};
+
+    \draw (p4) -- (q2);
+  \end{tikzpicture}
+  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest prawoskrętny, a kąt
+    $\angle{q_{j}q_{j+1}p_{i+1}}$ lewoskrętny, algorytm kończy
+    działanie.\label{fig:stepdown5}}
+\end{figure}
 
 %%% Local Variables:
 %%% mode: latex

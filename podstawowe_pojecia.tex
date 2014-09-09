@@ -21,8 +21,26 @@ wypukłych.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics{img/nonconvex}
-  \caption{Przykład czworokąta, który nie jest wypukły.}
+  \begin{tikzpicture}
+      \coordinate (p0) at (4.5,2);
+      \coordinate (p1) at (2,4);
+      \coordinate (p2) at (0,3);
+      \coordinate (p4) at (1,0);
+      \coordinate (p5) at (2,2);
+
+      \draw (p0) -- (p1) -- (p2) -- (p4) -- (p5) -- cycle;
+
+      \coordinate (a) at (1,1);
+      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+        label={above:$A$}] at (a) {};
+
+      \coordinate (b) at (3.5,2.25);
+      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+        label={120:$B$}] at (b) {};
+
+        \draw[blue] (a) -- (b);
+  \end{tikzpicture}
+  \caption{Przykład pięciokąta, który nie jest wypukły.}
 \end{figure}
 
 \begin{definicja}
