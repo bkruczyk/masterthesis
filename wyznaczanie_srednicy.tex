@@ -1,6 +1,6 @@
 \chapter{Wyznaczanie średnicy\label{chap:diameter}}
 Problem średnicy dowolnego zbioru punktów można przedstawić
-następująco: \emph{mając danych $n$ punktów na płaszczyźnie, znaleźć
+następująco: \emph{mając danych $n$ punktów na płaszczyźnie, wyznaczyć
   dwa punkty najbardziej odległe od siebie}. Problem można rozwiązać
 metodą naiwną wyznaczając odległość wszystkich $n(n-1)/2$ par punktów
 i wybierając największą z nich. Naturalnym jest jednak szukanie
@@ -10,7 +10,9 @@ Aby uniknąć badania wszystkich par punktów, można skorzystać z
 twierdzenia~\ref{thm:hy61}: wystarczy najpierw wyznaczyć otoczkę
 wypukłą zbioru punktów w czasie
 liniowo-logarytmicznym~\cite{Graham72}, a następnie wyznaczyć jej
-średnicę.
+średnicę. Względnie bardziej złożone rozwiązanie dla dowolnego
+wielokąta działające w czasie liniowym przedstawili w~\cite{Hersh93}
+J.\ Hershberger i S.\ Suri.
 
 \begin{twierdzenie}[Hocking-Young 1961\label{thm:hy61}]
   Średnica zbioru jest równa średnicy jego otoczki wypukłej.
@@ -30,7 +32,7 @@ należący do wielokąta wypukłego $P$. Ze względu na wypukłość, punkt
 $p_i$ od niego najdalszy musi być jednym z wierzchołków wielokąta $P$
 --- rozważając kolejne punkty na krawędzi $(p_{i-1}, p_i)$ zgodnie z
 ruchem wskazówek zegara ich odległość od $o$ zwiększa się osiągając
-maksimum w punkcie $q_i$, maleje z kolei wzdłuż krawędzi $(p_i,
+maksimum w punkcie $p_i$, maleje z kolei wzdłuż krawędzi $(p_i,
 p_{i+1})$.
 
 Kluczowym dla algorytmu korzystającego z wypukłości wielokąta przy
@@ -43,7 +45,7 @@ wyznaczaniu średnicy jest następujące twierdzenie.
 \end{twierdzenie}
 
 Proste wspierające nie mogą przechodzić przez każdą parę punktów. Na
-przykład żadne, dwie różne proste wpierające przechodzące przez $p_3$
+przykład żadne dwie różne proste wspierające przechodzące przez $p_3$
 i $p_6$ wielokąta z rysunku~\ref{fig:antipodal} nie mogą być
 równoległe, więc para $(p_{3},p_{6})$ nie może definiować
 średnicy. Przypomnijmy --- para punktów, przez które mogą przechodzić
@@ -51,7 +53,7 @@ proste wspierające, jest nazywana punktami antypodycznymi. Z
 twierdzenia~\ref{thm:yagbol} wynika, że szukając średnicy nie musimy
 badać wszystkich par punktów, a jedynie pary antypodyczne.
 
-\begin{figure}[htp]
+\begin{figure}[tp]
   \centering
   \begin{tikzpicture}
     \coordinate (p3) at (5, 3);
@@ -109,7 +111,41 @@ antypodyczny do $p_i$, a żaden wierzchołek nienależący do $C(p_i)$
 takim nie jest. Fakt ten umożliwia konstrukcję algorytmu pozwalającego
 efektywnie uzyskać wszystkie pary antypodyczne.
 
-\begin{figure}[htp]
+Wejściem dla algorytmu jest wielokąt zadany jako lista wierzchołków ze
+wskaźnikiem na swój następnik w kolejności przeciwnej do ruchu
+wskazówek zegara --- następnikiem wierzchołka $p_{n-1}$ jest
+$p_0$. Dla czytelności algorytmu przyjmijmy także, że żadna para boków
+tego wielokąta nie jest równoległa. Do określenia, który punkt leży
+najdalej od odcinka $p_{i}p_{i+1}$, korzystamy z funkcji ,,podwojonego
+pola ze znakiem trójkąta'' $p_{0}p_{i+1}p$, którą przedstawiono w
+rozdziale~\ref{chap:pojecia} do wyznaczenia skrętności kąta. W
+pierwszej części algorytmu w pętli \textbf{while} szukamy pierwszego
+najdalszego wierzchołka i oznaczamy go jako $q_0$. Następnie
+wyznaczamy łańcuch $C(p_i)$, używając wskaźników $p$ i $q$
+poruszających się w kierunku odwrotnym do ruchu wskazówek zegara,
+zaczynając odpowiednio od $p_0$ i $q_0$ do momentu, aż wskaźnik $q$
+wróci do pozycji $p_0$. Po tym kroku zostaną wypisane wszystkie pary
+antypodyczne. Znalezienie wierzchołka $q_0$ zajmuje w pesymistycznym
+przypadku $n-1$ kroków, natomiast przejście po łańcuchach $p_{0},
+\ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $n$ kroków. Mamy więc
+do czynienia ze złożonością czasową rzędu $O(n)$.
+
+% Specjalną sytuacją jest przypadek, gdy dwie krawędzie są równoległe
+% (wtedy pole ze znakiem trójkąta jest równe dla dwóch wierzchołków
+% tworzących krawędź równoległą), która wymaga od nas dodatkowego kroku
+% przy każdym wierzchołku (wiersze 15--19).
+
+% Poprawność algorytmu wynika z tego, że krawędzi równoległych jest co
+% najwyżej $N/2$, więc łącznie algorytm nie wykonuje więcej niż $3N$
+% kroków. Mamy więc do czynienia ze złożonością czasową rzędu $O(n)$.
+
+Fakt, że punkt antypodyczny dla punktu $p_{i+1}$ nie może być bliższy
+niż wierzchołek, który jest najdalej od $p_i$, wynika z wypukłością
+wielokąta --- dla dowolnego wierzchołka $p$ można wyznaczyć taki
+wierzchołek $q$, że odległość kolejnych wierzchołków od $p$ do $q$
+jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
+
+\begin{figure}[thp]
   \centering
   \begin{tikzpicture}
     \coordinate (p3) at (5, 3);
@@ -158,14 +194,14 @@ efektywnie uzyskać wszystkie pary antypodyczne.
     \node [anchor=center,circle,draw,fill,inner sep=1pt,
     label={above:$q_l$}] at (p5) {};
 
-    \draw [dashed,blue,shorten >= -3cm] (p0) -- (p6);
-    \draw [dashed,blue,shorten >= -5cm] (p0) -- (p1);
+    \draw [dashed,blue,shorten >= -4cm] (p0) -- (p6);
+    \draw [dashed,blue,shorten >= -6cm] (p0) -- (p1);
 
     \draw pic["$\alpha_i$",draw=blue, dashed, angle eccentricity=1.5, angle
     radius=0.75cm]{angle=p6--p0--p1};
 
-    \draw [dashed,red,shorten >= -3cm] (p4) -- (p5);
-    \draw [dashed,red,shorten >= -4.5cm] (p4) -- (p3);
+    \draw [dashed,red,shorten >= -3.5cm] (p4) -- (p5);
+    \draw [dashed,red,shorten >= -5cm] (p4) -- (p3);
 
     \draw pic["$\alpha_s$",draw=red, dashed, angle eccentricity=1.5, angle
     radius=0.75cm]{angle=p3--p4--p5};
@@ -173,46 +209,24 @@ efektywnie uzyskać wszystkie pary antypodyczne.
     \coordinate (x1) at (intersection of p0--p6 and p4--p5);
     \coordinate (x2) at (intersection of p0--p1 and p4--p3);
 
-    \draw [shorten >= -1cm, shorten <= -1cm] (x1) -- (x2);
+    \draw [shorten >= -1.5cm, shorten <= -1.4cm] (x1) -- (x2);
 
-        \node [label={[label distance=3cm]327:$l$}] at (x1) {};
+    \node [label={[label distance=3cm]327:$l$}] at (x1) {};
+
+    \coordinate (i) at (6,6.5);
+
+    \node [anchor=center,white,circle,draw,fill,inner sep=1pt,
+    label={$$}] at (i) {};
+
+    \fill [opacity=0.5, pattern=north west lines, pattern
+    color=green] ($(p0)!(0,7)!(p6)$) -- (x1) -- ($(p5)!(-3,0)!(p4)$);
+
+    \fill [opacity=0.5,pattern=north west lines, pattern
+    color=green]
+    ($(p4)!(0,-6.5)!(p3)$) -- (x2) -- ($(p0)!(9,0)!(p1)$);
   \end{tikzpicture}
   \caption{Prosta $l$ przecina $\alpha_i$ i $\alpha_s$.\label{fig:diameter}}
 \end{figure}
-
-Wejściem dla algorytmu jest wielokąt zadany jako lista wierzchołków ze
-wskaźnikiem na swój następnik w kolejności przeciwnej do ruchu
-wskazówek zegara --- następnikiem wierzchołka $p_{n-1}$ jest
-$p_0$. Dla czytelności algorytmu przyjmijmy także, że żadna para boków
-tego wielokąta nie jest równoległa. Do określenia, który punkt leży
-najdalej od odcinka $p_{i}p_{i+1}$, korzystamy z funkcji ,,podwojonego
-pola ze znakiem trójkąta'' $p_{0}p_{i+1}p$, którą przedstawiono w
-rozdziale~\ref{chap:pojecia} do wyznaczenia skrętności kąta. W
-pierwszej części algorytmu w pętli \textbf{while} szukamy pierwszego
-najdalszego wierzchołka i oznaczamy go jako $q_0$. Następnie
-wyznaczamy łańcuch $C(p_i)$, używając wskaźników $p$ i $q$
-poruszających się w kierunku odwrotnym do ruchu wskazówek zegara,
-zaczynając odpowiednio od $p_0$ i $q_0$ do momentu, aż wskaźnik $q$
-wróci do pozycji $p_0$. Po tym kroku zostaną wypisane wszystkie pary
-antypodyczne. Znalezienie wierzchołka $q_0$ zajmuje w pesymistycznym
-przypadku $n-1$ kroków, natomiast przejście po łańuchach $p_{0},
-\ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $n$ kroków. Mamy więc
-do czynienia ze złożonością czasową rzędu $O(n)$.
-
-% Specjalną sytuacją jest przypadek, gdy dwie krawędzie są równoległe
-% (wtedy pole ze znakiem trójkąta jest równe dla dwóch wierzchołków
-% tworzących krawędź równoległą), która wymaga od nas dodatkowego kroku
-% przy każdym wierzchołku (wiersze 15--19).
-
-% Poprawność algorytmu wynika z tego, że krawędzi równoległych jest co
-% najwyżej $N/2$, więc łącznie algorytm nie wykonuje więcej niż $3N$
-% kroków. Mamy więc do czynienia ze złożonością czasową rzędu $O(n)$.
-
-Fakt, że punkt antypodyczny dla punktu $p_{i+1}$ nie może być bliższy
-niż wierzchołek, który jest najdalej od $p_i$, wynika z wypukłością
-wielokąta --- dla dowolnego wierzchołka $p$ można wyznaczyć taki
-wierzchołek $q$, że odległość kolejnych wierzchołków od $p$ do $q$
-jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
 
 \begin{figure}[htp]
 
@@ -258,7 +272,7 @@ jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
 
   \end{algorithmic}
   \caption{Algorytm wypisujący wszystkie pary
-    antypodalne.\label{alg:antipodal}}
+    antypodyczne.\label{alg:antipodal}}
 \end{figure}
 
 \begin{table}[htb]

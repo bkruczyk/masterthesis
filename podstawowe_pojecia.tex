@@ -4,47 +4,44 @@ z geometrią obliczeniową i problemami dotyczącymi wielokątów
 wypukłych.
 
 \begin{definicja}
-  \emph{Wielokątem prostym} nazywamy taki wielokąt, że jedyne punkty
+  Wielokątem \emph{prostym} nazywamy taki wielokąt, że jedyne punkty
   płaszczyzny należące jednocześnie do dwóch jego krawędzi są jego
   wierzchołkami.
 \end{definicja}
 
 \begin{definicja}
-  \emph{Wielokątem wypukłym} nazywamy wielokąt prosty którego wnętrze
+  Wielokątem \emph{wypukłym} nazywamy wielokąt prosty, którego wnętrze
   jest \emph{zbiorem wypukłym}, tzn.\ wszystkie punkty należące do
   odcinka łączącego dwa dowolne punkty ze zbioru należą do tego
   zbioru.
 \end{definicja}
 
-% brzeg wielokąta, wnętrze i zewnętrze wielokąta
-% rysunki !
-
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}
-      \coordinate (p0) at (4.5,2);
-      \coordinate (p1) at (2,4);
-      \coordinate (p2) at (0,3);
-      \coordinate (p4) at (1,0);
-      \coordinate (p5) at (2,2);
+    \coordinate (p0) at (4.5,2);
+    \coordinate (p1) at (2,4);
+    \coordinate (p2) at (0,3);
+    \coordinate (p4) at (1,0);
+    \coordinate (p5) at (2,2);
 
-      \draw (p0) -- (p1) -- (p2) -- (p4) -- (p5) -- cycle;
+    \draw (p0) -- (p1) -- (p2) -- (p4) -- (p5) -- cycle;
 
-      \coordinate (a) at (1,1);
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-        label={above:$A$}] at (a) {};
+    \coordinate (a) at (1,1);
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={above:$A$}] at (a) {};
 
-      \coordinate (b) at (3.5,2.25);
-      \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
-        label={120:$B$}] at (b) {};
+    \coordinate (b) at (3.5,2.25);
+    \node [anchor=center,circle,draw,fill,inner sep=0.5pt,
+    label={120:$B$}] at (b) {};
 
-        \draw[blue] (a) -- (b);
+    \draw[blue] (a) -- (b);
   \end{tikzpicture}
   \caption{Przykład pięciokąta, który nie jest wypukły.}
 \end{figure}
 
 \begin{definicja}
-  \emph{Średnicą zbioru punktów} nazywamy największą odległość
+  \emph{Średnicą} zbioru punktów nazywamy największą odległość
   pomiędzy dwoma punktami należącymi do tego zbioru.
 \end{definicja}
 
@@ -65,7 +62,9 @@ wypukłych.
       .
     \end{math}
   \end{center}
+\end{definicja}
 
+\begin{definicja}
   Kąt $\angle p_{1}p_{2}p_{3}$ nazywamy \emph{lewoskrętnym}, jeżeli
   wyznacznik $X(p_1, p_2, p_3)$ jest dodatni, w przeciwnym przypadku
   mówimy, że kąt ten jest \emph{prawoskrętny}.
@@ -84,10 +83,10 @@ wypukłych.
 \end{definicja}
 
 \begin{definicja}\label{def:bigo}
-  Mówimy, że funkcja $f\colon \mathbb{N} \to \mathbb{R}$ jest co
-  najwyżej rzędu $g$ (jest \emph{ograniczona} przez funkcję $g\colon
-  \mathbb{N} \to \mathbb{R}$), gdy istnieją takie stałe $n_0 > 0$ oraz
-  $c > 0$, że
+  Mówimy, że funkcja $f\colon \mathbb{N} \to \mathbb{R}$ jest \emph{co
+    najwyżej rzędu} $g$ (jest \emph{ograniczona} przez funkcję
+  $g\colon \mathbb{N} \to \mathbb{R}$), gdy istnieją takie stałe $n_0
+  > 0$ oraz $c > 0$, że
 
   \begin{center}
     $\forall n \geq n_0\ f(n) \leq c \cdot g(n)$.
@@ -130,12 +129,10 @@ definicję~\ref{def:bigo}, zapisalibyśmy jako $T(n) = O(g(n))$.
     podane według rosnącej złożoności.}
 \end{table}
 
-W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego
-będziemy nazywać algorytm o mniejszej złożoności obliczeniowej niż
-najlepszy znany algorytm dla wielokąta prostego dla tego samego
-problemu.
-
-% przyjęte oznaczenia
+% W tej pracy \emph{efektywnym} algorytmem dla wielokąta wypukłego
+% będziemy nazywać algorytm o mniejszej złożoności obliczeniowej niż
+% najlepszy znany algorytm dla wielokąta prostego dla tego samego
+% problemu.
 
 %%% Local Variables:
 %%% mode: latex

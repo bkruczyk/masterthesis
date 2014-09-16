@@ -231,7 +231,7 @@ jest to wnętrze i zewnętrze wielokąta (rysunek~\ref{fig:location3}).
 \end{figure}
 
 W tej pracy będziemy zakładać, że brzeg wielokąta $P$ tworzą
-wierzchołki $p_0, \ldots, p_{n-1}$, ponumerowane w kolejności
+wierzchołki $p_0, \ldots,$ $p_{n-1}$, ponumerowane w kolejności
 przeciwnej do ruchu wskazówek zegara. Wyszukiwanie położenia danego
 punktu $z$ składa się z dwóch etapów. Najpierw określany jest klin, w
 którym leży $z$. Można to zrobić w czasie $O(\log n)$ używając
@@ -329,6 +329,15 @@ wyszukiwania klina został przedstawiony za pomocą pseudokodu z
 listingu~\ref{alg:findwedge}. Należy zauważyć, że indeksy wierzchołków
 są wyliczane za pomocą działania \emph{modulo} $n$. Innymi słowy,
 następnikiem wierzchołka $p_{n-1}$ jest wierzchołek $p_0$.
+
+Należy zauważyć, że względnie bardziej złożony algorytm, działający w
+czasie logarytmicznym dla problemu ogólnego przedstawił
+w~\cite{Kirk83} Kirkpatrick. W uproszczeniu: jest to metoda oparta na
+wyszukiwaniu w strukturze drzewa będącego reprezentacją poddanej
+triangulacji płaszczyzny. Wymaga ona jednak przetwarzania wstępnego,
+które może być wykonane w czasie liniowo-logarytmicznym --- stąd
+korzystniejsze jest używanie tego algorytmu w przypadku zapytań
+wielokrotnych.
 
 % Przyjęto także założenie, że brzeg $P$ należy do jego wnętrza.
 

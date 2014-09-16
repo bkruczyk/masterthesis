@@ -4,14 +4,18 @@ jest następująco.
 
 \begin{problem}[Przecięcie wielokątów]
   Mając dane dwa wielokąty wypukłe $P$ i $Q$, znaleźć ich
-  \emph{przecięcie} tj.\ obszar należący jednocześnie do $P$ i do $Q$.
+  \emph{przecięcie}, tj.\ obszar należący jednocześnie do $P$ i do
+  $Q$.
 \end{problem}
 
 W niniejszym rozdziale do wielokąta będziemy zaliczać jego wnętrze
 wraz z brzegiem. Jako $n$ będziemy oznaczać liczbę wierzchołków $P$, a
 jako $m$ liczbę wierzchołków $Q$. Stosując algorytm naiwny polegający
 na sprawdzeniu przecięcia każdej krawędzi $P$ z każdą krawędzią $Q$
-można uzyskać punkty wszystkich przecięć w czasie $O(nm)$.
+można uzyskać punkty wszystkich przecięć w czasie $O(nm)$. Dla
+wielokątów prostych ten problem można rozwiązać w czasie
+liniowo-logarytmicznym, uprzednio przekształcając go do problemu
+przecięcia odcinków, które wymaga czasu liniowego~\cite{Prep85}.
 
 \section{Algorytm Shamosa-Hoeya}
 Podstawową metodą rozwiązywania problemów w algorytmice jest technika
@@ -19,7 +23,7 @@ Podstawową metodą rozwiązywania problemów w algorytmice jest technika
 znajdowaniu rozwiązań częściowych, a następnie łączeniu ich w końcowy
 rezultat.
 
-Metodę wykorzystującą podział płaszczyzny, dla problemu przecięcia
+Metodę wykorzystującą podział płaszczyzny dla problemu przecięcia
 wielokątów zaproponowali Shamos i Hoey~\cite{ShamosHoey76}. Przez
 każdy wierzchołek $P$ i $Q$ prowadzimy prostą pionową, tworząc w ten
 sposób $n+m$ nieskończonych prostokątów zwanych dalej \emph{pasami}
@@ -67,7 +71,7 @@ ciągu krawędzi należących do $P$, a następnie z ciągu krawędzie
 należących do $Q$ (rysunek~\ref{img:sickles}). Jeżeli dany fragment
 brzegu $R$ należy do $Q$, to jest on ,,objęty'' na zewnątrz przez ciąg
 krawędzi $P$. I na odwrót --- fragmenty brzegu $R$, które należą do
-$P$, są otoczone przez krawędzie należące do $Q$.
+$P$, są otoczone przez krawędzie należące do~$Q$.
 
 \begin{figure}[htb]
   \centering
@@ -110,24 +114,24 @@ przecięcie bieżących krawędzi wielokątów $P$ i $Q$, i wybieramy
 krawędź, do której podążymy w następnym kroku.  Chcemy kierować się
 następującą regułą: jeżeli krawędź $B$ jest ,,skierowana'' w kierunku
 krawędzi $A$, ale jej nie przecina, to zbliżamy się do $A$ przechodząc
-po krawędzi $Q$ w miejsce możliwego przecięcia, w przeciwnym przypadku
-przechodzimy po $B$.
+po krawędzi $B$ w miejsce możliwego przecięcia, w przeciwnym przypadku
+przechodzimy po $A$.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[scale=0.7]{img/vectors}
-  \caption{\label{img:advance}}
+  \caption{\label{img:advance} Wektory krawędzi wielokątów $P$ i $Q$.}
 \end{figure}
 
 Rozważmy sytuację z rysunku~\ref{img:advance}. Niech $H(A)$ oznacza
 półpłaszczyznę po lewej stronie skierowanej prostej współliniowej do
 krawędzi $A$. Pogrubiona strzałka to wektor krawędzi $A$, pozostałe to
-wektory krawędzi $B$.  Jako $A \times B > 0$ zapiszmy warunek, taki że
+wektory krawędzi $B$.  Jako $A \times B > 0$ zapiszmy warunek taki, że
 współrzędna $z$ iloczynu wektorowego wektorów krawędzi $A$ i $B$ jest
 dodatnia (na rysunku~\ref{img:advance} oznaczone linią ciągłą). Jako
 $a$ oznaczmy ,,skierowany'' wierzchołek należący do krawędzi $A$, zaś
 jako $b$ ,,skierowany'' wierzchołek należący do krawędzi $B$. Przy
-wyborze krawędzi, po której przejdziemy w bieżącym kroku stosujemy
+wyborze krawędzi, po której przejdziemy w bieżącym kroku, stosujemy
 poniższą regułę. Jeżeli
 
 \begin{center}
@@ -141,28 +145,30 @@ Jeżeli $P$ i $Q$ przecinają się, to przecięcie zostanie znalezione po
 $O(n+m)$ krokach. Znając punkty przecięć, dodatkowe $n+m$ kroków
 wystarcza do wyznaczenia wszystkich wierzchołków tworzących brzeg
 przecięcia $P \cap Q$. Możemy tym samym stwierdzić, że jeżeli po
-$2(n+m)$ krokach nie odnajdziemy przecięcia to krawędzie $P$ i $Q$ nie
-przecinają się. Na koniec, jeżeli nie odnotowano przecięcia krawędzi,
-pozostaje sprawdzanie trzech końcowych warunków z
+$2(n+m)$ krokach nie odnajdziemy przecięcia, to krawędzie $P$ i $Q$
+nie przecinają się. Na koniec, jeżeli nie odnotowano przecięcia
+krawędzi, pozostaje sprawdzanie trzech końcowych warunków z
 listingu~\ref{alg:OrourkeFinalTerms}. Sprawdzenie, czy punkt zawiera
 się w wielokącie, tak jak to zostało pokazane w
 rozdziale~\ref{chap:point_location}, dla wielokąta prostego można
-wykonać w czasie liniowym, stąd złożoność czasowa całego algorytmy
+wykonać w czasie liniowym, stąd złożoność czasowa całego algorytmu
 wynosi $O(n + m)$.
 
 \begin{figure}
   \begin{algorithmic}[1]
-    \If {$p_i$ leży w $Q$}
+    \If {$p_0$ leży w $Q$}
     \State $P$ zawiera się $Q$
     \Else
-    \If {$q_j$ leży w $P$}
+    \If {$q_0$ leży w $P$}
     \State $Q$ zawiera się $P$
     \Else
     \State $P$ i $Q$ nie przecinają się
     \EndIf
     \EndIf
   \end{algorithmic}
-  \caption{\label{alg:OrourkeFinalTerms}}
+  \caption{\label{alg:OrourkeFinalTerms} Procedura sprawdzająca czy $P
+    \subseteq Q$ lub $Q \subseteq P$, gdy nie wykryto przecięcia
+    krawędzi.}
 \end{figure}
 
 \section{Algorytm Toussainta}
@@ -172,7 +178,7 @@ w czasie liniowym, zaproponował Toussaint w~\cite{ToussaintInt}.
 \begin{figure}[htb]
   \centering
   \includegraphics[scale=0.7]{img/toussaint1}
-  \caption{\label{img:toussaint1}}
+  \caption{\label{img:toussaint1} Kieszenie a przecięcie wielokątów.}
 \end{figure}
 
 \subsection{Opis}
@@ -183,8 +189,8 @@ w $k$ punktach $I_1, I_2, \ldots, I_k$ ponumerowanych zgodnie z ruchem
 wskazówek zegara. Brzegi $P$ i $Q$ oraz otoczka wypukła $CH(P \cup Q)$
 dzielą płaszczyznę na $2k + 1$ ograniczonych regionów: obszar
 przecięcia wielokątów $P \cap Q$ wyznaczony przez punkty $I_1, I_2,
-\ldots, I_k$, $k$ regionów gdzie $P$ lub $Q$ należy do otoczki
-wypukłej $CH(P \cup Q)$, ale nie należy do obszaru $P \cap Q$
+\ldots, I_k$, następnie $k$ regionów gdzie $P$ lub $Q$ należy do
+otoczki wypukłej $CH(P \cup Q)$, ale nie należy do obszaru $P \cap Q$
 przecięcia tych wielokątów, oraz analogiczne $k$ ,,kieszeni'' $K_1,
 K_2, \ldots, K_k$ leżących wewnątrz otoczki wypukłej $CH(P \cup Q$),
 ale leżących na zewnątrz $P \cup Q$. Każdej kieszeni $K_v$
@@ -199,7 +205,7 @@ trzech krokach (listing~\ref{alg:interconpol}).
   \begin{algorithmic}[1]
     \Procedure{Alogrytm Interconpol}{}
 
-    \State \emph{/* krok 1 */)}
+    \State \emph{/* krok 1 */}
 
     \State wyznacz otoczkę wypukłą $CH(P \cup Q)$
 
@@ -231,14 +237,15 @@ trzech krokach (listing~\ref{alg:interconpol}).
 
     \EndProcedure
   \end{algorithmic}
-  \caption{\label{alg:interconpol}}
+  \caption{\label{alg:interconpol} Algorytm wyznaczający przecięcie
+    wielokątów metodą Toussainta.}
 \end{figure}
 
 
 \subsection{Poprawność}
 Poprawność algorytmu opiera się na poniższych lematach.
 
-\begin{lemat}
+\begin{lemat}\em{\cite{ToussaintInt}}
   Jeżeli $P$ i $Q$ przecinają się to dla każdego mostu $CH(P \cup Q)$
   istnieje jeden związany z nim punkt przecięcia $P \cap Q$.
 \end{lemat}
@@ -275,32 +282,32 @@ Poprawność algorytmu opiera się na poniższych lematach.
 \begin{figure}[htb]
   \centering
   \includegraphics[scale=0.7]{img/toussaint2}
-  \caption{\label{img:toussaint2}}
+  \caption{\label{img:toussaint2} Most a punkt przecięcia.}
 \end{figure}
 
 \begin{twierdzenie}[Toussaint 1985\label{thm:toussaint85}]
-  Algorytm poprawnie wyznacza punkt przecięcia dla odpowiadającego mu
-  mostu.
+  Opisany wyżej algorytm poprawnie wyznacza punkt przecięcia dla
+  odpowiadającego mu mostu.
 \end{twierdzenie}
 
-Zanim omówimy dowód powyższego twierdzenia wprowadźmy definicje.
+Zanim omówimy dowód powyższego twierdzenia wprowadźmy kilka definicji.
 
 \begin{definicja}
-  Łańcuchem $C(p_i,p_{i+1},\ldots,p_j)$ będziemy nazywać ciąg
-  kolejnych, następujących po sobie krawędzi i wierzchołków
-  wielokąta prostego zaczynając od wierzchołka $p_i$ do wierzchołka
+  \emph{Łańcuchem} $C(p_i,p_{i+1},\ldots,p_j)$ nazywamy ciąg
+  kolejnych, następujących po sobie krawędzi i wierzchołków wielokąta
+  prostego zaczynając od wierzchołka $p_i$ do wierzchołka
   $p_j$. Jeżeli każda krawędź łańcucha wraz z następną krawędzią
-  tworzy kąt prawoskrętny to taki łańcuch nazywamy
+  tworzy kąt prawoskrętny, to taki łańcuch nazywamy
   \emph{wypukłym}. Analogicznie, jeżeli każda krawędź wraz ze swoim
-  następnikiem tworzy kąt lewoskrętny to taki łańcuch nazywamy
+  następnikiem tworzy kąt lewoskrętny, to taki łańcuch nazywamy
   \emph{łańcuchem wklęsłym}.
 \end{definicja}
 
 \begin{definicja}
-  Wielokątem \emph{żaglokształtnym} będziemy nazywać wielokąt
-  zawierający krawędź $(p_{i}p_{i+1})$ będącą \emph{masztem} oraz
-  wierzchołek $p_j$, który będziemy \emph{czubkiem żagla}, połączony z
-  wierzchołkami $p_i$ i $p_{i+1}$ \emph{łańcuchami wklęsłymi}.
+  Wielokątem \emph{żaglokształtnym} nazywamy wielokąt zawierający
+  krawędź $(p_{i}p_{i+1})$ będącą \emph{masztem} oraz wierzchołek
+  $p_j$ (tzw.\ \emph{czubek żagla}) połączony z wierzchołkami $p_i$ i
+  $p_{i+1}$ łańcuchami wklęsłymi.
 \end{definicja}
 
 \begin{definicja}
@@ -311,7 +318,7 @@ Zanim omówimy dowód powyższego twierdzenia wprowadźmy definicje.
 \begin{definicja}\label{def:ear}
   Niech $p_i, p_{i+1}, p_{i+2}$ będą trzema kolejnymi, następującymi
   po sobie wierzchołkami należącymi do wielokąta $P$. Jeżeli przekątna
-  łącząca $p_{i}$ i $p_{i+2}$ leży w $P$ to punkt $p_i$ nazywamy
+  łącząca $p_{i}$ i $p_{i+2}$ leży w $P$, to punkt $p_i$ nazywamy
   \emph{uchem} wielokąta $P$.
 \end{definicja}
 
@@ -319,19 +326,19 @@ Zauważmy, że każda kieszeń wraz z odpowiadającym jej mostem oraz
 punktem przecięcia $I_i$ tworzy wielokąt
 \emph{żaglokształtny}. Ponadto mamy następujący lemat.
 
-\begin{lemat}\label{lem:sailtip}
+\begin{lemat}\label{lem:sailtip}\emph{\cite{ToussaintInt}}
   Czubek wielokąta żaglokształtnego jest uchem.
 \end{lemat}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[scale=0.7]{img/toussaint3}
-  \caption{\label{img:toussaint3}}
+  \caption{\label{img:toussaint3} Wielokąt żaglokształtny.}
 \end{figure}
 
 \begin{proof}
   Przedłużmy krawędzie $(p_j,p_{j-1})$ i $(p_j, p_{j+1})$ tak, by
-  przecinały linię $L(p_i, p_{i+1})$ odpowiednio w punktach $x$ i $y$
+  przecinały prostą $L(p_i, p_{i+1})$ odpowiednio w punktach $x$ i $y$
   (rysunek~\ref{img:toussaint3}). Ze względu na to, że $p_j$ jest
   połączony z $p_i$ łańcuchem wypukłym, punkt $x$ musi leżeć na
   odcinku $(p_i, p_{i+1})$ będącym masztem $P$. Analogicznie, punkt
@@ -345,7 +352,7 @@ punktem przecięcia $I_i$ tworzy wielokąt
   siebie uszu.
 \end{twierdzenie}
 
-\begin{lemat}\label{lem:sailmast}
+\begin{lemat}\label{lem:sailmast}\emph{\cite{ToussaintInt}}
   Uchem jest góra masztu wielokąta żaglokształtnego albo uchem jest
   jego dół.
 \end{lemat}
@@ -360,9 +367,10 @@ punktem przecięcia $I_i$ tworzy wielokąt
 \end{proof}
 
 \begin{proof}[Dowód twierdzenia~\ref{thm:toussaint85}]
-  W każdym zachowywany jest następujący niezmiennik: po obcięciu
-  kolejnego ucha pozostała cześć wielokąta również jest wielokątem
-  żaglokształtnym.
+  W każdym kroku algorytmu znajdującego przecięcie krawędzi wielokąta
+  $P$ i wielokąta $Q$ zachowywany jest następujący niezmiennik: po
+  obcięciu kolejnego ucha wielokąta żaglokształtnego pozostała cześć
+  wielokąta również jest wielokątem żaglokształtnym.
 
   Lemat~\ref{lem:sailtip} pozwala nam na triangulację $P$ w każdym
   kroku obcinając ucho będące górą lub dołem masztu, dopóki nie
@@ -371,9 +379,10 @@ punktem przecięcia $I_i$ tworzy wielokąt
 
 W naszym przypadku wierzchołek $p_j$ jest szukanym punktem przecięcia
 $I_i$, tak więc dodatkowo w algorytmie powinniśmy uwzględnić warunek
-sprawdzający czy w bierzącym kroku nadal rozważamy krawędź należącą do
-wielokąta żaglokształtnego. Kompletny algorytm znajdujący czubek żagla
-wielokąta $P$ został przedstawiony na listingu~\ref{alg:stepdown}.
+sprawdzający, czy w bierzącym kroku nadal rozważamy krawędź należącą
+do wielokąta żaglokształtnego. Kompletny algorytm znajdujący czubek
+żagla wielokąta $P$ został przedstawiony na
+listingu~\ref{alg:stepdown}.
 
 \begin{figure}[htp]
   \begin{algorithmic}[1]
@@ -410,7 +419,8 @@ wielokąta $P$ został przedstawiony na listingu~\ref{alg:stepdown}.
 
     \EndProcedure
   \end{algorithmic}
-  \caption{\label{alg:stepdown}}
+  \caption{\label{alg:stepdown} Algorytm znajdujący punkt przecięcia
+    krawędzi wielokątów $P$ i $Q$ związany z danym mostem.}
 \end{figure}
 
 Wejściem dla procedury jest most $B_k(p_i,p_j)$ należący do $CH(P \cup
@@ -427,7 +437,7 @@ rysunki~\ref{fig:stepdown1}--\ref{fig:stepdown5}.
 Niech $n$ oznaczana liczbę wierzchołków wielokąta $P$, a $m$ liczbę
 wierzchołków wielokąta $Q$. Znalezienie otoczki wypukłej dwóch
 przecinających się wielokątów wypukłych może być wykonane w czasie
-$O(m + n)$\cite{Toussaint83}. W~\cite{ToussaintInt}, Toussaint
+$O(m + n)$~\cite{Toussaint83}. W~\cite{ToussaintInt} Toussaint
 proponuje wykorzystać technikę \emph{rotating calipers}, pozwalającą w
 tym samym czasie stwierdzić, czy $CH(P \cup Q) = P$ lub $CH(P \cup Q)
 = Q$.
@@ -437,11 +447,11 @@ wywołanie wymaga czasu liniowego zależnego od liczby wierzchołków
 należących do danego żagla. Wszystkich takich wierzchołków może być
 maksymalnie $n + m$, stąd ta część algorytmu wymaga czasu $O(n + m)$.
 
-Ostatnią część algorytmu, połączenie uzyskanych łańcuchów wewnętrznych
-można wykonać w czasie liniowym przechodząc przez krawędzie obydwu
-wielokątów, jeżeli podczas szukania punktów przecięć oznaczyliśmy
-kierunek w którym dana część wielokąta staje się łańcuchem
-wewnętrznym.
+Ostatnią część algorytmu, tj.\ połączenie uzyskanych łańcuchów
+wewnętrznych można wykonać w czasie liniowym przechodząc przez
+krawędzie obydwu wielokątów, jeżeli podczas szukania punktów przecięć
+oznaczyliśmy kierunek, w którym dana część wielokąta staje się
+łańcuchem wewnętrznym.
 
 Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
 
@@ -561,7 +571,7 @@ Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
     \draw (p2) -- (q4);
     \draw [dashed] (p2) -- (q3);
   \end{tikzpicture}
-  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest lewoskrętny więc
+  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest lewoskrętny, więc
     odcinamy ucho $q_j$.\label{fig:stepdown1}}
 \end{figure}
 
@@ -614,7 +624,7 @@ Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
     \draw (p2) -- (q3);
     \draw [dashed] (q3) -- (p3);
   \end{tikzpicture}
-  \caption{Kąt $\angle{p_{j}p_{j+1},q_{i+1}}$ jest prawoskrętny więc
+  \caption{Kąt $\angle{q_{j}q_{j+1},p_{i+1}}$ jest prawoskrętny, więc
     odcinamy ucho $p_i$.}
 \end{figure}
 
@@ -668,7 +678,7 @@ Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
     \draw [dashed] (p3) -- (q2);
 
   \end{tikzpicture}
-  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest lewoskrętny więc
+  \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest lewoskrętny, więc
     odcinamy ucho $q_j$.}
 \end{figure}
 
@@ -718,7 +728,7 @@ Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
     \draw (p3) -- (q2);
     \draw [dashed] (p4) -- (q2);
   \end{tikzpicture}
-  \caption{Kąt $\angle{q_{j}q_{j+1}p_{i+1}}$ jest prawoskrętny więc
+  \caption{Kąt $\angle{q_{j}q_{j+1}p_{i+1}}$ jest prawoskrętny, więc
     odcinamy ucho $p_i$.}
 \end{figure}
 
@@ -768,7 +778,7 @@ Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
     \draw (p4) -- (q2);
   \end{tikzpicture}
   \caption{Kąt $\angle{p_{i}p_{i+1}q_{j+1}}$ jest prawoskrętny, a kąt
-    $\angle{q_{j}q_{j+1}p_{i+1}}$ lewoskrętny, algorytm kończy
+    $\angle{q_{j}q_{j+1}p_{i+1}}$ lewoskrętny, zatem algorytm kończy
     działanie.\label{fig:stepdown5}}
 \end{figure}
 
