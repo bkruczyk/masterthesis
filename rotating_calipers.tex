@@ -35,7 +35,7 @@ gdzie $p_{i_0}$ to wierzchołek styczny do początkowej pozycji
 pierwszej prostej wspierającej, a $p_{j_0}$ to wierzchołek styczny do
 początkowej pozycji drugiej prostej wspierającej.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[scale=0.5]{img/calipers1}
   \caption{\label{img:calipers1} Wierzchołki $p_i$ i $p_j$ tworzą parę
@@ -82,7 +82,7 @@ wszystkie możliwe prostokąty zawierające, tj.\ obydwie suwmiarki
 wykonają pełny obrót wokół $P$. Ze wszystkich wyznaczonych w ten
 sposób prostokątów wybieramy najmniejszy.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[scale=0.5]{img/calipers2}
   \caption{\label{img:calipers2} Pary wierzchołków $(p_i, p_k)$ i
@@ -104,7 +104,7 @@ wypukłymi nie musi być równa średnicy otoczki wypukłej $P \cup Q$
 (rysunek~\ref{fig:maxdist}), więc nie możemy wykorzystać algorytmu
 wyznaczającego średnicę do rozwiązania tego problemu.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \begin{tikzpicture}
       \coordinate (p1) at (3,5);
@@ -167,7 +167,7 @@ wspierające o ten kąt. Proces powtarzamy do czasu, gdy proste
 wspierające zamienią się początkowymi pozycjami. W ostatnim kroku
 wybieramy największą z wyznaczonych odległości między punktami.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[scale=0.5]{img/calipers3}
   \caption{\label{img:calipers3} Para wierzchołków $(p_i, q_j)$ jest
@@ -238,9 +238,8 @@ zakończyć po znalezieniu obydwu mostów.
 
 Niech liczba wierzchołków $P$ wynosi $n$, a liczba wierzchołków $Q$
 wynosi $m$. Par kopodalnych jest mniej niż $n + m$. Sprawdzenie, czy
-para kopodalna jest mostem, odpobywa się w czasie $O(1)$, stąd
-złożoność czasowa algorytmu wyznaczającego mosty jest rzędu $O(n +
-m)$.
+para kopodalna jest mostem, odbywa się w czasie $O(1)$, stąd złożoność
+czasowa algorytmu wyznaczającego mosty jest rzędu $O(n + m)$.
 
 %%% Local Variables:
 %%% mode: latex
