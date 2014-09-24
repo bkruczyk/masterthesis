@@ -12,7 +12,7 @@ wypukłą zbioru punktów w czasie
 liniowo-logarytmicznym~\cite{Graham72}, a następnie wyznaczyć jej
 średnicę. Względnie bardziej złożone rozwiązanie dla dowolnego
 wielokąta działające w czasie liniowym przedstawili w~\cite{Hersh93}
-J.\ Hershberger i S.\ Suri.
+Hershberger i Suri.
 
 \begin{twierdzenie}[Hocking-Young 1961\label{thm:hy61}]
   Średnica zbioru jest równa średnicy jego otoczki wypukłej.
@@ -49,9 +49,10 @@ przykład żadne dwie różne proste wspierające przechodzące przez $p_3$
 i $p_6$ wielokąta z rysunku~\ref{fig:antipodal} nie mogą być
 równoległe, więc para $(p_{3},p_{6})$ nie może definiować
 średnicy. Przypomnijmy --- para punktów, przez które mogą przechodzić
-proste wspierające, jest nazywana punktami antypodycznymi. Z
-twierdzenia~\ref{thm:yagbol} wynika, że szukając średnicy nie musimy
-badać wszystkich par punktów, a jedynie pary antypodyczne.
+dwie różne równoległe proste wspierające, jest nazywana punktami
+antypodycznymi. Z twierdzenia~\ref{thm:yagbol} wynika, że szukając
+średnicy nie musimy badać wszystkich par punktów, a jedynie pary
+antypodyczne.
 
 \begin{figure}[tp]
   \centering
@@ -111,41 +112,7 @@ antypodyczny do $p_i$, a żaden wierzchołek nienależący do $C(p_i)$
 takim nie jest. Fakt ten umożliwia konstrukcję algorytmu pozwalającego
 efektywnie uzyskać wszystkie pary antypodyczne.
 
-Wejściem dla algorytmu jest wielokąt zadany jako lista wierzchołków ze
-wskaźnikiem na swój następnik w kolejności przeciwnej do ruchu
-wskazówek zegara --- następnikiem wierzchołka $p_{n-1}$ jest
-$p_0$. Dla czytelności algorytmu przyjmijmy także, że żadna para boków
-tego wielokąta nie jest równoległa. Do określenia, który punkt leży
-najdalej od odcinka $p_{i}p_{i+1}$, korzystamy z funkcji ,,podwojonego
-pola ze znakiem trójkąta'' $p_{0}p_{i+1}p$, którą przedstawiono w
-rozdziale~\ref{chap:pojecia} do wyznaczenia skrętności kąta. W
-pierwszej części algorytmu w pętli \textbf{while} szukamy pierwszego
-najdalszego wierzchołka i oznaczamy go jako $q_0$. Następnie
-wyznaczamy łańcuch $C(p_i)$, używając wskaźników $p$ i $q$
-poruszających się w kierunku odwrotnym do ruchu wskazówek zegara,
-zaczynając odpowiednio od $p_0$ i $q_0$ do momentu, aż wskaźnik $q$
-wróci do pozycji $p_0$. Po tym kroku zostaną wypisane wszystkie pary
-antypodyczne. Znalezienie wierzchołka $q_0$ zajmuje w pesymistycznym
-przypadku $n-1$ kroków, natomiast przejście po łańcuchach $p_{0},
-\ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $n$ kroków. Mamy więc
-do czynienia ze złożonością czasową rzędu $O(n)$.
-
-% Specjalną sytuacją jest przypadek, gdy dwie krawędzie są równoległe
-% (wtedy pole ze znakiem trójkąta jest równe dla dwóch wierzchołków
-% tworzących krawędź równoległą), która wymaga od nas dodatkowego kroku
-% przy każdym wierzchołku (wiersze 15--19).
-
-% Poprawność algorytmu wynika z tego, że krawędzi równoległych jest co
-% najwyżej $N/2$, więc łącznie algorytm nie wykonuje więcej niż $3N$
-% kroków. Mamy więc do czynienia ze złożonością czasową rzędu $O(n)$.
-
-Fakt, że punkt antypodyczny dla punktu $p_{i+1}$ nie może być bliższy
-niż wierzchołek, który jest najdalej od $p_i$, wynika z wypukłością
-wielokąta --- dla dowolnego wierzchołka $p$ można wyznaczyć taki
-wierzchołek $q$, że odległość kolejnych wierzchołków od $p$ do $q$
-jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
-
-\begin{figure}[thp]
+\begin{figure}[tp]
   \centering
   \begin{tikzpicture}
     \coordinate (p3) at (5, 3);
@@ -228,8 +195,45 @@ jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
   \caption{Prosta $l$ przecina $\alpha_i$ i $\alpha_s$.\label{fig:diameter}}
 \end{figure}
 
-\begin{figure}[htp]
 
+Wejściem dla algorytmu jest wielokąt zadany jako lista wierzchołków ze
+wskaźnikiem na swój następnik w kolejności przeciwnej do ruchu
+wskazówek zegara --- następnikiem wierzchołka $p_{n-1}$ jest
+$p_0$. Dla czytelności algorytmu przyjmijmy także, że żadna para boków
+tego wielokąta nie jest równoległa. Do określenia, który punkt leży
+najdalej od odcinka $p_{i}p_{i+1}$, korzystamy z funkcji ,,podwojonego
+pola ze znakiem trójkąta'' $p_{0}p_{i+1}p$, którą przedstawiono w
+rozdziale~\ref{chap:pojecia} do wyznaczenia skrętności kąta. W
+pierwszej części algorytmu w pętli \textbf{while} szukamy pierwszego
+najdalszego wierzchołka i oznaczamy go jako $q_0$. Następnie
+wyznaczamy łańcuch $C(p_i)$, używając wskaźników $p$ i $q$
+poruszających się w kierunku odwrotnym do ruchu wskazówek zegara,
+zaczynając odpowiednio od $p_0$ i $q_0$ do momentu, aż wskaźnik $q$
+wróci do pozycji $p_0$. Po tym kroku zostaną wypisane wszystkie pary
+antypodyczne. Znalezienie wierzchołka $q_0$ zajmuje w pesymistycznym
+przypadku $n-1$ kroków, natomiast przejście po łańcuchach $p_{0},
+\ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $n$ kroków. Mamy więc
+do czynienia ze złożonością czasową rzędu $O(n)$.
+
+% Specjalną sytuacją jest przypadek, gdy dwie krawędzie są równoległe
+% (wtedy pole ze znakiem trójkąta jest równe dla dwóch wierzchołków
+% tworzących krawędź równoległą), która wymaga od nas dodatkowego kroku
+% przy każdym wierzchołku (wiersze 15--19).
+
+% Poprawność algorytmu wynika z tego, że krawędzi równoległych jest co
+% najwyżej $N/2$, więc łącznie algorytm nie wykonuje więcej niż $3N$
+% kroków. Mamy więc do czynienia ze złożonością czasową rzędu $O(n)$.
+
+Fakt, że punkt antypodyczny dla punktu $p_{i+1}$ nie może być bliższy
+niż wierzchołek, który jest najdalej od $p_i$, wynika z wypukłości
+wielokąta --- dla dowolnego wierzchołka $p$ można wyznaczyć taki
+wierzchołek $q$, że odległość kolejnych wierzchołków od $p$ do $q$
+jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
+
+
+\begin{algorithm}
+  \caption{Algorytm wypisujący wszystkie pary
+    antypodyczne.\label{alg:antipodal}}
   \begin{algorithmic}[1]
     \Procedure{Antipodal Pairs}{}
 
@@ -271,9 +275,7 @@ jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
 \EndProcedure
 
   \end{algorithmic}
-  \caption{Algorytm wypisujący wszystkie pary
-    antypodyczne.\label{alg:antipodal}}
-\end{figure}
+\end{algorithm}
 
 \begin{table}[htb]
   \centering

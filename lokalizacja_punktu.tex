@@ -230,12 +230,11 @@ jest to wnętrze i zewnętrze wielokąta (rysunek~\ref{fig:location3}).
   \caption{Podział na kliny.\label{fig:location3}}
 \end{figure}
 
-W tej pracy będziemy zakładać, że brzeg wielokąta $P$ tworzą
-wierzchołki $p_0, \ldots,$ $p_{n-1}$, ponumerowane w kolejności
-przeciwnej do ruchu wskazówek zegara. Wyszukiwanie położenia danego
-punktu $z$ składa się z dwóch etapów. Najpierw określany jest klin, w
-którym leży $z$. Można to zrobić w czasie $O(\log n)$ używając
-wyszukiwania binarnego.
+Załóżmy, że brzeg wielokąta $P$ tworzą wierzchołki $p_0, \ldots,$
+$p_{n-1}$, ponumerowane w kolejności przeciwnej do ruchu wskazówek
+zegara. Wyszukiwanie położenia danego punktu $z$ składa się z dwóch
+etapów. Najpierw określany jest klin, w którym leży $z$. Można to
+zrobić w czasie $O(\log n)$ używając wyszukiwania binarnego.
 % % nie działa w pewnych przypadkach
 % Punkt $z$ będzie znajdował się pomiędzy promieniami $p_i$ i $p_{i+n}$
 % podzielonej płaszczyzny wtedy i tylko wtedy, gdy kąt $\angle p_{i}qz$
@@ -243,7 +242,7 @@ wyszukiwania binarnego.
 % następnych krokach stopniowo zawężamy nasz obszar poszukiwań, do czasu
 % aż odnajdziemy właściwy klin.
 Następnie określamy, czy $z$ należy do wnętrza lub zewnętrza
-znalezionego klinu. Jeśli kąt $\angle p_{i}p_{i+1}z$ jest lewoskrętny,
+znalezionego klina. Jeśli kąt $\angle p_{i}p_{i+1}z$ jest lewoskrętny,
 to $z$ jest wewnętrzny. Określenie skrętności kąta jest operacją o
 czasie $O(1)$, więc asymptotyczna złożoność tej części algorytmu jest
 rzędu $O(\log n)$.
@@ -320,8 +319,8 @@ rzędu $O(\log n)$.
 % \end{figure}
 
 Zastosowane tutaj przeszukiwanie binarne jest możliwe dzięki temu, że
-wierzchołki wielokąta wypukłego występują w kolejności kątowej lub
-inaczej mówiąc w kolejności krążenia wokół punktu $q$. Przetwarzanie
+wierzchołki wielokąta wypukłego występują w kolejności kątowej lub,
+inaczej mówiąc, w kolejności krążenia wokół punktu $q$. Przetwarzanie
 wstępne dla wielokąta $P$, na które składa się wyznaczenie punktu $q$
 oraz umieszczenie wielokąta w strukturze danych wspierającej
 wyszukiwanie binarne, może zostać wykonane w czasie $O(n)$. Algorytm
@@ -330,57 +329,56 @@ listingu~\ref{alg:findwedge}. Należy zauważyć, że indeksy wierzchołków
 są wyliczane za pomocą działania \emph{modulo} $n$. Innymi słowy,
 następnikiem wierzchołka $p_{n-1}$ jest wierzchołek $p_0$.
 
-Należy zauważyć, że względnie bardziej złożony algorytm, działający w
-czasie logarytmicznym dla problemu ogólnego przedstawił
+Warto wspomnieć, że względnie bardziej złożony algorytm, działający
+także w czasie logarytmicznym dla problemu ogólnego przedstawił
 w~\cite{Kirk83} Kirkpatrick. W uproszczeniu: jest to metoda oparta na
-wyszukiwaniu w strukturze drzewa będącego reprezentacją poddanej
-triangulacji płaszczyzny. Wymaga ona jednak przetwarzania wstępnego,
-które może być wykonane w czasie liniowo-logarytmicznym --- stąd
-korzystniejsze jest używanie tego algorytmu w przypadku zapytań
-wielokrotnych.
+wyszukiwaniu w strukturze drzewopodobnej będącej reprezentacją
+poddanej triangulacji płaszczyzny. Wymaga ona jednak przetwarzania
+wstępnego, które może być wykonane w czasie liniowo-logarytmicznym.
 
 % Przyjęto także założenie, że brzeg $P$ należy do jego wnętrza.
 
-\begin{figure}[htp]
+\begin{algorithm}
+  \caption{Algorytm wyznaczający klin zawierający szukany
+    punkt.\label{alg:findwedge}}
   \begin{algorithmic}[1]
-    \Procedure{Find Wedge}{}
+  \Procedure{Find Wedge}{}
 
-    \State {$j \gets \lfloor N/2 \rfloor$}
-    \State {$i \gets 0$}
+  \State {$j \gets \lfloor N/2 \rfloor$}
+  \State {$i \gets 0$}
 
-    \State
+  \State
 
-    \If {$z$ leży w klinie $p_jqp_i$}
-        \State {kontynuuj}
-    \Else
-        \State {$i \gets j$}
-        \State {$j \gets N$}
-    \EndIf
+  \If {$z$ leży w klinie $p_jqp_i$}
+      \State {kontynuuj}
+  \Else
+      \State {$i \gets j$}
+      \State {$j \gets N$}
+  \EndIf
 
-    \State
+  \State
 
-    \While {nie wyznaczono pojedynczego klina}
-        \State $s \gets \lfloor (j-i)/2 \rfloor$
+  \While {nie wyznaczono pojedynczego klina}
+      \State $s \gets \lfloor (j-i)/2 \rfloor$
 
-        \State
+      \State
 
-        \If {$z$ leży w klinie rozpiętym przez $p_sqp_i$}
+      \If {$z$ leży w klinie rozpiętym przez $p_sqp_i$}
                 \State {$j \gets s$}
-        \Else
+      \Else
                 \State {$i \gets s$}
-        \EndIf
-    \EndWhile
+      \EndIf
+  \EndWhile
 
-    \State
+  \State
 
-    \State $print(p_i, p_j)$
+  \State $print(p_i, p_j)$
 
-    \EndProcedure
+  \EndProcedure
 
-    \end{algorithmic}
-    \caption{Algorytm wyznaczający klin zawierający szukany
-      punkt.\label{alg:findwedge}}
-  \end{figure}
+  \end{algorithmic}
+
+\end{algorithm}
 
   %%% Local Variables:
   %%% mode: latex

@@ -5,9 +5,9 @@
 \usepackage{blindtext}
 \usepackage{tikz}
 \usepackage{amsthm}
-\usepackage{algorithmicx}
-\usepackage{algpseudocode}
 \usepackage{booktabs}
+\usepackage{algpseudocode}
+\usepackage[boxed]{algorithm}
 
 \usetikzlibrary{calc}
 \usetikzlibrary{intersections}
@@ -42,6 +42,16 @@
 \newtheorem{definicja}{Definicja}[chapter]
 
 \setcounter{tocdepth}{1}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\l@chapter}{1.0em}{0.8em}{}{}
+\makeatother
+
+\makeatletter
+\renewcommand{\ALG@name}{Listing}
+\renewcommand{\listalgorithmname}{Spis listingów}
+\makeatother
 
 \includeonly{
   frontmatter

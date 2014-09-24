@@ -4,24 +4,25 @@ jest następująco.
 
 \begin{problem}[Przecięcie wielokątów]
   Mając dane dwa wielokąty wypukłe $P$ i $Q$, znaleźć ich
-  \emph{przecięcie}, tj.\ obszar należący jednocześnie do $P$ i do
-  $Q$.
+  \emph{przecięcie} $P \cap Q$, tj.\ obszar należący jednocześnie do
+  $P$ i do $Q$.
 \end{problem}
 
 W niniejszym rozdziale do wielokąta będziemy zaliczać jego wnętrze
 wraz z brzegiem. Jako $n$ będziemy oznaczać liczbę wierzchołków $P$, a
 jako $m$ liczbę wierzchołków $Q$. Stosując algorytm naiwny polegający
-na sprawdzeniu przecięcia każdej krawędzi $P$ z każdą krawędzią $Q$
-można uzyskać punkty wszystkich przecięć w czasie $O(nm)$. Dla
-wielokątów prostych ten problem można rozwiązać w czasie
-liniowo-logarytmicznym, uprzednio przekształcając go do problemu
-przecięcia odcinków, które wymaga czasu liniowego~\cite{Prep85}.
+na sprawdzeniu przecięcia każdej krawędzi wielokąta $P$ z każdą
+krawędzią wielokąta $Q$ można uzyskać punkty wszystkich przecięć w
+czasie $O(nm)$. Dla wielokątów prostych ten problem można rozwiązać w
+czasie liniowo-logarytmicznym, uprzednio przekształcając go do
+problemu przecięcia odcinków, które wymaga czasu
+liniowego~\cite{Prep85}.
 
 \section{Algorytm Shamosa-Hoeya}
 Podstawową metodą rozwiązywania problemów w algorytmice jest technika
-\emph{dziel i zwyciężaj}, które polega na podziale na mniejsze części,
-znajdowaniu rozwiązań częściowych, a następnie łączeniu ich w końcowy
-rezultat.
+\emph{dziel i zwyciężaj}, które polega na podziale problemu na
+mniejsze części, znajdowaniu rozwiązań częściowych, a następnie
+łączeniu ich w końcowy rezultat.
 
 Metodę wykorzystującą podział płaszczyzny dla problemu przecięcia
 wielokątów zaproponowali Shamos i Hoey~\cite{ShamosHoey76}. Przez
@@ -32,9 +33,9 @@ wielokątów w każdej warstwie pozwoli nam na proste wyznaczenie obszaru
 przecięcia tych wielokątów. Wynika to z poniższego twierdzenia.
 
 \begin{twierdzenie}[Shamos-Hoey 1976]
-  Przecięcie wielokątów wypukłych $P = (p_1, \ldots, p_n)$ i $Q =
-  (q_1, \ldots, q_m)$ jest wielokątem wypukłym o sumie wierzchołków
-  nie większej niż $n + m$.
+  Przecięcie wielokątów wypukłych $P = (p_0, \ldots, p_{n-1})$ i $Q =
+  (q_0, \ldots, q_{m-1})$ jest wielokątem wypukłym o liczbie
+  wierzchołków nie większej niż $n + m$.
 \end{twierdzenie}
 
 \begin{proof}
@@ -81,15 +82,16 @@ $P$, są otoczone przez krawędzie należące do~$Q$.
 
 Możemy zauważyć, że przechodząc w odpowiedniej kolejności,
 jednocześnie po zewnętrznych i wewnętrznych krawędziach ,,sierpa''
-(rysunek~\ref{img:sickles}) ograniczymy sprawdzanie przecięć jedynie
+(rysunek~\ref{img:sickles}), ograniczymy sprawdzanie przecięć jedynie
 do krawędzi początkowych i końcowych danego sierpa. Z tego względu
 przy wyborze krawędzi, do której mamy przejść w danym kroku, kierujemy
 się tym, czy krawędź bieżąca może zawierać przecięcie, które dopiero
 ma być wykryte. Algorytm można przedstawić w postaci pseudokodu z
 listingu~\ref{alg:Orourke98}.
 
-\begin{figure}[htp]
-
+\begin{algorithm}
+  \caption{Algorytm wyznaczania przecięcia metodą O'Rourke i
+    in.\label{alg:Orourke98}}
   \begin{algorithmic}[1]
     \Procedure{Intersection of Convex Polygons}{}
 
@@ -103,9 +105,7 @@ listingu~\ref{alg:Orourke98}.
 
     \EndProcedure
   \end{algorithmic}
-  \caption{Algorytm wyznaczania przecięcia metodą O'Rourke i
-    in.\label{alg:Orourke98}}
-\end{figure}
+\end{algorithm}
 
 Wybierzmy dowolną krawędź $A \in P$ oraz dowolną krawędź $B \in
 Q$. Będziemy przechodzić po krawędziach obu wielokątów w kierunku
@@ -154,7 +154,10 @@ rozdziale~\ref{chap:point_location}, dla wielokąta prostego można
 wykonać w czasie liniowym, stąd złożoność czasowa całego algorytmu
 wynosi $O(n + m)$.
 
-\begin{figure}
+\begin{algorithm}
+  \caption{\label{alg:OrourkeFinalTerms} Procedura sprawdzająca, czy
+    $P \subseteq Q$ lub $Q \subseteq P$, gdy nie wykryto przecięcia
+    krawędzi.}
   \begin{algorithmic}[1]
     \If {$p_0$ leży w $Q$}
     \State $P$ zawiera się $Q$
@@ -166,10 +169,7 @@ wynosi $O(n + m)$.
     \EndIf
     \EndIf
   \end{algorithmic}
-  \caption{\label{alg:OrourkeFinalTerms} Procedura sprawdzająca czy $P
-    \subseteq Q$ lub $Q \subseteq P$, gdy nie wykryto przecięcia
-    krawędzi.}
-\end{figure}
+\end{algorithm}
 
 \section{Algorytm Toussainta}
 Stosunkowo prosty koncepcyjnie i implementacyjnie algorytm, działający
@@ -196,12 +196,12 @@ K_2, \ldots, K_k$ leżących wewnątrz otoczki wypukłej $CH(P \cup Q$),
 ale leżących na zewnątrz $P \cup Q$. Każdej kieszeni $K_v$
 przypisujemy odpowiadający jej punkt przecięcia $I_v$ oraz krawędź
 otoczki $CH(P \cup Q)$, którą będziemy nazywać \emph{mostem}, łączącą
-wierzchołek $p_i$ wielokąta $P$ oraz wierzchołek $q_j$ wielokąta $Q$ i
-oznaczymy ją jako $B_{v}(p_{i_v}, q_{j_v})$. Cały algorytm
+wierzchołek $p_i$ wielokąta $P$ oraz wierzchołek $q_j$ wielokąta $Q$,
+i oznaczoną ją jako $B_{v}(p_{i_v}, q_{j_v})$. Cały algorytm
 wyznaczający przecięcie wielokątów $P$ i $Q$ można przedstawić w
 trzech krokach (listing~\ref{alg:interconpol}).
 
-\begin{figure}[htp]
+\begin{algorithm}
   \begin{algorithmic}[1]
     \Procedure{Alogrytm Interconpol}{}
 
@@ -239,15 +239,16 @@ trzech krokach (listing~\ref{alg:interconpol}).
   \end{algorithmic}
   \caption{\label{alg:interconpol} Algorytm wyznaczający przecięcie
     wielokątów metodą Toussainta.}
-\end{figure}
+\end{algorithm}
 
 
 \subsection{Poprawność}
 Poprawność algorytmu opiera się na poniższych lematach.
 
-\begin{lemat}\em{\cite{ToussaintInt}}
-  Jeżeli $P$ i $Q$ przecinają się to dla każdego mostu $CH(P \cup Q)$
-  istnieje jeden związany z nim punkt przecięcia $P \cap Q$.
+\begin{lemat}
+  \em{\cite{ToussaintInt}} \em Jeżeli $P$ i $Q$ przecinają się to, dla
+  każdego mostu $CH(P \cup Q)$ istnieje jeden związany z nim punkt
+  przecięcia $P \cap Q$.
 \end{lemat}
 
 \begin{proof}
@@ -276,7 +277,7 @@ Poprawność algorytmu opiera się na poniższych lematach.
   może przecinać się w regionie $R = RH(p_{k+1}, p_k) \cap RH(q_{l+1},
   q_l)$. Dodatkowo, ponieważ $\angle p_{k}Iq_{l+1} < 180^{\circ}$,
   musi istnieć krawędź $(p_i, q_j) \in CH(P \cup Q)$, która przecina
-  region $R$ i jest nią most odpowiadający punktowi przecięcia $I$.
+  region $R$, i jest nią most odpowiadający punktowi przecięcia $I$.
 \end{proof}
 
 \begin{figure}[htb]
@@ -290,7 +291,8 @@ Poprawność algorytmu opiera się na poniższych lematach.
   odpowiadającego mu mostu.
 \end{twierdzenie}
 
-Zanim omówimy dowód powyższego twierdzenia wprowadźmy kilka definicji.
+Zanim omówimy dowód powyższego twierdzenia, wprowadźmy kilka
+definicji.
 
 \begin{definicja}
   \emph{Łańcuchem} $C(p_i,p_{i+1},\ldots,p_j)$ nazywamy ciąg
@@ -305,7 +307,7 @@ Zanim omówimy dowód powyższego twierdzenia wprowadźmy kilka definicji.
 
 \begin{definicja}
   Wielokątem \emph{żaglokształtnym} nazywamy wielokąt zawierający
-  krawędź $(p_{i}p_{i+1})$ będącą \emph{masztem} oraz wierzchołek
+  krawędź $(p_{i},p_{i+1})$ będącą \emph{masztem} oraz wierzchołek
   $p_j$ (tzw.\ \emph{czubek żagla}) połączony z wierzchołkami $p_i$ i
   $p_{i+1}$ łańcuchami wklęsłymi.
 \end{definicja}
@@ -343,12 +345,12 @@ punktem przecięcia $I_i$ tworzy wielokąt
   połączony z $p_i$ łańcuchem wypukłym, punkt $x$ musi leżeć na
   odcinku $(p_i, p_{i+1})$ będącym masztem $P$. Analogicznie, punkt
   $y$ musi leżeć na maszcie $P$. Punkty $p_j, p_{j-1}, x, y, p_{j+1},
-  p_j$, tworzą obszar znajdujący się w całości w $P$, stąd przekątna
+  p_j$ tworzą obszar znajdujący się w całości w $P$, stąd przekątna
   $(p_{j-1}, p_{j+1})$ również musi leżeć w $P$.
 \end{proof}
 
-\begin{twierdzenie}[Meisters 1975\label{thm:meisters}] Każdy wielokąt o
-  $n$ krawędziach ($n > 3$) ma co najmniej dwoje nienachodzących na
+\begin{twierdzenie}[Meisters 1975\label{thm:meisters}] Każdy wielokąt
+  o $n$ krawędziach $(n > 3)$ ma co najmniej dwoje nienachodzących na
   siebie uszu.
 \end{twierdzenie}
 
@@ -384,7 +386,9 @@ do wielokąta żaglokształtnego. Kompletny algorytm znajdujący czubek
 żagla wielokąta $P$ został przedstawiony na
 listingu~\ref{alg:stepdown}.
 
-\begin{figure}[htp]
+\begin{algorithm}
+  \caption{\label{alg:stepdown} Algorytm znajdujący punkt przecięcia
+    krawędzi wielokątów $P$ i $Q$ związany z danym mostem.}
   \begin{algorithmic}[1]
     \Procedure{Stepdown}{}
 
@@ -419,9 +423,7 @@ listingu~\ref{alg:stepdown}.
 
     \EndProcedure
   \end{algorithmic}
-  \caption{\label{alg:stepdown} Algorytm znajdujący punkt przecięcia
-    krawędzi wielokątów $P$ i $Q$ związany z danym mostem.}
-\end{figure}
+\end{algorithm}
 
 Wejściem dla procedury jest most $B_k(p_i,p_j)$ należący do $CH(P \cup
 Q)$, a wyjściem para wierzchołków $p_s$ i $q_t$, gdzie $(p_s,p_{s+1})
@@ -431,7 +433,7 @@ q_{j}q_{j+1}p_{i+1}$ jest prawoskrętny'' w pętlach \textbf{while}
 zapewniają, że w każdym kroku odetniemy ucho oraz że nie przejdziemy
 przez czubek żagla. Przebieg działania procedury \textsc{Stepdown} dla
 mostu z rysunku~\ref{fig:bridge} przedstawiają
-rysunki~\ref{fig:stepdown1}--\ref{fig:stepdown5}.
+rysunki~\ref{fig:stepdown1}-\ref{fig:stepdown5}.
 
 \subsection{Złożoność}
 Niech $n$ oznaczana liczbę wierzchołków wielokąta $P$, a $m$ liczbę
@@ -448,12 +450,11 @@ należących do danego żagla. Wszystkich takich wierzchołków może być
 maksymalnie $n + m$, stąd ta część algorytmu wymaga czasu $O(n + m)$.
 
 Ostatnią część algorytmu, tj.\ połączenie uzyskanych łańcuchów
-wewnętrznych można wykonać w czasie liniowym przechodząc przez
+wewnętrznych, można wykonać w czasie liniowym przechodząc przez
 krawędzie obydwu wielokątów, jeżeli podczas szukania punktów przecięć
 oznaczyliśmy kierunek, w którym dana część wielokąta staje się
-łańcuchem wewnętrznym.
-
-Stąd złożoność czasowa całego algorytmu wynosi $O(n + m)$.
+łańcuchem wewnętrznym. Stąd złożoność czasowa całego algorytmu wynosi
+$O(n + m)$.
 
 \begin{figure}[tbp]
   \centering
