@@ -10,69 +10,69 @@ Ogólny problem zawierania wielokątów sformułowany jest następująco.
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}
-      \coordinate (p0) at (5.5,1.5);
-      \coordinate (p1) at (3,4);
-      \coordinate (p2) at (0,3);
-      \coordinate (p3) at (-1,-0.5);
-      \coordinate (p4) at (3,-2);
+      \coordinate (q0) at (5.5,1.5);
+      \coordinate (q1) at (3,4);
+      \coordinate (q2) at (0,3);
+      \coordinate (q3) at (-1,-0.5);
+      \coordinate (q4) at (3,-2);
 
-      \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) -- cycle;
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={right:$p_0$}] at (p0) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={above:$p_1$}] at (p1) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={left:$p_2$}] at (p2) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={left:$p_3$}] at (p3) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={below:$p_4$}] at (p4) {};
-
-      \coordinate (q0) at (8,6);
-      \coordinate (q1) at (4,7);
-      \coordinate (q2) at (4,4);
-      \coordinate (q3) at (6,4);
-
-      \draw (q0) -- (q1) -- (q2) -- (q3) -- cycle;
+      \draw (q0) -- (q1) -- (q2) -- (q3) -- (q4) -- cycle;
 
       \node [anchor=center,circle,draw,fill,inner
       sep=1pt,label={right:$q_0$}] at (q0) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={60:$q_1$}] at (q1) {};
+      sep=1pt,label={above:$q_1$}] at (q1) {};
 
       \node [anchor=center,circle,draw,fill,inner
       sep=1pt,label={left:$q_2$}] at (q2) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={below:$q_3$}] at (q3) {};
-
-      \coordinate (q0') at (4.5, 1.5);
-      \coordinate (q1') at (0.5, 2.5);
-      \coordinate (q2') at (0.5, -0.5);
-      \coordinate (q3') at (2.5, -0.5);
-
-      \draw [dashed] (q0') -- (q1') -- (q2') -- (q3') -- cycle;
+      sep=1pt,label={left:$q_3$}] at (q3) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={right:$q_{0}'$}] at (q0') {};
+      sep=1pt,label={below:$q_4$}] at (q4) {};
+
+      \coordinate (p0) at (8,6);
+      \coordinate (p1) at (4,7);
+      \coordinate (p2) at (4,4);
+      \coordinate (p3) at (6,4);
+
+      \draw (p0) -- (p1) -- (p2) -- (p3) -- cycle;
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={60:$q_{1}'$}] at (q1') {};
+      sep=1pt,label={right:$p_0$}] at (p0) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={left:$q_{2}'$}] at (q2') {};
+      sep=1pt,label={60:$p_1$}] at (p1) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={below:$q_{3}'$}] at (q3') {};
+      sep=1pt,label={left:$p_2$}] at (p2) {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={below:$p_3$}] at (p3) {};
+
+      \coordinate (p0') at (4.5, 1.5);
+      \coordinate (p1') at (0.5, 2.5);
+      \coordinate (p2') at (0.5, -0.5);
+      \coordinate (p3') at (2.5, -0.5);
+
+      \draw [dashed] (p0') -- (p1') -- (p2') -- (p3') -- cycle;
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={right:$p_{0}'$}] at (p0') {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={60:$p_{1}'$}] at (p1') {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={left:$p_{2}'$}] at (p2') {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={below:$p_{3}'$}] at (p3') {};
   \end{tikzpicture}
-  \caption{Wielokąt $(q_0, \ldots, q_3)$ można umieścić w wielokącie
-    $(p_0, \ldots, p_4)$\label{img:containment1}}
+  \caption{Wielokąt $(p_0, \ldots, p_3)$ można umieścić w wielokącie
+    $(q_0, \ldots, q_4)$\label{img:containment1}}
 \end{figure}
 
 W problemie ogólnym dopuszczamy translacje i obroty zawieranego
@@ -132,8 +132,6 @@ spełniające zawieranie $P$ w $Q$. Algorytm rozwiązujący problem
 zawierania wielokąta $P$ w $Q$ przedstawiono na
 listingu~\ref{alg:containment}.
 
-
-
 Do znalezienia wierzchołków krytycznych możemy posłużyć się
 przedstawioną w rozdziale \ref{chap:calipers} metodą \emph{rotating
   calipers}. Zauważmy, że dana krawędź $(q_i, q_{i+1})$ wraz z
@@ -155,13 +153,35 @@ wcześniej.
 \begin{figure}
   \centering
   \begin{tikzpicture}
-      \coordinate (p0) at (5.5,1.5);
-      \coordinate (p1) at (3,4);
-      \coordinate (p2) at (0,3);
-      \coordinate (p3) at (-1,-0.5);
-      \coordinate (p4) at (3,-2);
+      \coordinate (q0) at (5.5,1.5);
+      \coordinate (q1) at (3,4);
+      \coordinate (q2) at (0,3);
+      \coordinate (q3) at (-1,-0.5);
+      \coordinate (q4) at (3,-2);
 
-      \draw (p0) -- (p1) -- (p2) -- (p3) -- (p4) -- cycle;
+      \draw (q0) -- (q1) -- (q2) -- (q3) -- (q4) -- cycle;
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={right:$q_0$}] at (q0) {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={above:$q_1$}] at (q1) {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={above:$q_2$}] at (q2) {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={left:$q_3$}] at (q3) {};
+
+      \node [anchor=center,circle,draw,fill,inner
+      sep=1pt,label={below:$q_4$}] at (q4) {};
+
+      \coordinate (p0) at (11,2);
+      \coordinate (p1) at (7,3);
+      \coordinate (p2) at (7,0);
+      \coordinate (p3) at (9,0);
+
+      \draw (p0) -- (p1) -- (p2) -- (p3) -- cycle;
 
       \node [anchor=center,circle,draw,fill,inner
       sep=1pt,label={right:$p_0$}] at (p0) {};
@@ -170,64 +190,48 @@ wcześniej.
       sep=1pt,label={above:$p_1$}] at (p1) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={left:$p_2$}] at (p2) {};
+      sep=1pt,label={below:$p_2$}] at (p2) {};
 
       \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={left:$p_3$}] at (p3) {};
+      sep=1pt,label={below:$p_3$}] at (p3) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={below:$p_4$}] at (p4) {};
+      \draw [blue, <-, shorten <= -2cm, shorten >= -2cm] (q2) -- (q1);
 
-      \coordinate (q0) at (11,2);
-      \coordinate (q1) at (7,3);
-      \coordinate (q2) at (7,0);
-      \coordinate (q3) at (9,0);
+      \draw[blue, ->, shorten <= -4cm] (p1) -- +($(q2)-(q1)$);
 
-      \draw (q0) -- (q1) -- (q2) -- (q3) -- cycle;
+      \coordinate (Q) at (1.75,1);
+      \node [anchor=center,inner sep=1pt,label={right:$Q$}] at (Q) {};
 
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={right:$q_0$}] at (q0) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={60:$q_1$}] at (q1) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={left:$q_2$}] at (q2) {};
-
-      \node [anchor=center,circle,draw,fill,inner
-      sep=1pt,label={below:$q_3$}] at (q3) {};
-
-      \draw [blue, <-, shorten <= -2cm, shorten >= -2cm] (p2) -- (p1);
-
-      \draw[blue, ->, shorten <= -4cm] (q1) -- +($(p2)-(p1)$);
+      \coordinate (P) at (8,1.25);
+      \node [anchor=center,inner sep=1pt,label={right:$P$}] at (P) {};
   \end{tikzpicture}
-  \caption{Pary punktów $(p_1,q_1)$ oraz $(p_2, q_1)$ to pary
+  \caption{Pary punktów $(q_1, p_1)$ oraz $(q_2, p_1)$ to pary
     kopodalne.\label{fig:containment3}}
 \end{figure}
 
 Na koniec pozostaje wyznaczenie przecięcia półpłaszczyzn $H_1' \cap
-\ldots \cap H_m'$. Uzyskane półpłaszczyzny podzielmy dwa zbiory: dolny
-i górny. Niech w dolnym zbiorze znajdą się półpłaszczyzny wyznaczone
-przez ,,dolne'' krawędzie wielokąta $Q$. Zacznijmy rozpatrywać kolejne
-półpłaszczyzny z dolnego zbioru pod względem nierosnącego
-współczynnika kierunkowego prostej $l_i$ określającej półpłaszczyznę
-$H_i'$. Włóżmy dwie pierwsze proste na stos. Będziemy oznaczać
-ostatnią prostą na stosie jako $l_o$, a przedostatnią jako $l_p$. Po
-rozpatrzeniu każdej kolejnej półpłaszczyzny będziemy zachowywać
-następujący niezmiennik: na stosie znajdują się te proste z ciągu
-$l_1, \ldots, l_i$, które stanowią brzeg zbioru $H_1' \cap \ldots \cap
-H_i'$. Postępujemy zgodnie z regułą, że jeżeli przecięcie obecnie
-rozważanej prostej $l_i$ z ostatnią prostą na stosie $l_o$ leży na
-lewo od przecięcia $l_o$ z przedostatnią prostą $l_p$ ze stosu, to
-zdejmujemy $l_o$ ze stosu i wkładamy na stos prostą $l_i$. Tę metodę
-obrazuje sytuacja z rysunku~\ref{img:containment2}. Na stos zostały
-włożone proste $l, l_p, l_o$, rozważana jest prosta $l_i$. Punkt $q' =
-l_i \cap l_o$ leży na lewo od $q = l_o \cap l_p$. Wobec tego
-zdejmujemy nadmiarową prostą $l_o$ ze stosu, a wkładamy na niego
-prostą $l_i$. Analogicznie postępujemy z zbiorem górnych
-półpłaszczyzn. W ostatnim kroku łączymy uzyskane dwa obszary wypukłe,
-poprzez wyznaczenie przecięcia par skrajnych półpłaszczyzn z dolnej i
-górnej otoczki.
+\ldots \cap H_m'$. Uzyskane półpłaszczyzny podzielmy na dwa zbiory:
+dolny i górny (rysunek~\ref{fig:lowerpart}). Niech w dolnym zbiorze
+znajdą się półpłaszczyzny wyznaczone przez dolne krawędzie wielokąta
+$Q$. Zacznijmy rozpatrywać kolejne półpłaszczyzny z dolnego zbioru pod
+względem nierosnącego współczynnika kierunkowego prostej $l_i$
+określającej półpłaszczyznę $H_i'$. Włóżmy dwie pierwsze proste na
+stos. Będziemy oznaczać ostatnią prostą na stosie jako $l_o$, a
+przedostatnią jako $l_p$. Po rozpatrzeniu każdej kolejnej
+półpłaszczyzny będziemy zachowywać następujący niezmiennik: na stosie
+znajdują się te proste z ciągu $l_1, \ldots, l_i$, które stanowią
+brzeg zbioru $H_1' \cap \ldots \cap H_i'$. Postępujemy zgodnie z
+regułą, że jeżeli przecięcie obecnie rozważanej prostej $l_i$ z
+ostatnią prostą na stosie $l_o$ leży na lewo od przecięcia $l_o$ z
+przedostatnią prostą $l_p$ ze stosu, to zdejmujemy $l_o$ ze stosu i
+wkładamy na stos prostą $l_i$. Tę metodę obrazuje sytuacja z
+rysunku~\ref{img:containment2}. Na stos zostały włożone proste $l,
+l_p, l_o$, rozważana jest prosta $l_i$. Punkt $q' = l_i \cap l_o$ leży
+na lewo od $q = l_o \cap l_p$. Wobec tego zdejmujemy nadmiarową prostą
+$l_o$ ze stosu, a wkładamy na niego prostą $l_i$. Analogicznie
+postępujemy z zbiorem górnych półpłaszczyzn. W ostatnim kroku łączymy
+uzyskane dwa obszary wypukłe, poprzez wyznaczenie przecięcia par
+skrajnych półpłaszczyzn z dolnej i górnej otoczki.
 
 \begin{figure}
   \centering
@@ -257,10 +261,11 @@ górnej otoczki.
 
       \draw [dashed, shorten >= -2cm, shorten <= -2cm] (p0) -- (p3);
   \end{tikzpicture}
-  \caption{\label{fig:lowerpart} Wierzchołki $p_0$ i $p_3$ są skrajne
-    na osi $x$. Zbiór krawędzi poniżej prostej zdefiniowanej przez
-    wierzchołki $p_0$ i $p_3$ nazwiemy zbiorem dolnym krawędzi
-    wielokąta $P$.}
+  \caption{\label{fig:lowerpart} Wierzchołki $p_0$ i $p_3$ mają
+    skrajne współrzędne na osi $x$. Zbiór krawędzi poniżej prostej
+    zdefiniowanej przez wierzchołki $p_0$ i $p_3$ nazywamy zbiorem
+    dolnym krawędzi wielokąta (lub przecięciem dolnym odpowiednich
+    półpłaszczyzn definiowanych przez krawędzie wielokąta).}
 \end{figure}
 
 \begin{figure}
