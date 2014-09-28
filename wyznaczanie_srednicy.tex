@@ -215,21 +215,11 @@ przypadku $n-1$ kroków, natomiast przejście po łańcuchach $p_{0},
 \ldots, q_{0}$ i $q_{0}, \ldots, p_{0}$ łącznie $n$ kroków. Mamy więc
 do czynienia ze złożonością czasową rzędu $O(n)$.
 
-% Specjalną sytuacją jest przypadek, gdy dwie krawędzie są równoległe
-% (wtedy pole ze znakiem trójkąta jest równe dla dwóch wierzchołków
-% tworzących krawędź równoległą), która wymaga od nas dodatkowego kroku
-% przy każdym wierzchołku (wiersze 15--19).
-
-% Poprawność algorytmu wynika z tego, że krawędzi równoległych jest co
-% najwyżej $N/2$, więc łącznie algorytm nie wykonuje więcej niż $3N$
-% kroków. Mamy więc do czynienia ze złożonością czasową rzędu $O(n)$.
-
 Fakt, że punkt antypodyczny dla punktu $p_{i+1}$ nie może być bliższy
 niż wierzchołek, który jest najdalej od $p_i$, wynika z wypukłości
 wielokąta --- dla dowolnego wierzchołka $p$ można wyznaczyć taki
 wierzchołek $q$, że odległość kolejnych wierzchołków od $p$ do $q$
 jest nierosnąca, zaś od $q$ do $p$ --- niemalejąca.
-
 
 \begin{algorithm}
   \caption{Algorytm wypisujący wszystkie pary

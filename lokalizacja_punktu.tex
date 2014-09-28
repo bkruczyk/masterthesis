@@ -235,88 +235,11 @@ $p_{n-1}$, ponumerowane w kolejności przeciwnej do ruchu wskazówek
 zegara. Wyszukiwanie położenia danego punktu $z$ składa się z dwóch
 etapów. Najpierw określany jest klin, w którym leży $z$. Można to
 zrobić w czasie $O(\log n)$ używając wyszukiwania binarnego.
-% % nie działa w pewnych przypadkach
-% Punkt $z$ będzie znajdował się pomiędzy promieniami $p_i$ i $p_{i+n}$
-% podzielonej płaszczyzny wtedy i tylko wtedy, gdy kąt $\angle p_{i}qz$
-% będzie lewoskrętny, a kąt $\angle p_{i+n}qz$ prawoskrętny. W
-% następnych krokach stopniowo zawężamy nasz obszar poszukiwań, do czasu
-% aż odnajdziemy właściwy klin.
 Następnie określamy, czy $z$ należy do wnętrza lub zewnętrza
 znalezionego klina. Jeśli kąt $\angle p_{i}p_{i+1}z$ jest lewoskrętny,
 to $z$ jest wewnętrzny. Określenie skrętności kąta jest operacją o
 czasie $O(1)$, więc asymptotyczna złożoność tej części algorytmu jest
 rzędu $O(\log n)$.
-
-% Umieszczenie wielokąta w strukturze danych umożliwiającej
-% przeszukiwanie binarne wymaga rozważenia przypadku zobrazowanego na
-% rysunku \ref{fig:binstruct}. By punkt $z$ został zakwalifikowany jako
-% należący do klina $(p_{3},p_{0})$ musi leżeć na przecięciu
-% półpłaszczyzny $H_1$ określonej przez obszar na prawo od prostej
-% zdefiniowanej przez odcinek $p_{3}q$ oraz półpłaszczyzny $H_2$
-% określonej przez obszar na lewo od prostej zdefiniowanej przez odcinek
-% $p_{0}q$. W sytuacji gdy kąt klina jest kątem rozwartym punkt $z$ nie
-% zostanie wykryty. Z tego powodu przy wyszukiwaniu binarnym powinniśmy
-% zaczynać od klina, którego kąt wewnętrzny jest
-% mniejszy. Uwzględniająca ten warunek (wiersze 4--9) procedura została
-% przedstawiona na listingu \ref{alg:findwedge}.
-
-% \begin{figure}[htp]
-%   \centering
-%   \begin{tikzpicture}
-%     \convexB
-
-%     \node [anchor=center,circle,draw,fill,inner sep=1pt,
-%     label={90:$p_0$}] at (p0) {};
-
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={100:$p_1$}] at (p1) {};
-
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={180:$p_2$}] at (p2) {};
-
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={[label distance=0.2cm]-90:$p_3$}] at (p3) {};
-
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={-45:$p_4$}] at (p4) {};
-
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={[label distance=0.1cm]0:$p_5$}] at (p5) {};
-
-%     \coordinate (q) at (2,2);
-%     \coordinate (z) at (3.25,3);
-
-%     \draw [dashed,shorten >=-0.5cm] (q) -- (p0);
-%     \draw [dashed,shorten >=-0.5cm] (q) -- (p1);
-%     \draw [dashed,shorten >=-0.5cm] (q) -- (p2);
-%     \draw [dashed,shorten >=-0.5cm] (q) -- (p3);
-%     \draw [dashed,shorten >=-0.5cm] (q) -- (p4);
-%     \draw [dashed,shorten >=-0.5cm] (q) -- (p5);
-
-%     \draw [name path=p4--q,green,dashed,shorten >=-4cm,shorten <=-2cm,->] (p3) -- (q);
-%     \draw [name path=p1--q,blue,dashed,shorten >=-4cm,shorten <=-1.5cm,->] (p0) -- (q);
-
-%     %     \path [name intersections={of=p4--q and p1--q,by=i1}];
-
-%     %     \fill [red] ($(q)!(-2,0)!(p1)$) circle [radius=2pt];
-%     %     \fill [blue] ($(q)!(11,0)!(p1)$) circle [radius=2pt];
-
-%     \filldraw [color=blue,opacity=0.2] (6,5) --
-%     ($(q)!(11,0)!(p0)$) -- ($(q)!(-2,0)!(p0)$) -- (6,-1.2);
-
-%     %     \fill [red] ($(p4)!(-2.5,0)!(q)$) circle [radius=2pt];
-%     %     \fill [red] ($(p4)!(6.5,0)!(q)$) circle [radius=2pt];
-
-%     \filldraw [color=green,opacity=0.2] ($(p3)!(-2.5,0)!(q)$) --
-%     ($(p3)!(6.5,0)!(q)$) -- (6,-1.2) -- (-2.7,-1.2);
-
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={-170:$q$}] at (q) {};
-%     \node [anchor=center,circle,draw,fill,inner
-%     sep=1pt,label={below:$z$}] at (z) {};
-%   \end{tikzpicture}
-%   \caption{\label{fig:binstruct}}
-% \end{figure}
 
 Zastosowane tutaj przeszukiwanie binarne jest możliwe dzięki temu, że
 wierzchołki wielokąta wypukłego występują w kolejności kątowej lub,
@@ -335,8 +258,6 @@ w~\cite{Kirk83} Kirkpatrick. W uproszczeniu: jest to metoda oparta na
 wyszukiwaniu w strukturze drzewopodobnej będącej reprezentacją
 poddanej triangulacji płaszczyzny. Wymaga ona jednak przetwarzania
 wstępnego, które może być wykonane w czasie liniowo-logarytmicznym.
-
-% Przyjęto także założenie, że brzeg $P$ należy do jego wnętrza.
 
 \begin{algorithm}
   \caption{Algorytm wyznaczający klin zawierający szukany
@@ -380,8 +301,8 @@ wstępnego, które może być wykonane w czasie liniowo-logarytmicznym.
 
 \end{algorithm}
 
-  %%% Local Variables:
-  %%% mode: latex
-  %%% TeX-master: "masterthesis"
-  %%% TeX-engine: xetex
-  %%% End:
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "masterthesis"
+%%% TeX-engine: xetex
+%%% End:
